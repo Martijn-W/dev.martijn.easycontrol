@@ -1,0 +1,28 @@
+{
+  "id": "dev.martijn.easycontrol",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Bosch EasyControl"
+  },
+  "description": {
+    "en": "Adds support for the Bosch EasyControl (CT200) thermostat"
+  },
+  "category": [
+    "climate"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Martijn W",
+    "email": "info@martijn.dev"
+  }
+}
