@@ -1,0 +1,126 @@
+<script type="text/javascript">
+    Homey.setTitle(__('easycontrol.pair.title'));
+    Homey.setSubtitle(__('easycontrol.pair.subtitle'));
+
+    /** @type HTMLFormElement */
+    const form = document.querySelector('.easycontrol-form');
+
+    form.addEventListener('submit', evt => {
+        evt.preventDefault();
+
+        const data = new FormData(form);
+        const name = data.get('name');
+        const serialNumber = data.get('serial-number');
+        const accessKey = data.get('access-key');
+        const password = data.get('password');
+
+        const device = {
+            name,
+            data: {
+                id: Math.random().toString(36).substr(2, 5).toLowerCase()
+            },
+            settings: {
+                serialNumber,
+                accessKey,
+                password
+            }
+        };
+
+        Homey.addDevice(device, (error, result) => {
+            if (error) {
+                console.error(error);
+                return;
+            }
+
+            console.log('addDevice()', result);
+            Homey.done();
+        });
+    });
+</script>
+
+<style>
+    .easycontrol-form {
+        display: flex;
+        height: 100%;
+        flex-flow: column;
+    }
+</style>
+
+<form class="homey-form easycontrol-form">
+    <fieldset class="homey-form-fieldset">
+        <legend
+            class="homey-form-legend"
+            data-i18n="easycontrol.pair.device"></legend>
+
+        <div class="homey-form-group">
+            <label
+                class="homey-form-label"
+                for="name"
+                data-i18n="easycontrol.pair.name"></label>
+            <input
+                class="homey-form-input"
+                name="name"
+                id="name"
+                type="text"
+                value=""
+                placeholder="E.g. Thermostat"
+                required/>
+        </div>
+    </fieldset>
+
+
+    <fieldset class="homey-form-fieldset">
+        <legend
+            class="homey-form-legend"
+            data-i18n="easycontrol.pair.connection"></legend>
+
+        <div class="homey-form-group">
+            <label
+                class="homey-form-label"
+                for="serial-number"
+                data-i18n="easycontrol.pair.serialNumber"></label>
+            <input
+                class="homey-form-input"
+                name="serial-number"
+                id="serial-number"
+                type="text"
+                value=""
+                placeholder="E.g. 111222333"
+                required/>
+        </div>
+
+        <div class="homey-form-group">
+            <label
+                class="homey-form-label"
+                for="access-key"
+                data-i18n="easycontrol.pair.accessKey"></label>
+            <input
+                class="homey-form-input"
+                name="access-key"
+                id="access-key"
+                type="text"
+                value=""
+                placeholder="E.g. abcd1234ef"
+                required/>
+        </div>
+
+        <div class="homey-form-group">
+            <label
+                class="homey-form-label"
+                for="password"
+                data-i18n="easycontrol.pair.password"></label>
+            <input
+                class="homey-form-input"
+                name="password"
+                id="password"
+                type="password"
+                value=""
+                placeholder="E.g. my-passw0rd"
+                required/>
+        </div>
+    </fieldset>
+
+    <button
+        class="homey-button-primary-full"
+        data-i18n="easycontrol.pair.connect"></button>
+</form>

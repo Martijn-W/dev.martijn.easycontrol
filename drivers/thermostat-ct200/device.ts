@@ -1,55 +1,64 @@
 import Homey from 'homey';
+import { Client } from './bosch';
 
-module.exports = class MyDevice extends Homey.Device {
+module.exports = class extends Homey.Device {
 
-  /**
-   * onInit is called when the device is initialized.
-   */
-  async onInit() {
-    this.log('MyDevice has been initialized');
-  }
+    #client: Client = new Client();
 
-  /**
-   * onAdded is called when the user adds the device, called just after pairing.
-   */
-  async onAdded() {
-    this.log('MyDevice has been added');
-  }
+    async onInit() {
+        const serialNumber = this.getSetting('serialNumber');
+        const accessKey = this.getSetting('accessKey');
+        const password = this.getSetting('password');
 
-  /**
-   * onSettings is called when the user updates the device's settings.
-   * @param {object} event the onSettings event data
-   * @param {object} event.oldSettings The old settings object
-   * @param {object} event.newSettings The new settings object
-   * @param {string[]} event.changedKeys An array of keys changed since the previous version
-   * @returns {Promise<string|void>} return a custom message that will be displayed
-   */
-  async onSettings({
-    oldSettings,
-    newSettings,
-    changedKeys,
-  }: {
-    oldSettings: { [key: string]: boolean | string | number | undefined | null };
-    newSettings: { [key: string]: boolean | string | number | undefined | null };
-    changedKeys: string[];
-  }): Promise<string | void> {
-    this.log("MyDevice settings where changed");
-  }
+        await this.#client.connect(serialNumber, accessKey, password);
+        await this.setInitialValues();
 
-  /**
-   * onRenamed is called when the user updates the device's name.
-   * This method can be used this to synchronise the name to the device.
-   * @param {string} name The new name
-   */
-  async onRenamed(name: string) {
-    this.log('MyDevice was renamed');
-  }
+        this.log('EasyControl device has been initialized');
+    }
 
-  /**
-   * onDeleted is called when the user deleted the device.
-   */
-  async onDeleted() {
-    this.log('MyDevice has been deleted');
-  }
+    async onAdded() {
+        this.log('EasyControl has been added');
+    }
+
+    async onSettings(): Promise<string | void> {
+        this.log('EasyControl settings where changed');
+    }
+
+    async onDeleted() {
+        this.#client.disconnect();
+
+        this.log('EasyControl device has been deleted');
+    }
+
+    private async setInitialValues() {
+        const zones = await this.#client.getZones();
+
+        if (zones == null)
+            return;
+
+        const zone = zones[0]; // todo: move this to initial setup!
+
+        const zoneTemperature = await this.#client.getZoneTemperature(zone.id);
+        const zoneTargetTemperature = await this.#client.getZoneTargetTemperature(zone.id);
+        const zoneHumidity = await this.#client.getZoneHumidity(zone.id);
+
+        if (zoneTemperature != null) {
+            console.log(`Current temperature: ${zoneTemperature.value}${zoneTemperature?.unitOfMeasure}`);
+
+            this.setCapabilityValue('measure_temperature', zoneTemperature.value).catch(this.error);
+        }
+
+        if (zoneTargetTemperature != null) {
+            console.log(`Current temperature: ${zoneTargetTemperature.value}${zoneTemperature?.unitOfMeasure}`);
+
+            this.setCapabilityValue('target_temperature', zoneTargetTemperature.value).catch(this.error);
+        }
+
+        if (zoneHumidity != null) {
+            console.log(`Current humidity: ${zoneHumidity.value}${zoneHumidity?.unitOfMeasure}`);
+
+            this.setCapabilityValue('measure_humidity', zoneHumidity.value).catch(this.error);
+        }
+    }
 
 };

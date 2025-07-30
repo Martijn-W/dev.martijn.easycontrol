@@ -1,1 +1,15 @@
-{}
+{
+    "easycontrol": {
+        "pair": {
+            "title": "Add Bosch EasyControl thermostat",
+            "subtitle": "Enter the information about your thermostat",
+            "device": "Device",
+            "connection": "Connection",
+            "name": "Name",
+            "serialNumber": "Serial number (no dashes)",
+            "accessKey": "Access key",
+            "password": "Password",
+            "connect": "Connect"
+        }
+    }
+}
