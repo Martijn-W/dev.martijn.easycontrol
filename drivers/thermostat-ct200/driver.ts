@@ -48,14 +48,6 @@ module.exports = class extends Homey.Driver {
         client.disconnect();
 
         await session.nextView();
-
-        // return {
-        //     name: 'Bosch EasyControl',
-        //     data,
-        //     store: {
-        //         paired_with_app_version: this.homey.app.manifest.version
-        //     }
-        // };
     }
 
 };
