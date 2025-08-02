@@ -42,7 +42,8 @@
       "capabilities": [
         "measure_humidity",
         "measure_temperature",
-        "target_temperature"
+        "target_temperature",
+        "measure_pressure"
       ],
       "platforms": [
         "local"

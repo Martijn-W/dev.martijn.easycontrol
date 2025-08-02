@@ -34,6 +34,7 @@ module.exports = class extends Homey.Device {
         const zoneTemperature = await this.#client.getZoneTemperature(zoneId);
         const zoneTargetTemperature = await this.#client.getZoneTargetTemperature(zoneId);
         const zoneHumidity = await this.#client.getZoneHumidity(zoneId);
+        const systemPressure = await this.#client.getApplianceSystemPressure();
 
         if (zoneTemperature != null) {
             console.log(`Current temperature: ${zoneTemperature.value}${zoneTemperature?.unitOfMeasure}`);
@@ -51,6 +52,14 @@ module.exports = class extends Homey.Device {
             console.log(`Current humidity: ${zoneHumidity.value}${zoneHumidity?.unitOfMeasure}`);
 
             this.setCapabilityValue('measure_humidity', zoneHumidity.value).catch(this.error);
+        }
+
+        if (systemPressure != null) {
+            console.log(`Current system pressure: ${systemPressure.value}${systemPressure?.unitOfMeasure}`);
+
+            // Convert from bar to millibar
+            const pressure = systemPressure.value * 1000;
+            this.setCapabilityValue('measure_pressure', pressure).catch(this.error);
         }
     }
 

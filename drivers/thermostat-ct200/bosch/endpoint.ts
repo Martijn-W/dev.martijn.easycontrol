@@ -6,5 +6,5 @@ export enum Endpoint {
     ZoneTargetTemperature = '/zones/zn%1/temperatureHeatingSetpoint',
     ZoneHumidity = '/zones/zn%1/humidity',
 
-    ApplianceSystemPressure = '/system/appliance/pressure'
+    ApplianceSystemPressure = '/system/appliance/systemPressure'
 }
