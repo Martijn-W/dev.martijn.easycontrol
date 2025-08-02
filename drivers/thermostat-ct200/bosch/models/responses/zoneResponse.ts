@@ -1,4 +1,4 @@
-export interface ZonesResponse {
+export interface ZoneResponse {
     id: number;
     name: string;
     icon: string;
@@ -6,4 +6,3 @@ export interface ZonesResponse {
     temp: number;
     status: string;
 }
-

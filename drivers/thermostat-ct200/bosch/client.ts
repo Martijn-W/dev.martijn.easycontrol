@@ -1,7 +1,8 @@
 // @ts-ignore
 import { EasyControlClient } from 'bosch-xmpp';
-import { Endpoint, ZonesResponse } from '.';
+import { Endpoint, ZoneResponse } from '.';
 import { ValueResponse } from './models/responses/valueResponse';
+import { DeviceResponse } from './models/responses/deviceResponse';
 
 export class Client {
     private XMPP_CLIENT: EasyControlClient | null = null;
@@ -26,11 +27,20 @@ export class Client {
         this.XMPP_CLIENT.end();
     }
 
-    public async getZones(): Promise<ZonesResponse[] | null> {
+    public async getDevices(): Promise<DeviceResponse[] | null> {
+        const response = await this.get(Endpoint.Devices);
+
+        if (response !== null && 'value' in response)
+            return response.value as DeviceResponse[];
+
+        return null;
+    }
+
+    public async getZones(): Promise<ZoneResponse[] | null> {
         const response = await this.get(Endpoint.Zones);
 
         if (response !== null && 'value' in response)
-            return response.value as ZonesResponse[];
+            return response.value as ZoneResponse[];
 
         return null;
     }

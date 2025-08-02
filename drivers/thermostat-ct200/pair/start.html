@@ -9,31 +9,14 @@
         evt.preventDefault();
 
         const data = new FormData(form);
-        const name = data.get('name');
         const serialNumber = data.get('serial-number');
         const accessKey = data.get('access-key');
         const password = data.get('password');
 
-        const device = {
-            name,
-            data: {
-                id: Math.random().toString(36).substr(2, 5).toLowerCase()
-            },
-            settings: {
-                serialNumber,
-                accessKey,
-                password
-            }
-        };
-
-        Homey.addDevice(device, (error, result) => {
-            if (error) {
-                console.error(error);
-                return;
-            }
-
-            console.log('addDevice()', result);
-            Homey.done();
+        Homey.emit('validate_device', {
+            serialNumber,
+            accessKey,
+            password
         });
     });
 </script>
@@ -47,28 +30,6 @@
 </style>
 
 <form class="homey-form easycontrol-form">
-    <fieldset class="homey-form-fieldset">
-        <legend
-            class="homey-form-legend"
-            data-i18n="easycontrol.pair.device"></legend>
-
-        <div class="homey-form-group">
-            <label
-                class="homey-form-label"
-                for="name"
-                data-i18n="easycontrol.pair.name"></label>
-            <input
-                class="homey-form-input"
-                name="name"
-                id="name"
-                type="text"
-                value=""
-                placeholder="E.g. Thermostat"
-                required/>
-        </div>
-    </fieldset>
-
-
     <fieldset class="homey-form-fieldset">
         <legend
             class="homey-form-legend"

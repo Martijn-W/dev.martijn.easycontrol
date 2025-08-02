@@ -1,16 +1,14 @@
 import Homey from 'homey';
 import { Client } from './bosch';
+import DeviceData from './deviceData';
 
 module.exports = class extends Homey.Device {
-
     #client: Client = new Client();
 
     async onInit() {
-        const serialNumber = this.getSetting('serialNumber');
-        const accessKey = this.getSetting('accessKey');
-        const password = this.getSetting('password');
+        const deviceData = this.getSetting('device') as DeviceData;
 
-        await this.#client.connect(serialNumber, accessKey, password);
+        await this.#client.connect(deviceData.serialNumber, deviceData.accessKey, deviceData.password);
         await this.setInitialValues();
 
         this.log('EasyControl device has been initialized');
@@ -31,16 +29,11 @@ module.exports = class extends Homey.Device {
     }
 
     private async setInitialValues() {
-        const zones = await this.#client.getZones();
+        const zoneId = this.getSetting('zoneId') as number;
 
-        if (zones == null)
-            return;
-
-        const zone = zones[0]; // todo: move this to initial setup!
-
-        const zoneTemperature = await this.#client.getZoneTemperature(zone.id);
-        const zoneTargetTemperature = await this.#client.getZoneTargetTemperature(zone.id);
-        const zoneHumidity = await this.#client.getZoneHumidity(zone.id);
+        const zoneTemperature = await this.#client.getZoneTemperature(zoneId);
+        const zoneTargetTemperature = await this.#client.getZoneTargetTemperature(zoneId);
+        const zoneHumidity = await this.#client.getZoneHumidity(zoneId);
 
         if (zoneTemperature != null) {
             console.log(`Current temperature: ${zoneTemperature.value}${zoneTemperature?.unitOfMeasure}`);

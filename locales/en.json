@@ -5,7 +5,6 @@
             "subtitle": "Enter the information about your thermostat",
             "device": "Device",
             "connection": "Connection",
-            "name": "Name",
             "serialNumber": "Serial number (no dashes)",
             "accessKey": "Access key",
             "password": "Password",
