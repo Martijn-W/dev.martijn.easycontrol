@@ -1,11 +1,12 @@
 import Homey from 'homey';
 import { Client, DeviceResponse } from './bosch';
 import PairSession from 'homey/lib/PairSession';
-import DeviceData from './deviceData';
+
+import ConnectionSettings from './connectionSettings';
 
 module.exports = class extends Homey.Driver {
     #devices: DeviceResponse[] = [];
-    #deviceData: DeviceData | null = null;
+    #deviceData: ConnectionSettings | null = null;
 
     async onInit() {
         this.log('EasyControl driver has been initialized');
@@ -22,14 +23,16 @@ module.exports = class extends Homey.Driver {
                         id: device.id
                     },
                     settings: {
-                        device: this.#deviceData,
+                        serialNumber: this.#deviceData!.serialNumber,
+                        accessKey: this.#deviceData!.accessKey,
+                        password: this.#deviceData!.password,
                         zoneId: device.zone
-                    }
+                    } as ConnectionSettings
                 }));
         });
     }
 
-    async validateDevice(data: DeviceData, session: PairSession): Promise<void> {
+    async validateDevice(data: ConnectionSettings, session: PairSession): Promise<void> {
         let client: Client;
 
         await session.nextView();

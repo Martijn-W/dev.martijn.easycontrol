@@ -79,7 +79,65 @@
           "template": "add_devices"
         }
       ],
-      "id": "thermostat-ct200"
+      "id": "thermostat-ct200",
+      "settings": [
+        {
+          "type": "group",
+          "label": {
+            "en": "Bosch EasyControl settings",
+            "nl": "Bosch EasyControl instellingen"
+          },
+          "children": [
+            {
+              "id": "serialNumber",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Serial number",
+                "nl": "Serienummer"
+              }
+            },
+            {
+              "id": "accessKey",
+              "type": "text",
+              "value": "",
+              "label": {
+                "en": "Access key",
+                "nl": "Toegangssleutel"
+              }
+            },
+            {
+              "id": "password",
+              "type": "password",
+              "value": "",
+              "label": {
+                "en": "Password",
+                "nl": "Wachtwoord"
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Advanced",
+            "nl": "Geadvanceerd"
+          },
+          "children": [
+            {
+              "id": "pollingInterval",
+              "type": "number",
+              "value": 30,
+              "step": 1,
+              "min": 5,
+              "label": {
+                "en": "Polling interval (seconds)",
+                "nl": "Verversingsinterval (seconden)"
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

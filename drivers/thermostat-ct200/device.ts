@@ -1,37 +1,59 @@
 import Homey from 'homey';
 import { Client } from './bosch';
-import DeviceData from './deviceData';
+
+import DeviceSettings from './deviceSettings';
+
+const nameof = <T>(name: keyof T) => name;
 
 module.exports = class extends Homey.Device {
     #client: Client = new Client();
     #shouldSync: boolean = true;
     #isSyncing: boolean = false;
     #timeout: NodeJS.Timeout | null = null;
+    #settings: DeviceSettings | null = null;
 
     async onInit() {
-        const deviceData = this.getSetting('device') as DeviceData;
+        this.#settings = this.getSettings() as DeviceSettings;
 
-        await this.#client.connect(deviceData.serialNumber, deviceData.accessKey, deviceData.password);
+        await this.#client.connect(
+            this.#settings!.serialNumber,
+            this.#settings!.accessKey,
+            this.#settings!.password);
 
         this.log('EasyControl device has been initialized');
+
+        this.#shouldSync = true;
 
         await this.sync();
     }
 
-    async onAdded() {
-        this.log('EasyControl has been added');
-    }
-
-    async onSettings(): Promise<string | void> {
+    async onSettings(event: {
+        oldSettings: { [key: string]: boolean | string | number | undefined | null },
+        newSettings: { [key: string]: boolean | string | number | undefined | null },
+        changedKeys: string[]
+    }): Promise<string | void> {
         this.log('EasyControl settings where changed');
+
+        if (event.changedKeys.includes(nameof<DeviceSettings>('pollingInterval'))) {
+            const newInterval = event.newSettings[nameof<DeviceSettings>('pollingInterval')] as number || null;
+
+            this.log(`Polling interval changed, resetting timeout to: ${newInterval}s`);
+
+            this.#timeout && clearTimeout(this.#timeout);
+            this.scheduleNextSync(newInterval);
+        }
     }
 
     async onDeleted() {
+        await this.reset();
+
+        this.log('EasyControl device has been deleted');
+    }
+
+    private async reset() {
         this.#shouldSync = false;
         this.#timeout && clearTimeout(this.#timeout);
         this.#client.disconnect();
-
-        this.log('EasyControl device has been deleted');
     }
 
     private async sync() {
@@ -40,6 +62,7 @@ module.exports = class extends Homey.Device {
 
         this.log('Syncing data...');
 
+        this.#settings = this.getSettings() as DeviceSettings;
         this.#isSyncing = true;
 
         await this.setThermostatData();
@@ -48,14 +71,22 @@ module.exports = class extends Homey.Device {
 
         this.log('Data synced');
 
+        this.scheduleNextSync(this.#settings?.pollingInterval ?? 30);
+    }
+
+    private scheduleNextSync(intervalSeconds: number | null) {
+        const nextIntervalMs = (intervalSeconds ?? 30) * 1000;
+
+        this.log(`Next sync in: ${nextIntervalMs}ms`);
+
         this.#timeout = setTimeout(
             async () => await this.sync(),
-            10000 //todo: get from settings
+            nextIntervalMs
         );
     }
 
     private async setThermostatData() {
-        const zoneId = this.getSetting('zoneId') as number;
+        const zoneId = this.#settings!.zoneId;
 
         const zoneTemperature = await this.#client.getZoneTemperature(zoneId);
         const zoneTargetTemperature = await this.#client.getZoneTargetTemperature(zoneId);
@@ -69,7 +100,7 @@ module.exports = class extends Homey.Device {
         }
 
         if (zoneTargetTemperature != null) {
-            this.log(`Current temperature: ${zoneTargetTemperature.value}${zoneTemperature?.unitOfMeasure}`);
+            this.log(`Current target temperature: ${zoneTargetTemperature.value}${zoneTemperature?.unitOfMeasure}`);
 
             this.setCapabilityValue('target_temperature', zoneTargetTemperature.value).catch(this.error);
         }
