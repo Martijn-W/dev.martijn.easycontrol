@@ -83,6 +83,12 @@ export class Client {
         return response as ValueResponse;
     }
 
+    public async getWifiSignalStrength(): Promise<ValueResponse | null> {
+        const response = await this.get(Endpoint.GatewayWifiRssi);
+
+        return response as ValueResponse;
+    }
+
     private async get(endpoint: string): Promise<{} | null> {
         if (this.XMPP_CLIENT === null) {
             return null;

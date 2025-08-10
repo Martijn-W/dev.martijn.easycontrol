@@ -7,7 +7,8 @@
         "measure_humidity",
         "measure_temperature",
         "target_temperature",
-        "measure_pressure"
+        "measure_pressure",
+        "measure_signal_strength"
     ],
     "platforms": [
         "local"
