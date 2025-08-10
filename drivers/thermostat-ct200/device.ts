@@ -20,6 +20,8 @@ module.exports = class extends Homey.Device {
             this.#settings!.accessKey,
             this.#settings!.password);
 
+        this.registerCapabilities();
+
         this.log('EasyControl device has been initialized');
 
         this.#shouldSync = true;
@@ -48,6 +50,10 @@ module.exports = class extends Homey.Device {
         await this.reset();
 
         this.log('EasyControl device has been deleted');
+    }
+
+    private registerCapabilities() {
+        this.registerCapabilityListener('target_temperature', this.onSetTargetTemperature.bind(this));
     }
 
     private async reset() {
@@ -117,6 +123,16 @@ module.exports = class extends Homey.Device {
             // Convert from bar to millibar
             const pressure = systemPressure.value * 1000;
             this.setCapabilityValue('measure_pressure', pressure).catch(this.error);
+        }
+    }
+
+    private async onSetTargetTemperature(value: any): Promise<void> {
+        this.log(`Setting target temperature: ${value}C`);
+
+        const response = await this.#client.setZoneTargetTemperature(this.#settings!.zoneId, value);
+
+        if (response?.status !== 'ok') {
+            this.error(`Failed to set target temperature: ${response?.status}`);
         }
     }
 

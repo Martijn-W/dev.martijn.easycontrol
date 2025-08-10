@@ -1,6 +1,6 @@
 // @ts-ignore
 import { EasyControlClient } from 'bosch-xmpp';
-import { Endpoint, ZoneResponse } from '.';
+import { Endpoint, PutResponse, ZoneResponse } from '.';
 import { ValueResponse } from './models/responses/valueResponse';
 import { DeviceResponse } from './models/responses/deviceResponse';
 
@@ -61,6 +61,14 @@ export class Client {
         return response as ValueResponse;
     }
 
+    public async setZoneTargetTemperature(zoneId: number, temperature: number): Promise<PutResponse | null> {
+        const endpoint = Endpoint.ZoneManualTemperatureHeating.replace('%1', `${zoneId}`);
+
+        const response = await this.set(endpoint, temperature);
+
+        return response as PutResponse;
+    }
+
     public async getZoneHumidity(zoneId: number): Promise<ValueResponse | null> {
         const endpoint = Endpoint.ZoneHumidity.replace('%1', `${zoneId}`);
 
@@ -89,9 +97,9 @@ export class Client {
         }
     }
 
-    public async set(endpoint: Endpoint, value: string): Promise<{} | null> {
+    public async set(endpoint: string, value: string | number | {}): Promise<{} | null> {
         try {
-            return await this.XMPP_CLIENT.put(endpoint, `{"value": ${value}}`);
+            return await this.XMPP_CLIENT.put(endpoint, {'value': value});
         } catch (ex) {
             this.parseError(ex as Error);
 
