@@ -101,25 +101,25 @@ module.exports = class extends Homey.Device {
         const wifiSignalStrength = await this.#client.getWifiSignalStrength();
 
         if (zoneTemperature != null) {
-            this.log(`Current temperature: ${zoneTemperature.value}${zoneTemperature.unitOfMeasure}`);
+            this.log(`→ temperature: ${zoneTemperature.value}${zoneTemperature.unitOfMeasure}`);
 
             this.setCapabilityValue('measure_temperature', zoneTemperature.value).catch(this.error);
         }
 
         if (zoneTargetTemperature != null) {
-            this.log(`Current target temperature: ${zoneTargetTemperature.value}${zoneTargetTemperature.unitOfMeasure}`);
+            this.log(`→ target temperature: ${zoneTargetTemperature.value}${zoneTargetTemperature.unitOfMeasure}`);
 
             this.setCapabilityValue('target_temperature', zoneTargetTemperature.value).catch(this.error);
         }
 
         if (zoneHumidity != null) {
-            this.log(`Current humidity: ${zoneHumidity.value}${zoneHumidity.unitOfMeasure}`);
+            this.log(`→ humidity: ${zoneHumidity.value}${zoneHumidity.unitOfMeasure}`);
 
             this.setCapabilityValue('measure_humidity', zoneHumidity.value).catch(this.error);
         }
 
         if (systemPressure != null) {
-            this.log(`Current system pressure: ${systemPressure.value}${systemPressure.unitOfMeasure}`);
+            this.log(`→ system pressure: ${systemPressure.value}${systemPressure.unitOfMeasure}`);
 
             // Convert from bar to millibar
             const pressure = systemPressure.value * 1000;
@@ -127,7 +127,7 @@ module.exports = class extends Homey.Device {
         }
 
         if (wifiSignalStrength != null) {
-            this.log(`Current wifi signal strength: ${wifiSignalStrength.value}${wifiSignalStrength.unitOfMeasure}`);
+            this.log(`→ wifi signal strength: ${wifiSignalStrength.value}${wifiSignalStrength.unitOfMeasure}`);
 
             this.setCapabilityValue('measure_signal_strength', wifiSignalStrength.value).catch(this.error);
         }
