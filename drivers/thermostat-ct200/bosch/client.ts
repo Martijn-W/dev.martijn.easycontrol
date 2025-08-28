@@ -1,8 +1,6 @@
 // @ts-ignore
 import { EasyControlClient } from 'bosch-xmpp';
-import { Endpoint, PutResponse, ZoneResponse } from '.';
-import { ValueResponse } from './models/responses/valueResponse';
-import { DeviceResponse } from './models/responses/deviceResponse';
+import { DeviceResponse, Endpoint, PutResponse, ValueResponse, ZoneResponse } from '.';
 
 export class Client {
     private XMPP_CLIENT: EasyControlClient | null = null;
