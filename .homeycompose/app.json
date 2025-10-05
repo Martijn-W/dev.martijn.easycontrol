@@ -1,35 +1,35 @@
 {
-    "id": "dev.martijn.easycontrol",
-    "version": "1.0.0",
-    "compatibility": ">=12.2.0",
-    "sdk": 3,
-    "brandColor": "#ED0007",
-    "platforms": [
-        "local"
-    ],
-    "name": {
-        "en": "Bosch EasyControl",
-        "nl": "Bosch EasyControl"
-    },
-    "description": {
-        "en": "Adds support for the Bosch EasyControl (CT200) thermostat",
-        "nl": "Voegt ondersteuning voor de Bosch EasyControl (CT200) thermostaat toe"
-    },
-    "category": [
-        "climate"
-    ],
-    "permissions": [],
-    "images": {
-        "small": "/assets/images/small.png",
-        "large": "/assets/images/large.png",
-        "xlarge": "/assets/images/xlarge.png"
-    },
-    "author": {
-        "name": "Martijn W",
-        "email": "info@martijn.dev"
-    },
-    "bugs": {
-        "url": "https://github.com/Martijn-W/dev.martijn.easycontrol"
-    },
-    "source": "https://github.com/Martijn-W/dev.martijn.easycontrol"
+  "id": "dev.martijn.easycontrol",
+  "version": "1.1.0",
+  "compatibility": ">=12.2.0",
+  "sdk": 3,
+  "brandColor": "#ED0007",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Bosch EasyControl",
+    "nl": "Bosch EasyControl"
+  },
+  "description": {
+    "en": "Adds support for the Bosch EasyControl (CT200) thermostat",
+    "nl": "Voegt ondersteuning voor de Bosch EasyControl (CT200) thermostaat toe"
+  },
+  "category": [
+    "climate"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Martijn W",
+    "email": "info@martijn.dev"
+  },
+  "bugs": {
+    "url": "https://github.com/Martijn-W/dev.martijn.easycontrol"
+  },
+  "source": "https://github.com/Martijn-W/dev.martijn.easycontrol"
 }
