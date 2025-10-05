@@ -157,6 +157,24 @@
     }
   ],
   "capabilities": {
+    "ec_measure_actual_modulation": {
+      "type": "number",
+      "title": {
+        "en": "Actual Modulation",
+        "nl": "Actuele modulering"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/modulation.svg",
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "%",
+        "nl": "%"
+      },
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
     "ec_measure_return_temperature": {
       "type": "number",
       "title": {

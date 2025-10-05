@@ -93,6 +93,12 @@ export class Client {
         return response as ValueResponse;
     }
 
+    public async getHeatSourcesActualModulation(): Promise<ValueResponse | null> {
+        const response = await this.get(Endpoint.HeatSourcesActualModulation);
+
+        return response as ValueResponse;
+    }
+
     private async get(endpoint: string): Promise<{} | null> {
         if (this.XMPP_CLIENT === null) {
             return null;

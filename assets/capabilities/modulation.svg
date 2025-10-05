@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-labelledby="title desc">
+    <title id="title">Actual modulation</title>
+    <desc id="desc">White square wave with two upward pulses representing modulation</desc>
+
+    <!-- Square wave with upward pulses -->
+    <path d="M4 36V16H14V36H24V16H34V36H44"
+          fill="none"
+          stroke="white"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+</svg>

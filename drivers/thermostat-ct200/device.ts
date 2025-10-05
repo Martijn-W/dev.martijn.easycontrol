@@ -55,7 +55,11 @@ module.exports = class extends Homey.Device {
     private async registerCapabilities(): Promise<void> {
         this.registerCapabilityListener('target_temperature', this.onSetTargetTemperature.bind(this));
 
-        const capabilities = ['ec_measure_return_temperature'];
+        const capabilities: string[] = [
+            'ec_measure_return_temperature',
+            'ec_measure_actual_modulation'
+        ];
+
         for (let capability of capabilities) {
             if (!this.hasCapability(capability)) {
                 await this.addCapability(capability);
@@ -107,6 +111,7 @@ module.exports = class extends Homey.Device {
         const systemPressure = await this.#client.getApplianceSystemPressure();
         const wifiSignalStrength = await this.#client.getWifiSignalStrength();
         const returnTemperature = await this.#client.getHeatSourcesReturnTemperature();
+        const actualModulation = await this.#client.getHeatSourcesActualModulation();
 
         if (zoneTemperature != null) {
             this.log(`→ temperature: ${zoneTemperature.value}${zoneTemperature.unitOfMeasure}`);
@@ -144,6 +149,12 @@ module.exports = class extends Homey.Device {
             this.log(`→ return temperature: ${returnTemperature.value}${returnTemperature.unitOfMeasure}`);
 
             this.setCapabilityValue('ec_measure_return_temperature', returnTemperature.value).catch(this.error);
+        }
+
+        if (actualModulation != null) {
+            this.log(`→ actual modulation: ${actualModulation.value}${actualModulation.unitOfMeasure}`);
+
+            this.setCapabilityValue('ec_measure_actual_modulation', actualModulation.value).catch(this.error);
         }
     }
 

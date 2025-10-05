@@ -11,5 +11,6 @@ export enum Endpoint {
 
     GatewayWifiRssi = '/gateway/wifi/rssi',
 
-    HeatSourcesReturnTemperature = '/heatSources/returnTemperature'
+    HeatSourcesReturnTemperature = '/heatSources/returnTemperature',
+    HeatSourcesActualModulation = '/heatSources/actualModulation'
 }
