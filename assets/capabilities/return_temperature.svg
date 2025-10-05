@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24" role="img" aria-labelledby="title desc">
+    <title id="title">Return temperature</title>
+    <desc id="desc">White icon showing central heating return with a thermometer whose bar starts at the circle center</desc>
+
+    <!-- Supply pipe (top, rightward flow) -->
+    <path d="M4 6H20" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <path d="M18 4l4 2-4 2" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Return pipe (bottom, leftward flow) -->
+    <path d="M20 18H4" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <path d="M6 20l-4-2 4-2" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- U-bends -->
+    <path d="M20 6c0 2-2 4-2 6s2 4 2 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+    <path d="M4 6c0 2 2 4 2 6s-2 4-2 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+
+    <!-- Thermometer: bar starts from circle center -->
+    <circle cx="12" cy="19" r="3" fill="white"/>
+    <rect x="10.5" y="10" width="3" height="9" rx="1.5" fill="white"/>
+</svg>

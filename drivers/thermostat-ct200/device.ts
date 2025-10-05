@@ -20,7 +20,7 @@ module.exports = class extends Homey.Device {
             this.#settings!.accessKey,
             this.#settings!.password);
 
-        this.registerCapabilities();
+        await this.registerCapabilities();
 
         this.log('EasyControl device has been initialized');
 
@@ -52,8 +52,15 @@ module.exports = class extends Homey.Device {
         this.log('EasyControl device has been deleted');
     }
 
-    private registerCapabilities() {
+    private async registerCapabilities(): Promise<void> {
         this.registerCapabilityListener('target_temperature', this.onSetTargetTemperature.bind(this));
+
+        const capabilities = ['ec_measure_return_temperature'];
+        for (let capability of capabilities) {
+            if (!this.hasCapability(capability)) {
+                await this.addCapability(capability);
+            }
+        }
     }
 
     private async reset() {
@@ -99,6 +106,7 @@ module.exports = class extends Homey.Device {
         const zoneHumidity = await this.#client.getZoneHumidity(zoneId);
         const systemPressure = await this.#client.getApplianceSystemPressure();
         const wifiSignalStrength = await this.#client.getWifiSignalStrength();
+        const returnTemperature = await this.#client.getHeatSourcesReturnTemperature();
 
         if (zoneTemperature != null) {
             this.log(`→ temperature: ${zoneTemperature.value}${zoneTemperature.unitOfMeasure}`);
@@ -130,6 +138,12 @@ module.exports = class extends Homey.Device {
             this.log(`→ wifi signal strength: ${wifiSignalStrength.value}${wifiSignalStrength.unitOfMeasure}`);
 
             this.setCapabilityValue('measure_signal_strength', wifiSignalStrength.value).catch(this.error);
+        }
+
+        if (returnTemperature != null) {
+            this.log(`→ return temperature: ${returnTemperature.value}${returnTemperature.unitOfMeasure}`);
+
+            this.setCapabilityValue('ec_measure_return_temperature', returnTemperature.value).catch(this.error);
         }
     }
 

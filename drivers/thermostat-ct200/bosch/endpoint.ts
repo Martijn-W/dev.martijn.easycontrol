@@ -9,5 +9,7 @@ export enum Endpoint {
 
     ApplianceSystemPressure = '/system/appliance/systemPressure',
 
-    GatewayWifiRssi = '/gateway/wifi/rssi'
+    GatewayWifiRssi = '/gateway/wifi/rssi',
+
+    HeatSourcesReturnTemperature = '/heatSources/returnTemperature'
 }

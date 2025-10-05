@@ -8,7 +8,8 @@
         "measure_temperature",
         "target_temperature",
         "measure_pressure",
-        "measure_signal_strength"
+        "measure_signal_strength",
+        "ec_measure_return_temperature"
     ],
     "capabilitiesOptions": {
         "measure_pressure": {
