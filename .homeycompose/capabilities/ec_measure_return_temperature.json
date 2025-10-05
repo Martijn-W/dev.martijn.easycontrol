@@ -12,6 +12,7 @@
         "en": "°C",
         "nl": "°C"
     },
+    "insights": true,
     "min": -3276,
     "max": 3276,
     "step": 0.1,

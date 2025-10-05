@@ -12,6 +12,7 @@
         "en": "%",
         "nl": "%"
     },
+    "insights": true,
     "min": 0,
     "max": 100,
     "step": 1
