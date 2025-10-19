@@ -33,6 +33,60 @@
     "url": "https://github.com/Martijn-W/dev.martijn.easycontrol"
   },
   "source": "https://github.com/Martijn-W/dev.martijn.easycontrol",
+  "flow": {
+    "triggers": [
+      {
+        "id": "ec_measure_return_temperature_changed",
+        "title": {
+          "en": "Return temperature changed",
+          "nl": "Terugkomsttemperatuur gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ec_measure_return_temperature",
+            "type": "number",
+            "title": {
+              "en": "Return temperature",
+              "nl": "Terugkomsttemperatuur"
+            },
+            "example": 40.3
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200"
+          }
+        ]
+      },
+      {
+        "id": "ec_measure_actual_modulation_changed",
+        "title": {
+          "en": "Actual modulation changed",
+          "nl": "Actuele modulering gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ec_measure_actual_modulation",
+            "type": "number",
+            "title": {
+              "en": "Modulation",
+              "nl": "Modulering"
+            },
+            "example": 35
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200"
+          }
+        ]
+      }
+    ]
+  },
   "drivers": [
     {
       "name": {
