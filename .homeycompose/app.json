@@ -1,42 +1,42 @@
 {
-    "id": "dev.martijn.easycontrol",
-    "version": "1.1.0",
-    "compatibility": ">=12.2.0",
-    "sdk": 3,
-    "brandColor": "#ED0007",
-    "platforms": [
-        "local"
-    ],
-    "name": {
-        "en": "Bosch EasyControl",
-        "nl": "Bosch EasyControl"
-    },
-    "description": {
-        "en": "Perfect heating comfort has never been so easy",
-        "nl": "Perfect warmtecomfort was nog nooit zo gemakkelijk"
-    },
-    "category": [
-        "climate"
-    ],
-    "permissions": [],
-    "images": {
-        "small": "/assets/images/small.png",
-        "large": "/assets/images/large.png",
-        "xlarge": "/assets/images/xlarge.png"
-    },
-    "author": {
-        "name": "Martijn W",
-        "email": "info@martijn.dev"
-    },
-    "contributors": {
-        "developers": [
-            {
-                "name": "Robert Klep"
-            }
-        ]
-    },
-    "bugs": {
-        "url": "https://github.com/Martijn-W/dev.martijn.easycontrol"
-    },
-    "source": "https://github.com/Martijn-W/dev.martijn.easycontrol"
+  "id": "dev.martijn.easycontrol",
+  "version": "1.2.0",
+  "compatibility": ">=12.2.0",
+  "sdk": 3,
+  "brandColor": "#ED0007",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Bosch EasyControl",
+    "nl": "Bosch EasyControl"
+  },
+  "description": {
+    "en": "Perfect heating comfort has never been so easy",
+    "nl": "Perfect warmtecomfort was nog nooit zo gemakkelijk"
+  },
+  "category": [
+    "climate"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Martijn W",
+    "email": "info@martijn.dev"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Robert Klep"
+      }
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/Martijn-W/dev.martijn.easycontrol"
+  },
+  "source": "https://github.com/Martijn-W/dev.martijn.easycontrol"
 }
