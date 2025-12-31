@@ -48,7 +48,7 @@ module.exports = class extends Homey.Driver {
         this.#deviceData = data;
         this.#devices = await client.getDevices() ?? [];
 
-        client.disconnect();
+        await client.disconnect();
 
         await session.nextView();
     }

@@ -70,7 +70,7 @@ module.exports = class extends Homey.Device {
     private async reset() {
         this.#shouldSync = false;
         this.#timeout && clearTimeout(this.#timeout);
-        this.#client.disconnect();
+        await this.#client.disconnect();
     }
 
     private async sync() {

@@ -1,28 +1,30 @@
-// @ts-ignore
-import { EasyControlClient } from 'bosch-xmpp';
+import { EasyControlClient, ConfigBuilder } from 'bosch-xmpp-client';
 import { DeviceResponse, Endpoint, PutResponse, ValueResponse, ZoneResponse } from '.';
 
 export class Client {
-    private XMPP_CLIENT: EasyControlClient | null = null;
+    private easyControlClient: EasyControlClient | null = null;
 
     public async connect(serialNumber: number, accessKey: string, password: string): Promise<void> {
-        this.XMPP_CLIENT = EasyControlClient({
-            serialNumber: serialNumber,
-            accessKey: accessKey,
-            password: password
-        });
+        const config = new ConfigBuilder()
+            .withSerialNumber(`${serialNumber}`)
+            .withAccessKey(accessKey)
+            .withPassword(password)
+            .build();
 
-        await this.XMPP_CLIENT.connect()
-            .catch((e: Error) => {
-                console.log(`Failed to connect to the XMPP Client: ${e}`);
-            });
+        this.easyControlClient = new EasyControlClient(config);
+
+        try {
+            await this.easyControlClient.connect();
+        } catch (e) {
+            console.log(`Failed to connect to the XMPP Client: ${e}`);
+        }
     }
 
-    public disconnect(): void {
-        if (this.XMPP_CLIENT === null)
+    public async disconnect(): Promise<void> {
+        if (this.easyControlClient === null)
             return;
 
-        this.XMPP_CLIENT.end();
+        await this.easyControlClient.disconnect();
     }
 
     public async getDevices(): Promise<DeviceResponse[] | null> {
@@ -100,12 +102,12 @@ export class Client {
     }
 
     private async get(endpoint: string): Promise<{} | null> {
-        if (this.XMPP_CLIENT === null) {
+        if (this.easyControlClient === null) {
             return null;
         }
 
         try {
-            return await this.XMPP_CLIENT.get(endpoint);
+            return await this.easyControlClient.get(endpoint);
         } catch (ex) {
             this.parseError(ex as Error);
 
@@ -114,8 +116,14 @@ export class Client {
     }
 
     public async set(endpoint: string, value: string | number | {}): Promise<{} | null> {
+        if (this.easyControlClient === null) {
+            console.error('Unable to set value. Reason: Client is not connected!');
+
+            return null;
+        }
+
         try {
-            return await this.XMPP_CLIENT.put(endpoint, {'value': value});
+            return await this.easyControlClient.put(endpoint, {'value': value});
         } catch (ex) {
             this.parseError(ex as Error);
 
