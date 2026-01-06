@@ -33,6 +33,8 @@ module.exports = class extends Homey.Driver {
     }
 
     async validateDevice(data: ConnectionSettings, session: PairSession): Promise<void> {
+        this.log('Validating device...');
+
         let client: Client;
 
         await session.nextView();
@@ -45,8 +47,12 @@ module.exports = class extends Homey.Driver {
             return;
         }
 
+        this.log('Valid device, fetching devices...')
+
         this.#deviceData = data;
         this.#devices = await client.getDevices() ?? [];
+
+        this.log(`Found ${this.#devices.length} device(s)`)
 
         await client.disconnect();
 
