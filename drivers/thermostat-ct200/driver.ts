@@ -37,9 +37,12 @@ module.exports = class extends Homey.Driver {
 
         let client: Client;
 
-        await session.nextView();
+        session.nextView()
+            .catch(e => this.error(e));
 
         try {
+            this.log('Attempting to connect to the XMPP Client...');
+
             client = new Client();
             await client.connect(data.serialNumber, data.accessKey, data.password);
         } catch (ex) {
