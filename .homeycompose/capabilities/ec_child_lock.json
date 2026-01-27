@@ -1,0 +1,13 @@
+{
+    "type": "boolean",
+    "title": {
+        "en": "Child lock",
+        "nl": "Kinderslot"
+    },
+    "uiComponent": "toggle",
+    "icon": "/assets/capabilities/child_lock.svg",
+    "getable": true,
+    "setable": true,
+    "insights": true,
+    "uiQuickAction": false
+}

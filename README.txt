@@ -8,6 +8,9 @@ Features include:
 — Monitor Wi-Fi connection strength
 — Monitor actual modulation
 — Monitor return temperature
+— Monitor valve position
+— Set child lock
+— And many more!
 
 To get connection details:
 
@@ -15,4 +18,4 @@ To get connection details:
 - Access Key: this is printed on the back of the device.
 - Password: in the EasyControl app go to Menu -> Settings -> Personal -> Change password.
 
-By default, the app polls the status every 30 seconds. This can be changed in the settings of the device. Bosch may block you from accessing data if you set this value too low.
+By default, the app polls the status every 30 seconds. This can be changed in the settings of the thermostat device. Bosch may block you from accessing data if you set this value too low.

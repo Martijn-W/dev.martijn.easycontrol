@@ -1,0 +1,20 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Signal strength",
+        "nl": "Signaalsterkte"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/signal_strength.svg",
+    "getable": true,
+    "setable": false,
+    "units": {
+        "en": "%",
+        "nl": "%"
+    },
+    "insights": true,
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "decimals": 0
+}

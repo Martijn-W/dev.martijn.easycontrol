@@ -1,0 +1,20 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Temperature offset",
+        "nl": "Temperatuur compensatie"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/temperature_offset.svg",
+    "getable": true,
+    "setable": true,
+    "units": {
+        "en": "°C",
+        "nl": "°C"
+    },
+    "insights": false,
+    "min": -2,
+    "max": 2,
+    "step": 0.5,
+    "decimals": 1
+}

@@ -1,0 +1,65 @@
+{
+    "name": {
+        "en": "Smart Radiator Thermostat (ETRV)",
+        "nl": "Slimme Radiator Thermostaat (ETRV)"
+    },
+    "class": "thermostat",
+    "capabilities": [
+        "measure_temperature",
+        "target_temperature",
+        "alarm_battery",
+        "ec_valve_position",
+        "ec_temperature_offset",
+        "ec_measure_valve_signal_strength",
+        "ec_child_lock"
+    ],
+    "capabilitiesOptions": {
+    },
+    "energy": {
+        "batteries": [
+            "AA",
+            "AA"
+        ]
+    },
+    "platforms": [
+        "local"
+    ],
+    "connectivity": [
+        "cloud"
+    ],
+    "images": {
+        "small": "{{driverAssetsPath}}/images/small.png",
+        "large": "{{driverAssetsPath}}/images/large.png",
+        "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+    },
+    "pair": [
+        {
+            "id": "list_thermostats",
+            "template": "list_devices",
+            "options": {
+                "singular": true,
+                "title": {
+                    "en": "Select your thermostat",
+                    "nl": "Selecteer je thermostaat"
+                }
+            },
+            "navigation": {
+                "next": "list_thermostat_valves"
+            }
+        },
+        {
+            "id": "list_thermostat_valves",
+            "template": "list_devices",
+            "options": {
+                "singular": true
+            },
+            "navigation": {
+                "next": "add_thermostat_valves"
+            }
+        },
+        {
+            "id": "add_thermostat_valves",
+            "template": "add_devices"
+        }
+    ]
+}

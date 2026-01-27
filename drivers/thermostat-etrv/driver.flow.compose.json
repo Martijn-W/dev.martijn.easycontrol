@@ -1,0 +1,214 @@
+{
+    "triggers": [
+        {
+            "id": "ec_temperature_offset_changed",
+            "title": {
+                "en": "Temperature offset changed",
+                "nl": "Temperatuur compensatie gewijzigd"
+            },
+            "tokens": [
+                {
+                    "name": "ec_temperature_offset",
+                    "type": "number",
+                    "title": {
+                        "en": "Temperature offset",
+                        "nl": "Temperatuur compensatie"
+                    },
+                    "example": -1.5
+                }
+            ]
+        },
+        {
+            "id": "ec_measure_valve_signal_strength_changed",
+            "title": {
+                "en": "Signal strength changed",
+                "nl": "Signaalsterkte gewijzigd"
+            },
+            "tokens": [
+                {
+                    "name": "ec_measure_valve_signal_strength",
+                    "type": "number",
+                    "title": {
+                        "en": "Signal strength",
+                        "nl": "Signaalsterkte"
+                    },
+                    "example": 50
+                }
+            ]
+        },
+        {
+            "id": "ec_child_lock_changed",
+            "title": {
+                "en": "Child lock status changed",
+                "nl": "Kinderslot status gewijzigd"
+            },
+            "tokens": [
+                {
+                    "name": "ec_child_lock",
+                    "type": "boolean",
+                    "title": {
+                        "en": "Child lock status",
+                        "nl": "Kinderslot status"
+                    }
+                }
+            ]
+        }
+    ],
+    "conditions": [
+        {
+            "id": "ec_etrv_get_child_lock",
+            "title": {
+                "en": "Get child lock status",
+                "nl": "Kinderslot status ophalen"
+            },
+            "titleFormatted": {
+                "en": "The child lock !{{is|isn't}} [[lock]]",
+                "nl": "Het kinderslot !{{is|is niet}} [[lock]]"
+            },
+            "hint": {
+                "en": "Get the current child lock status",
+                "nl": "Haal de huidige kinderslot status op"
+            },
+            "args": [
+                {
+                    "type": "dropdown",
+                    "name": "lock",
+                    "values": [
+                        {
+                            "id": "true",
+                            "label": {
+                                "en": "On"
+                            }
+                        },
+                        {
+                            "id": "false",
+                            "label": {
+                                "en": "Off"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "id": "ec_etrv_set_child_lock",
+            "title": {
+                "en": "Set child lock status",
+                "nl": "Kinderslot status instellen"
+            },
+            "titleFormatted": {
+                "en": "Turn the child lock [[lock]]",
+                "nl": "Zet het kinderslot [[lock]]"
+            },
+            "hint": {
+                "en": "Sets the child lock status of the radiator valve",
+                "nl": "Stelt de kinderslot status van de radiatorknop in"
+            },
+            "args": [
+                {
+                    "type": "dropdown",
+                    "name": "lock",
+                    "title": {
+                        "en": "on/off",
+                        "nl": "aan/uit"
+                    },
+                    "values": [
+                        {
+                            "id": "true",
+                            "label": {
+                                "en": "On",
+                                "nl": "Aan"
+                            }
+                        },
+                        {
+                            "id": "false",
+                            "label": {
+                                "en": "Off",
+                                "nl": "Uit"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ec_etrv_set_temperature_offset",
+            "title": {
+                "en": "Set temperature offset",
+                "nl": "Temperatuur compensatie instellen"
+            },
+            "titleFormatted": {
+                "en": "Set the temperature offset to [[offset]]",
+                "nl": "Stel de temperatuur compensatie in op [[offset]]"
+            },
+            "hint": {
+                "en": "Sets the temperature offset of the radiator valve",
+                "nl": "Stelt de temperatuur compensatie van de radiatorknop in"
+            },
+            "args": [
+                {
+                    "type": "dropdown",
+                    "name": "offset",
+                    "values": [
+                        {
+                            "id": "-2",
+                            "label": {
+                                "en": "-2°C"
+                            }
+                        },
+                        {
+                            "id": "-1.5",
+                            "label": {
+                                "en": "-1.5°C"
+                            }
+                        },
+                        {
+                            "id": "-1",
+                            "label": {
+                                "en": "-1°C"
+                            }
+                        },
+                        {
+                            "id": "-0.5",
+                            "label": {
+                                "en": "-0.5°C"
+                            }
+                        },
+                        {
+                            "id": "0",
+                            "label": {
+                                "en": "0°C"
+                            }
+                        },
+                        {
+                            "id": "0.5",
+                            "label": {
+                                "en": "0.5°C"
+                            }
+                        },
+                        {
+                            "id": "1.0",
+                            "label": {
+                                "en": "1.0°C"
+                            }
+                        },
+                        {
+                            "id": "1.5",
+                            "label": {
+                                "en": "1.5°C"
+                            }
+                        },
+                        {
+                            "id": "2",
+                            "label": {
+                                "en": "2°C"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

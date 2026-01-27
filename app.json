@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "dev.martijn.easycontrol",
-  "version": "1.3.2",
+  "version": "2.0.0",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "brandColor": "#ED0007",
@@ -35,6 +35,13 @@
         "name": "Robert Klep"
       }
     ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "martijnwoolschot"
+      }
+    }
   },
   "bugs": {
     "url": "https://github.com/Martijn-W/dev.martijn.easycontrol"
@@ -89,6 +96,338 @@
             "type": "device",
             "name": "device",
             "filter": "driver_id=thermostat-ct200"
+          }
+        ]
+      },
+      {
+        "id": "ec_temperature_offset_changed",
+        "title": {
+          "en": "Temperature offset changed",
+          "nl": "Temperatuur compensatie gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ec_temperature_offset",
+            "type": "number",
+            "title": {
+              "en": "Temperature offset",
+              "nl": "Temperatuur compensatie"
+            },
+            "example": -1.5
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-etrv"
+          }
+        ]
+      },
+      {
+        "id": "ec_measure_valve_signal_strength_changed",
+        "title": {
+          "en": "Signal strength changed",
+          "nl": "Signaalsterkte gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ec_measure_valve_signal_strength",
+            "type": "number",
+            "title": {
+              "en": "Signal strength",
+              "nl": "Signaalsterkte"
+            },
+            "example": 50
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-etrv"
+          }
+        ]
+      },
+      {
+        "id": "ec_child_lock_changed",
+        "title": {
+          "en": "Child lock status changed",
+          "nl": "Kinderslot status gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ec_child_lock",
+            "type": "boolean",
+            "title": {
+              "en": "Child lock status",
+              "nl": "Kinderslot status"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-etrv"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "ec_ct200_get_child_lock",
+        "title": {
+          "en": "Get child lock status",
+          "nl": "Kinderslot status ophalen"
+        },
+        "titleFormatted": {
+          "en": "The child lock !{{is|isn't}} [[lock]]",
+          "nl": "Het kinderslot !{{is|is niet}} [[lock]]"
+        },
+        "hint": {
+          "en": "Get the current child lock status",
+          "nl": "Haal de huidige kinderslot status op"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200"
+          },
+          {
+            "type": "dropdown",
+            "name": "lock",
+            "values": [
+              {
+                "id": "true",
+                "label": {
+                  "en": "On"
+                }
+              },
+              {
+                "id": "false",
+                "label": {
+                  "en": "Off"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ec_etrv_get_child_lock",
+        "title": {
+          "en": "Get child lock status",
+          "nl": "Kinderslot status ophalen"
+        },
+        "titleFormatted": {
+          "en": "The child lock !{{is|isn't}} [[lock]]",
+          "nl": "Het kinderslot !{{is|is niet}} [[lock]]"
+        },
+        "hint": {
+          "en": "Get the current child lock status",
+          "nl": "Haal de huidige kinderslot status op"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-etrv"
+          },
+          {
+            "type": "dropdown",
+            "name": "lock",
+            "values": [
+              {
+                "id": "true",
+                "label": {
+                  "en": "On"
+                }
+              },
+              {
+                "id": "false",
+                "label": {
+                  "en": "Off"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "ec_ct200_set_child_lock",
+        "title": {
+          "en": "Set child lock status",
+          "nl": "Kinderslot status instellen"
+        },
+        "titleFormatted": {
+          "en": "Turn the child lock [[lock]]",
+          "nl": "Zet het kinderslot [[lock]]"
+        },
+        "hint": {
+          "en": "Sets the child lock status of the radiator valve",
+          "nl": "Stelt de kinderslot status van de radiatorknop in"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200"
+          },
+          {
+            "type": "dropdown",
+            "name": "lock",
+            "title": {
+              "en": "on/off",
+              "nl": "aan/uit"
+            },
+            "values": [
+              {
+                "id": "true",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "false",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ec_etrv_set_child_lock",
+        "title": {
+          "en": "Set child lock status",
+          "nl": "Kinderslot status instellen"
+        },
+        "titleFormatted": {
+          "en": "Turn the child lock [[lock]]",
+          "nl": "Zet het kinderslot [[lock]]"
+        },
+        "hint": {
+          "en": "Sets the child lock status of the radiator valve",
+          "nl": "Stelt de kinderslot status van de radiatorknop in"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-etrv"
+          },
+          {
+            "type": "dropdown",
+            "name": "lock",
+            "title": {
+              "en": "on/off",
+              "nl": "aan/uit"
+            },
+            "values": [
+              {
+                "id": "true",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "false",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ec_etrv_set_temperature_offset",
+        "title": {
+          "en": "Set temperature offset",
+          "nl": "Temperatuur compensatie instellen"
+        },
+        "titleFormatted": {
+          "en": "Set the temperature offset to [[offset]]",
+          "nl": "Stel de temperatuur compensatie in op [[offset]]"
+        },
+        "hint": {
+          "en": "Sets the temperature offset of the radiator valve",
+          "nl": "Stelt de temperatuur compensatie van de radiatorknop in"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-etrv"
+          },
+          {
+            "type": "dropdown",
+            "name": "offset",
+            "values": [
+              {
+                "id": "-2",
+                "label": {
+                  "en": "-2°C"
+                }
+              },
+              {
+                "id": "-1.5",
+                "label": {
+                  "en": "-1.5°C"
+                }
+              },
+              {
+                "id": "-1",
+                "label": {
+                  "en": "-1°C"
+                }
+              },
+              {
+                "id": "-0.5",
+                "label": {
+                  "en": "-0.5°C"
+                }
+              },
+              {
+                "id": "0",
+                "label": {
+                  "en": "0°C"
+                }
+              },
+              {
+                "id": "0.5",
+                "label": {
+                  "en": "0.5°C"
+                }
+              },
+              {
+                "id": "1.0",
+                "label": {
+                  "en": "1.0°C"
+                }
+              },
+              {
+                "id": "1.5",
+                "label": {
+                  "en": "1.5°C"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "2°C"
+                }
+              }
+            ]
           }
         ]
       }
@@ -215,9 +554,87 @@
           ]
         }
       ]
+    },
+    {
+      "name": {
+        "en": "Smart Radiator Thermostat (ETRV)",
+        "nl": "Slimme Radiator Thermostaat (ETRV)"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "measure_temperature",
+        "target_temperature",
+        "alarm_battery",
+        "ec_valve_position",
+        "ec_temperature_offset",
+        "ec_measure_valve_signal_strength",
+        "ec_child_lock"
+      ],
+      "capabilitiesOptions": {},
+      "energy": {
+        "batteries": [
+          "AA",
+          "AA"
+        ]
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/thermostat-etrv/assets/images/small.png",
+        "large": "/drivers/thermostat-etrv/assets/images/large.png",
+        "xlarge": "/drivers/thermostat-etrv/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_thermostats",
+          "template": "list_devices",
+          "options": {
+            "singular": true,
+            "title": {
+              "en": "Select your thermostat",
+              "nl": "Selecteer je thermostaat"
+            }
+          },
+          "navigation": {
+            "next": "list_thermostat_valves"
+          }
+        },
+        {
+          "id": "list_thermostat_valves",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_thermostat_valves"
+          }
+        },
+        {
+          "id": "add_thermostat_valves",
+          "template": "add_devices"
+        }
+      ],
+      "id": "thermostat-etrv"
     }
   ],
   "capabilities": {
+    "ec_child_lock": {
+      "type": "boolean",
+      "title": {
+        "en": "Child lock",
+        "nl": "Kinderslot"
+      },
+      "uiComponent": "toggle",
+      "icon": "/assets/capabilities/child_lock.svg",
+      "getable": true,
+      "setable": true,
+      "insights": true,
+      "uiQuickAction": false
+    },
     "ec_measure_actual_modulation": {
       "type": "number",
       "title": {
@@ -256,6 +673,65 @@
       "max": 3276,
       "step": 0.1,
       "decimals": 1
+    },
+    "ec_measure_valve_signal_strength": {
+      "type": "number",
+      "title": {
+        "en": "Signal strength",
+        "nl": "Signaalsterkte"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/signal_strength.svg",
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "%",
+        "nl": "%"
+      },
+      "insights": true,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "decimals": 0
+    },
+    "ec_temperature_offset": {
+      "type": "number",
+      "title": {
+        "en": "Temperature offset",
+        "nl": "Temperatuur compensatie"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/temperature_offset.svg",
+      "getable": true,
+      "setable": true,
+      "units": {
+        "en": "°C",
+        "nl": "°C"
+      },
+      "insights": false,
+      "min": -2,
+      "max": 2,
+      "step": 0.5,
+      "decimals": 1
+    },
+    "ec_valve_position": {
+      "type": "number",
+      "title": {
+        "en": "Valve Position",
+        "nl": "Stand radiatorklep"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/valve_position.svg",
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "%",
+        "nl": "%"
+      },
+      "insights": true,
+      "min": 0,
+      "max": 100,
+      "step": 1
     }
   }
 }

@@ -36,5 +36,85 @@
                 }
             ]
         }
+    ],
+    "conditions": [
+        {
+            "id": "ec_ct200_get_child_lock",
+            "title": {
+                "en": "Get child lock status",
+                "nl": "Kinderslot status ophalen"
+            },
+            "titleFormatted": {
+                "en": "The child lock !{{is|isn't}} [[lock]]",
+                "nl": "Het kinderslot !{{is|is niet}} [[lock]]"
+            },
+            "hint": {
+                "en": "Get the current child lock status",
+                "nl": "Haal de huidige kinderslot status op"
+            },
+            "args": [
+                {
+                    "type": "dropdown",
+                    "name": "lock",
+                    "values": [
+                        {
+                            "id": "true",
+                            "label": {
+                                "en": "On"
+                            }
+                        },
+                        {
+                            "id": "false",
+                            "label": {
+                                "en": "Off"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "id": "ec_ct200_set_child_lock",
+            "title": {
+                "en": "Set child lock status",
+                "nl": "Kinderslot status instellen"
+            },
+            "titleFormatted": {
+                "en": "Turn the child lock [[lock]]",
+                "nl": "Zet het kinderslot [[lock]]"
+            },
+            "hint": {
+                "en": "Sets the child lock status of the radiator valve",
+                "nl": "Stelt de kinderslot status van de radiatorknop in"
+            },
+            "args": [
+                {
+                    "type": "dropdown",
+                    "name": "lock",
+                    "title": {
+                        "en": "on/off",
+                        "nl": "aan/uit"
+                    },
+                    "values": [
+                        {
+                            "id": "true",
+                            "label": {
+                                "en": "On",
+                                "nl": "Aan"
+                            }
+                        },
+                        {
+                            "id": "false",
+                            "label": {
+                                "en": "Off",
+                                "nl": "Uit"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
     ]
 }

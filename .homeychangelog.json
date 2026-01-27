@@ -1,20 +1,24 @@
 {
-  "1.0.0": {
-    "en": "Initial release"
-  },
-  "1.1.0": {
-    "en": "Updated driver icon, added new capabilities: return temperature, actual modulation"
-  },
-  "1.2.0": {
-    "en": "Added flow cards for return temperature and actual modulation"
-  },
-  "1.3.0": {
-    "en": "Replaced bosch-xmpp package with own modernized implementation"
-  },
-  "1.3.1": {
-    "en": "Added more verbose logging"
-  },
-  "1.3.2": {
-    "en": "Fixed issue for Homey Pro 2019 devices not being able to pair devices"
-  }
+    "1.0.0": {
+        "en": "Initial release"
+    },
+    "1.1.0": {
+        "en": "Updated driver icon, added new capabilities: return temperature, actual modulation"
+    },
+    "1.2.0": {
+        "en": "Added flow cards for return temperature and actual modulation"
+    },
+    "1.3.0": {
+        "en": "Replaced bosch-xmpp package with own modernized implementation"
+    },
+    "1.3.1": {
+        "en": "Added more verbose logging"
+    },
+    "1.3.2": {
+        "en": "Fixed issue for Homey Pro 2019 devices not being able to pair devices"
+    },
+    "2.0.0": {
+        "en": "Added support for thermostat valves (ETRV)! Complete rewrite of the app to manage multiple devices efficiently. Added support for child lock. Added donate links to app store listing.",
+        "nl": "Ondersteuning voor radiatorknoppen (ETRV)! De app is van de grond op hergeschreven om meerdere apparaten efficiënt te beheren. Ondersteuning voor kinderslot. Donatie links toegevoegd aan app store pagina."
+    }
 }

@@ -1,0 +1,19 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Valve Position",
+        "nl": "Stand radiatorklep"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/valve_position.svg",
+    "getable": true,
+    "setable": false,
+    "units": {
+        "en": "%",
+        "nl": "%"
+    },
+    "insights": true,
+    "min": 0,
+    "max": 100,
+    "step": 1
+}

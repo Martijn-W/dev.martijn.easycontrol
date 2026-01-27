@@ -1,3 +1,3 @@
 # Bosch EasyControl
 
-Adds support for the Bosch EasyControl (CT200) thermostat
+Adds Homey support for the Bosch EasyControl (CT200) thermostat and ETRV radiator valves.

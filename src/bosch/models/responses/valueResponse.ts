@@ -1,9 +1,9 @@
-export interface ValueResponse {
+export interface ValueResponse<TValue> {
     id: string,
     type: string,
     writeable: number,
     recordable: number,
-    value: number,
+    value: TValue,
     used: string,
     unitOfMeasure: 'C' | 'F',
     minValue: number,
