@@ -20,5 +20,9 @@
     "2.0.0": {
         "en": "Added support for thermostat valves (ETRV)! Complete rewrite of the app to manage multiple devices efficiently. Added support for child lock. Added donate links to app store listing.",
         "nl": "Ondersteuning voor radiatorknoppen (ETRV)! De app is van de grond op hergeschreven om meerdere apparaten efficiënt te beheren. Ondersteuning voor kinderslot. Donatie links toegevoegd aan app store pagina."
+    },
+    "2.0.1": {
+        "en": "Fixed crash when the app gets an unexpected value for the child lock state",
+        "nl": "Crash opgelost wanneer de app een onverwachte waarde voor de kinderslot status krijgt"
     }
 }

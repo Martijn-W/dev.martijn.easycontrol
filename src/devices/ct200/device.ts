@@ -196,7 +196,15 @@ export default class Ct200Device extends Homey.Device {
         if (deviceThermostatChildLockEnabled != null) {
             this.log(`→ child lock status: ${deviceThermostatChildLockEnabled.value}`);
 
-            this.setCapabilityValue('ec_child_lock', deviceThermostatChildLockEnabled.value.toLowerCase() === 'true').catch(this.error);
+            const value: unknown = deviceThermostatChildLockEnabled.value;
+
+            if (typeof value === 'boolean') {
+                this.setCapabilityValue('ec_child_lock', value).catch(this.error);
+            } else if (typeof value === 'string') {
+                this.setCapabilityValue('ec_child_lock', value.toLowerCase() === 'true').catch(this.error);
+            } else {
+                this.log(`! unexpected child lock status type: ${typeof value}, value: ${value}`);
+            }
         }
 
         // Notify all connected thermostat valves that they need to update. Make sure to wait for each device to finish,
