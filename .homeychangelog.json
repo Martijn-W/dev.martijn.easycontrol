@@ -24,5 +24,9 @@
     "2.0.1": {
         "en": "Fixed crash when the app gets an unexpected value for the child lock state",
         "nl": "Crash opgelost wanneer de app een onverwachte waarde voor de kinderslot status krijgt"
+    },
+    "2.0.2": {
+        "en": "Fixed issue where Homey 2019 was not able to pair radiator valves",
+        "nl": "Probleem opgelost waarbij Homey 2019 niet kon pairen met radiatorknoppen"
     }
 }

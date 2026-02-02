@@ -21,11 +21,13 @@ export default class EtrvDriver extends Homey.Driver {
     }
 
     private async onListDevices(data: any, session: PairSession) {
-        if (data.viewId === 'list_thermostats') {
+        const viewId = data?.viewId;
+
+        if (viewId === 'list_thermostats' || !this.#thermostatDevice) {
             return this.listThermostats();
         }
 
-        if (data.viewId === 'list_thermostat_valves') {
+        if (viewId === 'list_thermostat_valves' || (viewId === undefined && this.#thermostatDevice)) {
             return await this.listThermostatValves(session);
         }
     }
@@ -64,6 +66,9 @@ export default class EtrvDriver extends Homey.Driver {
         const serialNumber = parseInt(this.#thermostatDevice.data.id);
 
         const thermostat: Ct200Device | undefined = thermostatManager.getThermostat(serialNumber);
+
+        // Reset state (Homey 2019 reuses driver instance between pairing sessions)
+        this.#thermostatDevice = undefined;
 
         if (!thermostat) {
             await session.prevView();
