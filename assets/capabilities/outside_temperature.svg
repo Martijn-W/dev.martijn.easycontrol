@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24">
+    <!-- Thermometer -->
+    <circle cx="8" cy="17" r="3" fill="white"/>
+    <rect x="6.5" y="5" width="3" height="12" rx="1.5" fill="white"/>
+
+    <!-- Sun (outside indicator) -->
+    <circle cx="16" cy="9" r="2" fill="white"/>
+
+    <!-- Sun rays -->
+    <g fill="white">
+        <!-- base ray (pointing up) -->
+        <rect x="15.8" y="4.5" width="0.4" height="2" rx="0.2"/>
+
+        <!-- rotated copies around center (16,9) -->
+        <rect x="15.8" y="4.5" width="0.4" height="2" rx="0.2" transform="rotate(45 16 9)"/>
+        <rect x="15.8" y="4.5" width="0.4" height="2" rx="0.2" transform="rotate(90 16 9)"/>
+        <rect x="15.8" y="4.5" width="0.4" height="2" rx="0.2" transform="rotate(135 16 9)"/>
+        <rect x="15.8" y="4.5" width="0.4" height="2" rx="0.2" transform="rotate(180 16 9)"/>
+        <rect x="15.8" y="4.5" width="0.4" height="2" rx="0.2" transform="rotate(225 16 9)"/>
+        <rect x="15.8" y="4.5" width="0.4" height="2" rx="0.2" transform="rotate(270 16 9)"/>
+        <rect x="15.8" y="4.5" width="0.4" height="2" rx="0.2" transform="rotate(315 16 9)"/>
+    </g>
+</svg>

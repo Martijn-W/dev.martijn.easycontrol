@@ -20,5 +20,8 @@ export enum Endpoint {
     DeviceValvePosition = '/devices/device%1/etrv/valvePosition',
     DeviceTemperatureOffset = '/devices/device%1/etrv/offset',
     DeviceChildLockEnabled = '/devices/device%1/etrv/childLock/enabled',
-    DeviceThermostatChildLockEnabled = '/devices/device%1/thermostat/childLock/enabled'
+    DeviceThermostatChildLockEnabled = '/devices/device%1/thermostat/childLock/enabled',
+
+    SystemOutsideTemperature = '/system/sensors/temperatures/outdoor_t1',
+    SystemTemperatureOffset = '/system/sensors/temperatures/offset'
 }

@@ -3,6 +3,7 @@ import PairSession from 'homey/lib/PairSession';
 import { Client, DeviceResponse } from '../../bosch';
 import DeviceSettings from './deviceSettings';
 import Ct200Device from './device';
+import EtrvDevice from '../etrv/device';
 
 export default class Ct200Driver extends Homey.Driver {
     #devices: DeviceResponse[] = [];
@@ -66,7 +67,21 @@ export default class Ct200Driver extends Homey.Driver {
     }
 
     private async registerActions(): Promise<void> {
+        await this.registerSetTemperatureOffsetAction();
         await this.registerSetChildLockAction();
+    }
+
+    private async registerSetTemperatureOffsetAction(): Promise<void> {
+        const setTemperatureOffset = this.homey.flow.getActionCard('ec_ct200_set_temperature_offset');
+
+        type TemperatureOffsetArguments = {
+            readonly device: Ct200Device,
+            readonly offset: string
+        }
+
+        setTemperatureOffset.registerRunListener(async ({device, offset}: TemperatureOffsetArguments) => {
+            await device.onSetTemperatureOffset(parseFloat(offset));
+        });
     }
 
     private async registerSetChildLockAction(): Promise<void> {

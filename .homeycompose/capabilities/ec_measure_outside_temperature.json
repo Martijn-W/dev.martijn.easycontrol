@@ -1,0 +1,20 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Outside temperature",
+        "nl": "Buitentemperatuur"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/outside_temperature.svg",
+    "getable": true,
+    "setable": false,
+    "units": {
+        "en": "°C",
+        "nl": "°C"
+    },
+    "insights": true,
+    "min": -25,
+    "max": 50,
+    "step": 1,
+    "decimals": 0
+}

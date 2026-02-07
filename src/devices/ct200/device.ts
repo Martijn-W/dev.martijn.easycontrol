@@ -73,6 +73,22 @@ export default class Ct200Device extends Homey.Device {
         this.scheduleNextSync(0);
     }
 
+    async onSetTemperatureOffset(value: number): Promise<void> {
+        if (value < -2 || value > 2 || value % .5 !== 0) {
+            throw new Error('Temperature offset must be between -2 and 2 with a step value of .5');
+        }
+
+        this.log(`Setting temperature offset: ${value}`);
+
+        const response = await this.#client.setSystemTemperatureOffset(value);
+
+        if (response?.status !== 'ok') {
+            throw new Error(`Failed to set temperature offset: ${response?.status}`);
+        }
+
+        this.setCapabilityValue('ec_temperature_offset', value).catch(this.error);
+    }
+
     async onSetChildLock(value: boolean): Promise<void> {
         this.log(`Setting child lock status: ${value}`);
 
@@ -89,7 +105,9 @@ export default class Ct200Device extends Homey.Device {
         const capabilities: string[] = [
             'ec_measure_return_temperature',
             'ec_measure_actual_modulation',
-            'ec_child_lock'
+            'ec_child_lock',
+            'ec_measure_outside_temperature',
+            'ec_temperature_offset'
         ];
 
         for (let capability of capabilities) {
@@ -148,6 +166,8 @@ export default class Ct200Device extends Homey.Device {
         const returnTemperature = await this.#client.getHeatSourcesReturnTemperature();
         const actualModulation = await this.#client.getHeatSourcesActualModulation();
         const deviceThermostatChildLockEnabled = await this.#client.getDeviceThermostatChildLock(this.getData().id);
+        const outsideTemperature = await this.#client.getOutsideTemperature();
+        const systemTemperatureOffset = await this.#client.getSystemTemperatureOffset();
 
         if (zoneTemperature != null) {
             this.log(`→ temperature: ${zoneTemperature.value}${zoneTemperature.unitOfMeasure}`);
@@ -205,6 +225,18 @@ export default class Ct200Device extends Homey.Device {
             } else {
                 this.log(`! unexpected child lock status type: ${typeof value}, value: ${value}`);
             }
+        }
+
+        if (outsideTemperature != null) {
+            this.log(`→ outside temperature: ${outsideTemperature.value}${outsideTemperature.unitOfMeasure}`);
+
+            this.setCapabilityValue('ec_measure_outside_temperature', outsideTemperature.value).catch(this.error);
+        }
+
+        if (systemTemperatureOffset != null) {
+            this.log(`→ system temperature offset: ${systemTemperatureOffset.value}${systemTemperatureOffset.unitOfMeasure}`);
+
+            this.setCapabilityValue('ec_temperature_offset', systemTemperatureOffset.value).catch(this.error);
         }
 
         // Notify all connected thermostat valves that they need to update. Make sure to wait for each device to finish,

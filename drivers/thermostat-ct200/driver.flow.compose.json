@@ -19,6 +19,23 @@
             ]
         },
         {
+            "id": "ec_ct200_child_lock_changed",
+            "title": {
+                "en": "The child lock status changes",
+                "nl": "Kinderslot status verandert"
+            },
+            "tokens": [
+                {
+                    "name": "ec_child_lock",
+                    "type": "boolean",
+                    "title": {
+                        "en": "Child lock status",
+                        "nl": "Kinderslot status"
+                    }
+                }
+            ]
+        },
+        {
             "id": "ec_measure_actual_modulation_changed",
             "title": {
                 "en": "Actual modulation changed",
@@ -33,6 +50,43 @@
                         "nl": "Modulering"
                     },
                     "example": 35
+                }
+            ]
+        },
+        {
+            "id": "ec_measure_outside_temperature_changed",
+            "highlight": true,
+            "title": {
+                "en": "The outside temperature changes",
+                "nl": "De buitentemperatuur verandert"
+            },
+            "tokens": [
+                {
+                    "name": "ec_measure_outside_temperature",
+                    "type": "number",
+                    "title": {
+                        "en": "Outside temperature",
+                        "nl": "Buitentemperatuur"
+                    },
+                    "example": 6
+                }
+            ]
+        },
+        {
+            "id": "ec_ct200_temperature_offset_changed",
+            "title": {
+                "en": "The temperature offset changes",
+                "nl": "De temperatuur compensatie verandert"
+            },
+            "tokens": [
+                {
+                    "name": "ec_temperature_offset",
+                    "type": "number",
+                    "title": {
+                        "en": "Temperature offset",
+                        "nl": "Temperatuur compensatie"
+                    },
+                    "example": -1.5
                 }
             ]
         }
@@ -110,6 +164,83 @@
                             "label": {
                                 "en": "Off",
                                 "nl": "Uit"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ec_ct200_set_temperature_offset",
+            "title": {
+                "en": "Set temperature offset",
+                "nl": "Temperatuur compensatie instellen"
+            },
+            "titleFormatted": {
+                "en": "Set the temperature offset to [[offset]]",
+                "nl": "Stel de temperatuur compensatie in op [[offset]]"
+            },
+            "hint": {
+                "en": "Sets the temperature offset of the radiator valve",
+                "nl": "Stelt de temperatuur compensatie van de thermostaat in"
+            },
+            "args": [
+                {
+                    "type": "dropdown",
+                    "name": "offset",
+                    "values": [
+                        {
+                            "id": "-2",
+                            "label": {
+                                "en": "-2°C"
+                            }
+                        },
+                        {
+                            "id": "-1.5",
+                            "label": {
+                                "en": "-1.5°C"
+                            }
+                        },
+                        {
+                            "id": "-1",
+                            "label": {
+                                "en": "-1°C"
+                            }
+                        },
+                        {
+                            "id": "-0.5",
+                            "label": {
+                                "en": "-0.5°C"
+                            }
+                        },
+                        {
+                            "id": "0",
+                            "label": {
+                                "en": "0°C"
+                            }
+                        },
+                        {
+                            "id": "0.5",
+                            "label": {
+                                "en": "0.5°C"
+                            }
+                        },
+                        {
+                            "id": "1.0",
+                            "label": {
+                                "en": "1.0°C"
+                            }
+                        },
+                        {
+                            "id": "1.5",
+                            "label": {
+                                "en": "1.5°C"
+                            }
+                        },
+                        {
+                            "id": "2",
+                            "label": {
+                                "en": "2°C"
                             }
                         }
                     ]

@@ -28,5 +28,9 @@
     "2.0.2": {
         "en": "Fixed issue where Homey 2019 was not able to pair radiator valves",
         "nl": "Probleem opgelost waarbij Homey 2019 niet kon pairen met radiatorknoppen"
+    },
+    "2.1.0": {
+        "en": "Added support for outside temperature. Added support for temperature offset for the CT200 thermostat.",
+        "nl": "Ondersteuning toegevoegd voor buitentemperatuur. Ondersteuning toegevoegd voor temperatuur compensatie voor de CT200 thermostaat."
     }
 }

@@ -181,6 +181,24 @@ export class Client {
         return response as PutResponse;
     }
 
+    public async getOutsideTemperature(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.SystemOutsideTemperature);
+
+        return response as ValueResponse<number>;
+    }
+
+    public async getSystemTemperatureOffset(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.SystemTemperatureOffset);
+
+        return response as ValueResponse<number>;
+    }
+
+    public async setSystemTemperatureOffset(offset: number): Promise<PutResponse | null> {
+        const response = await this.set(Endpoint.SystemTemperatureOffset, offset);
+
+        return response as PutResponse;
+    }
+
     private async get(endpoint: string): Promise<{} | null> {
         if (this.easyControlClient === null) {
             return null;
