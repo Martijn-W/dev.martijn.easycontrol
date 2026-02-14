@@ -1,6 +1,6 @@
 {
     "id": "dev.martijn.easycontrol",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "compatibility": ">=12.2.0",
     "sdk": 3,
     "brandColor": "#ED0007",

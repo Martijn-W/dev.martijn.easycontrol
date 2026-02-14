@@ -32,5 +32,9 @@
     "2.1.0": {
         "en": "Added support for outside temperature. Added support for temperature offset for the CT200 thermostat.",
         "nl": "Ondersteuning toegevoegd voor buitentemperatuur. Ondersteuning toegevoegd voor temperatuur compensatie voor de CT200 thermostaat."
+    },
+    "2.1.1": {
+        "en": "Updated decryption logic to hopefully fix connection issues for some users",
+        "nl": "Decryptielogica bijgewerkt om hopelijk verbindingsproblemen bij sommige gebruikers op te lossen"
     }
 }
