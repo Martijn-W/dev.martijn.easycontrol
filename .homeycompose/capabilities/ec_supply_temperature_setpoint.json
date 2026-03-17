@@ -1,0 +1,19 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Supply temperature setpoint",
+        "nl": "Aanvoertemperatuur setpoint"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/temperature_setpoint.svg",
+    "getable": true,
+    "setable": false,
+    "units": {
+        "en": "°C",
+        "nl": "°C"
+    },
+    "insights": true,
+    "min": 0,
+    "max": 90,
+    "step": 1
+}

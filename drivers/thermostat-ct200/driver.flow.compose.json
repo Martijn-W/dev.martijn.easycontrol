@@ -89,6 +89,41 @@
                     "example": -1.5
                 }
             ]
+        },
+        {
+            "id": "ec_ct200_supply_temperature_setpoint_changed",
+            "title": {
+                "en": "Supply temperature setpoint changed",
+                "nl": "Aanvoertemperatuur setpoint gewijzigd"
+            },
+            "tokens": [
+                {
+                    "name": "ec_supply_temperature_setpoint",
+                    "type": "number",
+                    "title": {
+                        "en": "Supply temperature setpoint",
+                        "nl": "Aanvoertemperatuur setpoint"
+                    },
+                    "example": 28
+                }
+            ]
+        },
+        {
+            "id": "ec_ct200_awaymode_changed",
+            "title": {
+                "en": "Away mode changed",
+                "nl": "Afwezigheidsmodus gewijzigd"
+            },
+            "tokens": [
+                {
+                    "name": "ec_away_mode",
+                    "type": "boolean",
+                    "title": {
+                        "en": "Away mode enabled",
+                        "nl": "Afwezigheidsmodus ingeschakeld"
+                    }
+                }
+            ]
         }
     ],
     "conditions": [
@@ -110,6 +145,41 @@
                 {
                     "type": "dropdown",
                     "name": "lock",
+                    "values": [
+                        {
+                            "id": "true",
+                            "label": {
+                                "en": "On"
+                            }
+                        },
+                        {
+                            "id": "false",
+                            "label": {
+                                "en": "Off"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ec_ct200_get_away_mode",
+            "title": {
+                "en": "Get away mode status",
+                "nl": "Afwezigheidsmodus ophalen"
+            },
+            "titleFormatted": {
+                "en": "The away mode !{{is|isn't}} [[enabled]]",
+                "nl": "De afwezigheidsmodus !{{is|is niet}} [[enabled]]"
+            },
+            "hint": {
+                "en": "Get the current away mode status",
+                "nl": "Haal de huidige afwezigheidsmodus op"
+            },
+            "args": [
+                {
+                    "type": "dropdown",
+                    "name": "enabled",
                     "values": [
                         {
                             "id": "true",
@@ -241,6 +311,47 @@
                             "id": "2",
                             "label": {
                                 "en": "2°C"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ec_ct200_set_away_mode",
+            "title": {
+                "en": "Set away mode",
+                "nl": "Afwezigheidsmodus instellen"
+            },
+            "titleFormatted": {
+                "en": "Set away mode [[enabled]]",
+                "nl": "Zet de afwezigheidsmodus [[enabled]]"
+            },
+            "hint": {
+                "en": "Turns the away mode on or off. Does not work with the manual heating mode",
+                "nl": "Zet de afwezigheidsmodus aan of uit. Werkt niet met de handmatige warmtemodus"
+            },
+            "args": [
+                {
+                    "type": "dropdown",
+                    "name": "enabled",
+                    "title": {
+                        "en": "on/off",
+                        "nl": "aan/uit"
+                    },
+                    "values": [
+                        {
+                            "id": "true",
+                            "label": {
+                                "en": "On",
+                                "nl": "Aan"
+                            }
+                        },
+                        {
+                            "id": "false",
+                            "label": {
+                                "en": "Off",
+                                "nl": "Uit"
                             }
                         }
                     ]

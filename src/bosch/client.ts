@@ -199,6 +199,24 @@ export class Client {
         return response as PutResponse;
     }
 
+    public async getHeatingCircuitSupplyTemperatureSetpoint(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.HeatingCircuitSupplyTemperatureSetpoint.replace('%1', '1'));
+
+        return response as ValueResponse<number>;
+    }
+
+    public async getSystemAwayModeEnabled() : Promise<ValueResponse<string> | null> {
+        const response = await this.get(Endpoint.SystemAwayModeEnabled);
+
+        return response as ValueResponse<string>;
+    }
+
+    public async setSystemAwayModeEnabled(enabled: boolean) : Promise<PutResponse | null> {
+        const response = await this.set(Endpoint.SystemAwayModeEnabled, enabled ? 'true' : 'false');
+
+        return response as PutResponse;
+    }
+
     private async get(endpoint: string): Promise<{} | null> {
         if (this.easyControlClient === null) {
             return null;

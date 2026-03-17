@@ -54,12 +54,12 @@ export default class Ct200Driver extends Homey.Driver {
             return;
         }
 
-        this.log('Valid device, fetching devices...')
+        this.log('Valid device, fetching devices...');
 
         this.#deviceData = data;
         this.#devices = await client.getDevices() ?? [];
 
-        this.log(`Found ${this.#devices.length} device(s)`)
+        this.log(`Found ${this.#devices.length} device(s)`);
 
         await client.disconnect();
 
@@ -69,6 +69,7 @@ export default class Ct200Driver extends Homey.Driver {
     private async registerActions(): Promise<void> {
         await this.registerSetTemperatureOffsetAction();
         await this.registerSetChildLockAction();
+        await this.registerSetAwayModeAction();
     }
 
     private async registerSetTemperatureOffsetAction(): Promise<void> {
@@ -101,6 +102,27 @@ export default class Ct200Driver extends Homey.Driver {
             const lockValue = lock.toLowerCase() === 'true';
 
             return device.getCapabilityValue('ec_child_lock') === lockValue;
+        });
+    }
+
+    private async registerSetAwayModeAction(): Promise<void> {
+        const setAwayMode = this.homey.flow.getActionCard('ec_ct200_set_away_mode');
+        const getAwayMode = this.homey.flow.getConditionCard('ec_ct200_get_away_mode');
+
+        type AwayModeArguments = {
+            readonly device: Ct200Device,
+            readonly enabled: string
+        }
+
+        setAwayMode.registerRunListener(async ({device, enabled}: AwayModeArguments) => {
+            this.log(`Setting away mode: ${enabled}`);
+            await device.onSetAwayMode(enabled.toLowerCase() === 'true');
+        });
+
+        getAwayMode.registerRunListener(async ({device, enabled}: AwayModeArguments) => {
+            const modusValue = enabled.toLowerCase() === 'true';
+
+            return device.getCapabilityValue('ec_away_mode') === modusValue;
         });
     }
 }

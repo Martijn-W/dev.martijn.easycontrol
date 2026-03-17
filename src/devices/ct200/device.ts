@@ -101,13 +101,27 @@ export default class Ct200Device extends Homey.Device {
         this.setCapabilityValue('ec_child_lock', value).catch(this.error);
     }
 
+    async onSetAwayMode(value: boolean): Promise<void> {
+        this.log(`Setting away mode status: ${value}`);
+
+        const response = await this.#client.setSystemAwayModeEnabled(value);
+
+        if (response?.status !== 'ok') {
+            throw new Error(this.homey.__('easycontrol.awayMode.error'));
+        }
+
+        this.setCapabilityValue('ec_away_mode', value).catch(this.error);
+    }
+
     private async registerCapabilities(): Promise<void> {
         const capabilities: string[] = [
             'ec_measure_return_temperature',
             'ec_measure_actual_modulation',
             'ec_child_lock',
             'ec_measure_outside_temperature',
-            'ec_temperature_offset'
+            'ec_temperature_offset',
+            'ec_supply_temperature_setpoint',
+            'ec_away_mode'
         ];
 
         for (let capability of capabilities) {
@@ -118,6 +132,7 @@ export default class Ct200Device extends Homey.Device {
 
         this.registerCapabilityListener('target_temperature', this.onSetTargetTemperature.bind(this));
         this.registerCapabilityListener('ec_child_lock', this.onSetChildLock.bind(this));
+        this.registerCapabilityListener('ec_away_mode', this.onSetAwayMode.bind(this));
     }
 
     private async reset() {
@@ -168,6 +183,8 @@ export default class Ct200Device extends Homey.Device {
         const deviceThermostatChildLockEnabled = await this.#client.getDeviceThermostatChildLock(this.getData().id);
         const outsideTemperature = await this.#client.getOutsideTemperature();
         const systemTemperatureOffset = await this.#client.getSystemTemperatureOffset();
+        const supplyTemperatureSetpoint = await this.#client.getHeatingCircuitSupplyTemperatureSetpoint();
+        const systemAwayModeEnabled = await this.#client.getSystemAwayModeEnabled();
 
         if (zoneTemperature != null) {
             this.log(`→ temperature: ${zoneTemperature.value}${zoneTemperature.unitOfMeasure}`);
@@ -237,6 +254,26 @@ export default class Ct200Device extends Homey.Device {
             this.log(`→ system temperature offset: ${systemTemperatureOffset.value}${systemTemperatureOffset.unitOfMeasure}`);
 
             this.setCapabilityValue('ec_temperature_offset', systemTemperatureOffset.value).catch(this.error);
+        }
+
+        if (supplyTemperatureSetpoint != null) {
+            this.log(`→ supply temperature setpoint: ${supplyTemperatureSetpoint.value}${supplyTemperatureSetpoint.unitOfMeasure}`);
+
+            this.setCapabilityValue('ec_supply_temperature_setpoint', supplyTemperatureSetpoint.value).catch(this.error);
+        }
+
+        if (systemAwayModeEnabled != null) {
+            this.log(`→ away mode status: ${systemAwayModeEnabled.value}`);
+
+            const value: unknown = systemAwayModeEnabled.value;
+
+            if (typeof value === 'boolean') {
+                this.setCapabilityValue('ec_away_mode', value).catch(this.error);
+            } else if (typeof value === 'string') {
+                this.setCapabilityValue('ec_away_mode', value.toLowerCase() === 'true').catch(this.error);
+            } else {
+                this.log(`! unexpected away mode status type: ${typeof value}, value: ${value}`);
+            }
         }
 
         // Notify all connected thermostat valves that they need to update. Make sure to wait for each device to finish,

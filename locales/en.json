@@ -9,6 +9,9 @@
             "accessKey": "Access key",
             "password": "Password",
             "connect": "Connect"
+        },
+        "awayMode": {
+            "error": "Failed to set away mode. Make sure a clock program is active."
         }
     }
 }

@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "dev.martijn.easycontrol",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "brandColor": "#ED0007",
@@ -175,6 +175,55 @@
         ]
       },
       {
+        "id": "ec_ct200_supply_temperature_setpoint_changed",
+        "title": {
+          "en": "Supply temperature setpoint changed",
+          "nl": "Aanvoertemperatuur setpoint gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ec_supply_temperature_setpoint",
+            "type": "number",
+            "title": {
+              "en": "Supply temperature setpoint",
+              "nl": "Aanvoertemperatuur setpoint"
+            },
+            "example": 28
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200"
+          }
+        ]
+      },
+      {
+        "id": "ec_ct200_awaymode_changed",
+        "title": {
+          "en": "Away mode changed",
+          "nl": "Afwezigheidsmodus gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ec_away_mode",
+            "type": "boolean",
+            "title": {
+              "en": "Away mode enabled",
+              "nl": "Afwezigheidsmodus ingeschakeld"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200"
+          }
+        ]
+      },
+      {
         "id": "ec_temperature_offset_changed",
         "title": {
           "en": "Temperature offset changed",
@@ -273,6 +322,46 @@
           {
             "type": "dropdown",
             "name": "lock",
+            "values": [
+              {
+                "id": "true",
+                "label": {
+                  "en": "On"
+                }
+              },
+              {
+                "id": "false",
+                "label": {
+                  "en": "Off"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ec_ct200_get_away_mode",
+        "title": {
+          "en": "Get away mode status",
+          "nl": "Afwezigheidsmodus ophalen"
+        },
+        "titleFormatted": {
+          "en": "The away mode !{{is|isn't}} [[enabled]]",
+          "nl": "De afwezigheidsmodus !{{is|is niet}} [[enabled]]"
+        },
+        "hint": {
+          "en": "Get the current away mode status",
+          "nl": "Haal de huidige afwezigheidsmodus op"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200"
+          },
+          {
+            "type": "dropdown",
+            "name": "enabled",
             "values": [
               {
                 "id": "true",
@@ -454,6 +543,52 @@
                 "id": "2",
                 "label": {
                   "en": "2°C"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ec_ct200_set_away_mode",
+        "title": {
+          "en": "Set away mode",
+          "nl": "Afwezigheidsmodus instellen"
+        },
+        "titleFormatted": {
+          "en": "Set away mode [[enabled]]",
+          "nl": "Zet de afwezigheidsmodus [[enabled]]"
+        },
+        "hint": {
+          "en": "Turns the away mode on or off. Does not work with the manual heating mode",
+          "nl": "Zet de afwezigheidsmodus aan of uit. Werkt niet met de handmatige warmtemodus"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200"
+          },
+          {
+            "type": "dropdown",
+            "name": "enabled",
+            "title": {
+              "en": "on/off",
+              "nl": "aan/uit"
+            },
+            "values": [
+              {
+                "id": "true",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "false",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
                 }
               }
             ]
@@ -779,6 +914,19 @@
     }
   ],
   "capabilities": {
+    "ec_away_mode": {
+      "type": "boolean",
+      "title": {
+        "en": "Away mode",
+        "nl": "Afwezigheidsmodus"
+      },
+      "uiComponent": "toggle",
+      "icon": "/assets/capabilities/away_mode.svg",
+      "getable": true,
+      "setable": true,
+      "insights": true,
+      "uiQuickAction": false
+    },
     "ec_child_lock": {
       "type": "boolean",
       "title": {
@@ -870,6 +1018,25 @@
       "max": 100,
       "step": 1,
       "decimals": 0
+    },
+    "ec_supply_temperature_setpoint": {
+      "type": "number",
+      "title": {
+        "en": "Supply temperature setpoint",
+        "nl": "Aanvoertemperatuur setpoint"
+      },
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/temperature_setpoint.svg",
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "°C",
+        "nl": "°C"
+      },
+      "insights": true,
+      "min": 0,
+      "max": 90,
+      "step": 1
     },
     "ec_temperature_offset": {
       "type": "number",

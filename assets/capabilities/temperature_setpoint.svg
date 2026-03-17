@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24">
+    <!-- Thermometer -->
+    <circle cx="8" cy="17" r="3" fill="white"/>
+    <rect x="6.5" y="5" width="3" height="12" rx="1.5" fill="white"/>
+
+    <!-- Arrow shaft -->
+    <rect x="12" y="8" width="6" height="2" rx="0.5" fill="white"/>
+
+    <!-- Rounded arrow head -->
+    <path d="M13 6.7 Q12.7 6.5 12.4 6.8 L10.7 8.7 Q10.4 9 10.7 9.3 L12.4 11.2 Q12.7 11.5 13 11.3 Q13.2 11.15 13.2 10.8 L13.2 7.2 Q13.2 6.85 13 6.7 Z"
+          fill="white"/>
+</svg>

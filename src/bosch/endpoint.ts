@@ -22,6 +22,9 @@ export enum Endpoint {
     DeviceChildLockEnabled = '/devices/device%1/etrv/childLock/enabled',
     DeviceThermostatChildLockEnabled = '/devices/device%1/thermostat/childLock/enabled',
 
+    SystemAwayModeEnabled = '/system/awayMode/enabled',
     SystemOutsideTemperature = '/system/sensors/temperatures/outdoor_t1',
-    SystemTemperatureOffset = '/system/sensors/temperatures/offset'
+    SystemTemperatureOffset = '/system/sensors/temperatures/offset',
+
+    HeatingCircuitSupplyTemperatureSetpoint = '/heatingCircuits/hc%1/supplyTemperatureSetpoint'
 }
