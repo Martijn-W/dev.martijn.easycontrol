@@ -1,6 +1,7 @@
 import BaseDeviceSettings from '../base/baseDeviceSettings';
 
 export default interface DeviceSettings extends BaseDeviceSettings {
-    accessKey: string,
-    password: string
+    accessToken: string,
+    refreshToken: string
+    expiresAtUtc: Date
 }

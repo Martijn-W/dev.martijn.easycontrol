@@ -1,0 +1,46 @@
+{
+    "id": "ec_ct200_set_away_mode",
+    "title": {
+        "en": "Set away mode",
+        "nl": "Afwezigheidsmodus instellen"
+    },
+    "titleFormatted": {
+        "en": "Set away mode [[enabled]]",
+        "nl": "Zet de afwezigheidsmodus [[enabled]]"
+    },
+    "hint": {
+        "en": "Turns the away mode on or off. Does not work with the manual heating mode",
+        "nl": "Zet de afwezigheidsmodus aan of uit. Werkt niet met de handmatige warmtemodus"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        },
+        {
+            "type": "dropdown",
+            "name": "enabled",
+            "title": {
+                "en": "on/off",
+                "nl": "aan/uit"
+            },
+            "values": [
+                {
+                    "id": "true",
+                    "label": {
+                        "en": "On",
+                        "nl": "Aan"
+                    }
+                },
+                {
+                    "id": "false",
+                    "label": {
+                        "en": "Off",
+                        "nl": "Uit"
+                    }
+                }
+            ]
+        }
+    ]
+}

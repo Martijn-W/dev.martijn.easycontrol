@@ -24,6 +24,7 @@ export enum Endpoint {
 
     SystemAwayModeEnabled = '/system/awayMode/enabled',
     SystemOutsideTemperature = '/system/sensors/temperatures/outdoor_t1',
+    SystemSensorHumidityIndoor = '/system/sensors/humidity/indoor_h1',
     SystemTemperatureOffset = '/system/sensors/temperatures/offset',
 
     HeatingCircuitSupplyTemperatureSetpoint = '/heatingCircuits/hc%1/supplyTemperatureSetpoint'

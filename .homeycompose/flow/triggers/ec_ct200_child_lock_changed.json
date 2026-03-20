@@ -1,0 +1,24 @@
+{
+    "id": "ec_ct200_child_lock_changed",
+    "title": {
+        "en": "The child lock status changes",
+        "nl": "Kinderslot status verandert"
+    },
+    "tokens": [
+        {
+            "name": "ec_child_lock",
+            "type": "boolean",
+            "title": {
+                "en": "Child lock status",
+                "nl": "Kinderslot status"
+            }
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

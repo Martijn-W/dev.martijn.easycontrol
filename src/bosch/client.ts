@@ -1,31 +1,13 @@
-import { EasyControlClient, ConfigBuilder } from 'bosch-xmpp-client';
 import { DeviceResponse, Endpoint, PutResponse, ValueResponse, ZoneResponse } from '.';
+import { IEasyControlClient } from 'bosch-xmpp-client/dist/types';
+import ConnectionSettings from './models/settings/connectionSettings';
 
-export class Client {
-    private easyControlClient: EasyControlClient | null = null;
+export abstract class Client {
+    protected abstract easyControlClient: IEasyControlClient | null;
 
-    public async connect(serialNumber: number, accessKey: string, password: string): Promise<void> {
-        const config = new ConfigBuilder()
-            .withSerialNumber(`${serialNumber}`)
-            .withAccessKey(accessKey)
-            .withPassword(password)
-            .build();
+    public abstract connect(connectionSettings: ConnectionSettings): Promise<void>;
 
-        this.easyControlClient = new EasyControlClient(config);
-
-        try {
-            await this.easyControlClient.connect();
-        } catch (e) {
-            console.log(`Failed to connect to the XMPP Client: ${e}`);
-        }
-    }
-
-    public async disconnect(): Promise<void> {
-        if (this.easyControlClient === null)
-            return;
-
-        await this.easyControlClient.disconnect();
-    }
+    public abstract disconnect(): Promise<void>;
 
     public async getDevices(): Promise<DeviceResponse[] | null> {
         const response = await this.get(Endpoint.Devices);
@@ -77,6 +59,7 @@ export class Client {
         return response as ValueResponse<number>;
     }
 
+    /** @deprecated Use system sensor instead */
     public async getZoneHumidity(zoneId: number): Promise<ValueResponse<number> | null> {
         const endpoint = Endpoint.ZoneHumidity.replace('%1', `${zoneId}`);
 
@@ -187,6 +170,12 @@ export class Client {
         return response as ValueResponse<number>;
     }
 
+    public async getSystemSensorHumidity(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.SystemSensorHumidityIndoor);
+
+        return response as ValueResponse<number>;
+    }
+
     public async getSystemTemperatureOffset(): Promise<ValueResponse<number> | null> {
         const response = await this.get(Endpoint.SystemTemperatureOffset);
 
@@ -205,13 +194,13 @@ export class Client {
         return response as ValueResponse<number>;
     }
 
-    public async getSystemAwayModeEnabled() : Promise<ValueResponse<string> | null> {
+    public async getSystemAwayModeEnabled(): Promise<ValueResponse<string> | null> {
         const response = await this.get(Endpoint.SystemAwayModeEnabled);
 
         return response as ValueResponse<string>;
     }
 
-    public async setSystemAwayModeEnabled(enabled: boolean) : Promise<PutResponse | null> {
+    public async setSystemAwayModeEnabled(enabled: boolean): Promise<PutResponse | null> {
         const response = await this.set(Endpoint.SystemAwayModeEnabled, enabled ? 'true' : 'false');
 
         return response as PutResponse;
@@ -239,7 +228,7 @@ export class Client {
         }
 
         try {
-            return await this.easyControlClient.put(endpoint, {'value': value});
+            return await this.easyControlClient.put(endpoint, {'value': value}) || {status: 'ok'};
         } catch (ex) {
             this.parseError(ex as Error);
 
@@ -248,10 +237,36 @@ export class Client {
     }
 
     private parseError(error: Error) {
+        if (this.isServerError(error)) {
+            throw error;
+        }
+
         if (error.message === 'HTTP_TOO_MANY_REQUESTS') {
             console.warn('Spawning too many requests!');
         } else {
             console.error((error.stack || error) as string);
         }
+    }
+
+    private isServerError(error: Error): boolean {
+        const statusCode = this.getHttpStatusCode(error);
+
+        if (statusCode !== null) {
+            return statusCode >= 500 && statusCode <= 599;
+        }
+
+        return /HTTP_(INTERNAL_SERVER_ERROR|BAD_GATEWAY|SERVICE_UNAVAILABLE|GATEWAY_TIMEOUT)/.test(error.message);
+    }
+
+    private getHttpStatusCode(error: Error): number | null {
+        const message = error.message ?? '';
+
+        // Handles format: "HTTP 500: Internal Server Error"
+        const fetchStyleStatusInMessage = message.match(/^HTTP\s+(\d{3})\s*:/i);
+        if (fetchStyleStatusInMessage !== null) {
+            return parseInt(fetchStyleStatusInMessage[1], 10);
+        }
+
+        return null;
     }
 }

@@ -1,0 +1,66 @@
+{
+    "name": {
+        "en": "Thermostat (CT200 HTTPS)"
+    },
+    "class": "thermostat",
+    "capabilities": [
+        "measure_humidity",
+        "measure_temperature",
+        "target_temperature",
+        "measure_pressure",
+        "measure_signal_strength"
+    ],
+    "capabilitiesOptions": {
+        "measure_pressure": {
+            "title": {
+                "en": "System Pressure",
+                "nl": "Systeemdruk"
+            }
+        },
+        "measure_signal_strength": {
+            "title": {
+                "en": "WiFi Signal Strength",
+                "nl": "WiFi Signaalsterkte"
+            }
+        }
+    },
+    "platforms": [
+        "local"
+    ],
+    "connectivity": [
+        "cloud"
+    ],
+    "images": {
+        "small": "{{driverAssetsPath}}/images/small.png",
+        "large": "{{driverAssetsPath}}/images/large.png",
+        "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+    },
+    "pair": [
+        {
+            "id": "start"
+        },
+        {
+            "id": "loading",
+            "template": "loading"
+        },
+        {
+            "id": "list_devices",
+            "template": "list_devices",
+            "options": {
+                "singular": true
+            },
+            "navigation": {
+                "next": "add_devices"
+            }
+        },
+        {
+            "id": "add_devices",
+            "template": "add_devices"
+        }
+    ],
+    "repair": [
+        {
+            "id": "start"
+        }
+    ]
+}

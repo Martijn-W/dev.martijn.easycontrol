@@ -40,5 +40,9 @@
     "2.2.0": {
         "en": "Added support for monitoring supply temperature setpoint. Added support for setting Away Mode (requires a clock program to be active)",
         "nl": "Ondersteuning toegevoegd voor aanvoertemperatuur setpoint. Ondersteuning toegevoegd voor het zetten van de afwezigheidsmodus (vereist een actief klokprogramma)"
+    },
+    "3.0.0": {
+        "en": "Added support for connecting to the thermostat over HTTPS. If you have trouble connecting your thermostat over XMPP, try to connect over HTTPS instead.",
+        "nl": "Ondersteuning toegevoegd voor het verbinden met de thermostaat via HTTPS. Als je problemen ervaart met het verbinden met je thermostaat via XMPP, probeer dan via HTTPS te verbinden."
     }
 }

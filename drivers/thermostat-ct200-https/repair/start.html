@@ -1,0 +1,108 @@
+<style>
+    .easycontrol-form {
+        display: flex;
+        height: 100%;
+        flex-flow: column;
+    }
+
+    .token-waiting {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .token-throbber {
+        width: 14px;
+        height: 14px;
+        border: 2px solid #d0d0d0;
+        border-top-color: #777;
+        border-radius: 50%;
+        animation: token-spin 0.8s linear infinite;
+    }
+
+    @keyframes token-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<form class="homey-form easycontrol-form">
+    <header class="homey-header">
+        <h1
+            class="homey-title"
+            data-i18n="easycontrol.thermostatCt200Https.customView.pairingTitle">Pairing</h1>
+        <p
+            id="ip-subtitle"
+            class="homey-subtitle"><span data-i18n="easycontrol.thermostatCt200Https.customView.networkRequirement">Your PC and Homey must be on the same network.</span> <span data-i18n="easycontrol.thermostatCt200Https.customView.homeyIpAddressLabel">Homey IP address:</span> <span
+                id="homey-ip-address"
+                data-i18n="easycontrol.thermostatCt200Https.customView.detectingHomeyIp">Detecting Homey IP...</span></p>
+    </header>
+
+    <div class="homey-form-group">
+        <p
+            class="homey-text-muted"
+            style="margin-top: 0;">
+            <span data-i18n="easycontrol.thermostatCt200Https.customView.step1Prefix">1. Download the helper app here (macOS/Windows/Linux):</span>
+            <a
+                id="helper-url-link"
+                href="https://github.com/Martijn-W/BoschApiHelper/releases"
+                target="_blank"
+                rel="noopener noreferrer">
+                https://github.com/Martijn-W/BoschApiHelper/releases
+            </a>
+
+            <br/>
+            <span data-i18n="easycontrol.thermostatCt200Https.customView.step2Instruction">2. Follow the instructions in the helper app to log in with your SingleKey Id account</span>
+        </p>
+    </div>
+
+    <div
+        class="homey-form-group"
+        style="text-align: center; margin-top: 20px;">
+        <p data-i18n="easycontrol.thermostatCt200Https.customView.enterPairingCode">Enter this Pairing Code in the app:</p>
+        <h2
+            id="code-display"
+            style="font-size: 3em; letter-spacing: 8px; margin: 10px 0; color: #333;">----</h2>
+        <p class="homey-text-muted token-waiting">
+            <span class="token-throbber" aria-hidden="true"></span>
+            <span data-i18n="easycontrol.thermostatCt200Https.customView.waitingForAccessToken">Waiting for the access token</span>
+        </p>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+    const HELPER_APP_URL = 'https://github.com/Martijn-W/BoschApiHelper/releases';
+    const helperUrlLink = document.getElementById('helper-url-link');
+
+    const openExternalUrl = (url) => {
+        if (typeof Homey.popup === 'function') {
+            Homey.popup(url);
+            return;
+        }
+
+        if (typeof Homey.openURL === 'function') {
+            Homey.openURL(url);
+            return;
+        }
+
+        window.open(url, '_blank', 'noopener,noreferrer');
+    };
+
+    helperUrlLink.addEventListener('click', evt => {
+        evt.preventDefault();
+        openExternalUrl(HELPER_APP_URL);
+    });
+
+    (async () => {
+        try {
+            const info = await Homey.emit('get_setup_info');
+
+            document.getElementById('homey-ip-address').innerText = info.localIp;
+            document.getElementById('code-display').innerText = info.pairingCode;
+        } catch (err) {
+            Homey.alert(err);
+        }
+    })();
+</script>

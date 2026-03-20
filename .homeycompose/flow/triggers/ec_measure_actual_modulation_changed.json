@@ -1,0 +1,25 @@
+{
+    "id": "ec_measure_actual_modulation_changed",
+    "title": {
+        "en": "Actual modulation changed",
+        "nl": "Actuele modulering gewijzigd"
+    },
+    "tokens": [
+        {
+            "name": "ec_measure_actual_modulation",
+            "type": "number",
+            "title": {
+                "en": "Modulation",
+                "nl": "Modulering"
+            },
+            "example": 35
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

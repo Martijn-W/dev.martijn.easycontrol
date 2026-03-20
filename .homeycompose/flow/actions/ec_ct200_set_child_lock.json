@@ -1,0 +1,46 @@
+{
+    "id": "ec_ct200_set_child_lock",
+    "title": {
+        "en": "Set child lock status",
+        "nl": "Kinderslot status instellen"
+    },
+    "titleFormatted": {
+        "en": "Turn the child lock [[lock]]",
+        "nl": "Zet het kinderslot [[lock]]"
+    },
+    "hint": {
+        "en": "Sets the child lock status of the radiator valve",
+        "nl": "Stelt de kinderslot status van de radiatorknop in"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        },
+        {
+            "type": "dropdown",
+            "name": "lock",
+            "title": {
+                "en": "on/off",
+                "nl": "aan/uit"
+            },
+            "values": [
+                {
+                    "id": "true",
+                    "label": {
+                        "en": "On",
+                        "nl": "Aan"
+                    }
+                },
+                {
+                    "id": "false",
+                    "label": {
+                        "en": "Off",
+                        "nl": "Uit"
+                    }
+                }
+            ]
+        }
+    ]
+}

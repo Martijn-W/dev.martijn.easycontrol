@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "dev.martijn.easycontrol",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "brandColor": "#ED0007",
@@ -40,6 +40,9 @@
     "donate": {
       "paypal": {
         "username": "martijnwoolschot"
+      },
+      "githubSponsors": {
+        "username": "Martijn-W"
       }
     }
   },
@@ -47,30 +50,36 @@
     "url": "https://github.com/Martijn-W/dev.martijn.easycontrol"
   },
   "source": "https://github.com/Martijn-W/dev.martijn.easycontrol",
+  "api": {
+    "postToken": {
+      "method": "post",
+      "path": "/token",
+      "public": true
+    }
+  },
   "flow": {
     "triggers": [
       {
-        "id": "ec_measure_return_temperature_changed",
+        "id": "ec_ct200_awaymode_changed",
         "title": {
-          "en": "Return temperature changed",
-          "nl": "Terugkomsttemperatuur gewijzigd"
+          "en": "Away mode changed",
+          "nl": "Afwezigheidsmodus gewijzigd"
         },
         "tokens": [
           {
-            "name": "ec_measure_return_temperature",
-            "type": "number",
+            "name": "ec_away_mode",
+            "type": "boolean",
             "title": {
-              "en": "Return temperature",
-              "nl": "Terugkomsttemperatuur"
-            },
-            "example": 40.3
+              "en": "Away mode enabled",
+              "nl": "Afwezigheidsmodus ingeschakeld"
+            }
           }
         ],
         "args": [
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=thermostat-ct200"
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
           }
         ]
       },
@@ -94,7 +103,57 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=thermostat-ct200"
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+          }
+        ]
+      },
+      {
+        "id": "ec_ct200_supply_temperature_setpoint_changed",
+        "title": {
+          "en": "Supply temperature setpoint changed",
+          "nl": "Aanvoertemperatuur setpoint gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ec_supply_temperature_setpoint",
+            "type": "number",
+            "title": {
+              "en": "Supply temperature setpoint",
+              "nl": "Aanvoertemperatuur setpoint"
+            },
+            "example": 28
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+          }
+        ]
+      },
+      {
+        "id": "ec_ct200_temperature_offset_changed",
+        "title": {
+          "en": "The temperature offset changes",
+          "nl": "De temperatuur compensatie verandert"
+        },
+        "tokens": [
+          {
+            "name": "ec_temperature_offset",
+            "type": "number",
+            "title": {
+              "en": "Temperature offset",
+              "nl": "Temperatuur compensatie"
+            },
+            "example": -1.5
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
           }
         ]
       },
@@ -119,7 +178,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=thermostat-ct200"
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
           }
         ]
       },
@@ -145,74 +204,25 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=thermostat-ct200"
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
           }
         ]
       },
       {
-        "id": "ec_ct200_temperature_offset_changed",
+        "id": "ec_measure_return_temperature_changed",
         "title": {
-          "en": "The temperature offset changes",
-          "nl": "De temperatuur compensatie verandert"
+          "en": "Return temperature changed",
+          "nl": "Terugkomsttemperatuur gewijzigd"
         },
         "tokens": [
           {
-            "name": "ec_temperature_offset",
+            "name": "ec_measure_return_temperature",
             "type": "number",
             "title": {
-              "en": "Temperature offset",
-              "nl": "Temperatuur compensatie"
+              "en": "Return temperature",
+              "nl": "Terugkomsttemperatuur"
             },
-            "example": -1.5
-          }
-        ],
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=thermostat-ct200"
-          }
-        ]
-      },
-      {
-        "id": "ec_ct200_supply_temperature_setpoint_changed",
-        "title": {
-          "en": "Supply temperature setpoint changed",
-          "nl": "Aanvoertemperatuur setpoint gewijzigd"
-        },
-        "tokens": [
-          {
-            "name": "ec_supply_temperature_setpoint",
-            "type": "number",
-            "title": {
-              "en": "Supply temperature setpoint",
-              "nl": "Aanvoertemperatuur setpoint"
-            },
-            "example": 28
-          }
-        ],
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=thermostat-ct200"
-          }
-        ]
-      },
-      {
-        "id": "ec_ct200_awaymode_changed",
-        "title": {
-          "en": "Away mode changed",
-          "nl": "Afwezigheidsmodus gewijzigd"
-        },
-        "tokens": [
-          {
-            "name": "ec_away_mode",
-            "type": "boolean",
-            "title": {
-              "en": "Away mode enabled",
-              "nl": "Afwezigheidsmodus ingeschakeld"
-            }
+            "example": 40.3
           }
         ],
         "args": [
@@ -300,28 +310,28 @@
     ],
     "conditions": [
       {
-        "id": "ec_ct200_get_child_lock",
+        "id": "ec_ct200_get_away_mode",
         "title": {
-          "en": "Get child lock status",
-          "nl": "Kinderslot status ophalen"
+          "en": "Get away mode status",
+          "nl": "Afwezigheidsmodus ophalen"
         },
         "titleFormatted": {
-          "en": "The child lock !{{is|isn't}} [[lock]]",
-          "nl": "Het kinderslot !{{is|is niet}} [[lock]]"
+          "en": "The away mode !{{is|isn't}} [[enabled]]",
+          "nl": "De afwezigheidsmodus !{{is|is niet}} [[enabled]]"
         },
         "hint": {
-          "en": "Get the current child lock status",
-          "nl": "Haal de huidige kinderslot status op"
+          "en": "Get the current away mode status",
+          "nl": "Haal de huidige afwezigheidsmodus op"
         },
         "args": [
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=thermostat-ct200"
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
           },
           {
             "type": "dropdown",
-            "name": "lock",
+            "name": "enabled",
             "values": [
               {
                 "id": "true",
@@ -340,28 +350,28 @@
         ]
       },
       {
-        "id": "ec_ct200_get_away_mode",
+        "id": "ec_ct200_get_child_lock",
         "title": {
-          "en": "Get away mode status",
-          "nl": "Afwezigheidsmodus ophalen"
+          "en": "Get child lock status",
+          "nl": "Kinderslot status ophalen"
         },
         "titleFormatted": {
-          "en": "The away mode !{{is|isn't}} [[enabled]]",
-          "nl": "De afwezigheidsmodus !{{is|is niet}} [[enabled]]"
+          "en": "The child lock !{{is|isn't}} [[lock]]",
+          "nl": "Het kinderslot !{{is|is niet}} [[lock]]"
         },
         "hint": {
-          "en": "Get the current away mode status",
-          "nl": "Haal de huidige afwezigheidsmodus op"
+          "en": "Get the current child lock status",
+          "nl": "Haal de huidige kinderslot status op"
         },
         "args": [
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=thermostat-ct200"
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
           },
           {
             "type": "dropdown",
-            "name": "enabled",
+            "name": "lock",
             "values": [
               {
                 "id": "true",
@@ -422,6 +432,52 @@
     ],
     "actions": [
       {
+        "id": "ec_ct200_set_away_mode",
+        "title": {
+          "en": "Set away mode",
+          "nl": "Afwezigheidsmodus instellen"
+        },
+        "titleFormatted": {
+          "en": "Set away mode [[enabled]]",
+          "nl": "Zet de afwezigheidsmodus [[enabled]]"
+        },
+        "hint": {
+          "en": "Turns the away mode on or off. Does not work with the manual heating mode",
+          "nl": "Zet de afwezigheidsmodus aan of uit. Werkt niet met de handmatige warmtemodus"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+          },
+          {
+            "type": "dropdown",
+            "name": "enabled",
+            "title": {
+              "en": "on/off",
+              "nl": "aan/uit"
+            },
+            "values": [
+              {
+                "id": "true",
+                "label": {
+                  "en": "On",
+                  "nl": "Aan"
+                }
+              },
+              {
+                "id": "false",
+                "label": {
+                  "en": "Off",
+                  "nl": "Uit"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "ec_ct200_set_child_lock",
         "title": {
           "en": "Set child lock status",
@@ -439,7 +495,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=thermostat-ct200"
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
           },
           {
             "type": "dropdown",
@@ -485,7 +541,7 @@
           {
             "type": "device",
             "name": "device",
-            "filter": "driver_id=thermostat-ct200"
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
           },
           {
             "type": "dropdown",
@@ -543,52 +599,6 @@
                 "id": "2",
                 "label": {
                   "en": "2°C"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": "ec_ct200_set_away_mode",
-        "title": {
-          "en": "Set away mode",
-          "nl": "Afwezigheidsmodus instellen"
-        },
-        "titleFormatted": {
-          "en": "Set away mode [[enabled]]",
-          "nl": "Zet de afwezigheidsmodus [[enabled]]"
-        },
-        "hint": {
-          "en": "Turns the away mode on or off. Does not work with the manual heating mode",
-          "nl": "Zet de afwezigheidsmodus aan of uit. Werkt niet met de handmatige warmtemodus"
-        },
-        "args": [
-          {
-            "type": "device",
-            "name": "device",
-            "filter": "driver_id=thermostat-ct200"
-          },
-          {
-            "type": "dropdown",
-            "name": "enabled",
-            "title": {
-              "en": "on/off",
-              "nl": "aan/uit"
-            },
-            "values": [
-              {
-                "id": "true",
-                "label": {
-                  "en": "On",
-                  "nl": "Aan"
-                }
-              },
-              {
-                "id": "false",
-                "label": {
-                  "en": "Off",
-                  "nl": "Uit"
                 }
               }
             ]
@@ -825,6 +835,95 @@
             }
           ]
         },
+        {
+          "type": "group",
+          "label": {
+            "en": "Advanced",
+            "nl": "Geadvanceerd"
+          },
+          "children": [
+            {
+              "id": "pollingInterval",
+              "type": "number",
+              "value": 30,
+              "step": 1,
+              "min": 5,
+              "label": {
+                "en": "Polling interval (seconds)",
+                "nl": "Verversingsinterval (seconden)"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "Thermostat (CT200 HTTPS)"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "measure_humidity",
+        "measure_temperature",
+        "target_temperature",
+        "measure_pressure",
+        "measure_signal_strength"
+      ],
+      "capabilitiesOptions": {
+        "measure_pressure": {
+          "title": {
+            "en": "System Pressure",
+            "nl": "Systeemdruk"
+          }
+        },
+        "measure_signal_strength": {
+          "title": {
+            "en": "WiFi Signal Strength",
+            "nl": "WiFi Signaalsterkte"
+          }
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [
+        "cloud"
+      ],
+      "images": {
+        "small": "/drivers/thermostat-ct200-https/assets/images/small.png",
+        "large": "/drivers/thermostat-ct200-https/assets/images/large.png",
+        "xlarge": "/drivers/thermostat-ct200-https/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "start"
+        },
+        {
+          "id": "loading",
+          "template": "loading"
+        },
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "options": {
+            "singular": true
+          },
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "repair": [
+        {
+          "id": "start"
+        }
+      ],
+      "id": "thermostat-ct200-https",
+      "settings": [
         {
           "type": "group",
           "label": {

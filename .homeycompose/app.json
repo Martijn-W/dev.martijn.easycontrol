@@ -1,6 +1,6 @@
 {
     "id": "dev.martijn.easycontrol",
-    "version": "2.2.0",
+    "version": "3.0.0",
     "compatibility": ">=12.2.0",
     "sdk": 3,
     "brandColor": "#ED0007",
@@ -39,11 +39,21 @@
         "donate": {
             "paypal": {
                 "username": "martijnwoolschot"
+            },
+            "githubSponsors": {
+                "username": "Martijn-W"
             }
         }
     },
     "bugs": {
         "url": "https://github.com/Martijn-W/dev.martijn.easycontrol"
     },
-    "source": "https://github.com/Martijn-W/dev.martijn.easycontrol"
+    "source": "https://github.com/Martijn-W/dev.martijn.easycontrol",
+    "api": {
+        "postToken": {
+            "method": "post",
+            "path": "/token",
+            "public": true
+        }
+    }
 }

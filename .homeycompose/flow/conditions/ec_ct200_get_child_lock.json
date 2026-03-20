@@ -1,0 +1,40 @@
+{
+    "id": "ec_ct200_get_child_lock",
+    "title": {
+        "en": "Get child lock status",
+        "nl": "Kinderslot status ophalen"
+    },
+    "titleFormatted": {
+        "en": "The child lock !{{is|isn't}} [[lock]]",
+        "nl": "Het kinderslot !{{is|is niet}} [[lock]]"
+    },
+    "hint": {
+        "en": "Get the current child lock status",
+        "nl": "Haal de huidige kinderslot status op"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        },
+        {
+            "type": "dropdown",
+            "name": "lock",
+            "values": [
+                {
+                    "id": "true",
+                    "label": {
+                        "en": "On"
+                    }
+                },
+                {
+                    "id": "false",
+                    "label": {
+                        "en": "Off"
+                    }
+                }
+            ]
+        }
+    ]
+}

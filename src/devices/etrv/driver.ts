@@ -2,8 +2,8 @@ import Homey from 'homey';
 import DeviceSettings from './deviceSettings';
 import { DeviceResponse, thermostatManager } from '../../bosch';
 import PairSession from 'homey/lib/PairSession';
-import Ct200Device from '../ct200/device';
 import EtrvDevice from './device';
+import { Ct200BaseDevice } from '../base/ct200BaseDevice';
 
 export default class EtrvDriver extends Homey.Driver {
     #thermostatDevice: { name: string, icon: string, data: { id: string } } | undefined;
@@ -65,7 +65,7 @@ export default class EtrvDriver extends Homey.Driver {
 
         const serialNumber = parseInt(this.#thermostatDevice.data.id);
 
-        const thermostat: Ct200Device | undefined = thermostatManager.getThermostat(serialNumber);
+        const thermostat: Ct200BaseDevice<any> | undefined = thermostatManager.getThermostat(serialNumber);
 
         // Reset state (Homey 2019 reuses driver instance between pairing sessions)
         this.#thermostatDevice = undefined;

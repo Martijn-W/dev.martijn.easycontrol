@@ -1,0 +1,82 @@
+{
+    "id": "ec_ct200_set_temperature_offset",
+    "title": {
+        "en": "Set temperature offset",
+        "nl": "Temperatuur compensatie instellen"
+    },
+    "titleFormatted": {
+        "en": "Set the temperature offset to [[offset]]",
+        "nl": "Stel de temperatuur compensatie in op [[offset]]"
+    },
+    "hint": {
+        "en": "Sets the temperature offset of the radiator valve",
+        "nl": "Stelt de temperatuur compensatie van de thermostaat in"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        },
+        {
+            "type": "dropdown",
+            "name": "offset",
+            "values": [
+                {
+                    "id": "-2",
+                    "label": {
+                        "en": "-2°C"
+                    }
+                },
+                {
+                    "id": "-1.5",
+                    "label": {
+                        "en": "-1.5°C"
+                    }
+                },
+                {
+                    "id": "-1",
+                    "label": {
+                        "en": "-1°C"
+                    }
+                },
+                {
+                    "id": "-0.5",
+                    "label": {
+                        "en": "-0.5°C"
+                    }
+                },
+                {
+                    "id": "0",
+                    "label": {
+                        "en": "0°C"
+                    }
+                },
+                {
+                    "id": "0.5",
+                    "label": {
+                        "en": "0.5°C"
+                    }
+                },
+                {
+                    "id": "1.0",
+                    "label": {
+                        "en": "1.0°C"
+                    }
+                },
+                {
+                    "id": "1.5",
+                    "label": {
+                        "en": "1.5°C"
+                    }
+                },
+                {
+                    "id": "2",
+                    "label": {
+                        "en": "2°C"
+                    }
+                }
+            ]
+        }
+    ]
+}

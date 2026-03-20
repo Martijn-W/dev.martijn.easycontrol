@@ -1,0 +1,24 @@
+{
+    "id": "ec_ct200_awaymode_changed",
+    "title": {
+        "en": "Away mode changed",
+        "nl": "Afwezigheidsmodus gewijzigd"
+    },
+    "tokens": [
+        {
+            "name": "ec_away_mode",
+            "type": "boolean",
+            "title": {
+                "en": "Away mode enabled",
+                "nl": "Afwezigheidsmodus ingeschakeld"
+            }
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

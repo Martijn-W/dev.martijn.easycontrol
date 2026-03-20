@@ -1,0 +1,31 @@
+{
+    "easycontrol": {
+        "pair": {
+            "title": "Bosch EasyControl-thermostaat toevoegen",
+            "subtitle": "Voer de gegevens van je thermostaat in",
+            "device": "Apparaat",
+            "connection": "Verbinding",
+            "serialNumber": "Serienummer (zonder streepjes)",
+            "accessKey": "Access key",
+            "password": "Wachtwoord",
+            "connect": "Verbinden"
+        },
+        "thermostatCt200Https": {
+            "customView": {
+                "pairingTitle": "Koppelen",
+                "networkRequirement": "Je pc en Homey moeten op hetzelfde netwerk zitten.",
+                "homeyIpAddressLabel": "Homey IP-adres:",
+                "detectingHomeyIp": "Homey IP-adres wordt gedetecteerd...",
+                "noteLabel": "Let op:",
+                "noteText": "Gebruik dit apparaat alleen wanneer het apparaat Thermostat (CT200) niet werkt.",
+                "step1Prefix": "1. Download hier de helper-app (macOS/Windows/Linux):",
+                "step2Instruction": "2. Volg de instructies in de helper-app om in te loggen met je SingleKey Id-account",
+                "enterPairingCode": "Voer deze koppelcode in de app in:",
+                "waitingForAccessToken": "Wachten op de token"
+            }
+        },
+        "awayMode": {
+            "error": "Kan afwezigheidsmodus niet instellen. Zorg ervoor dat een klokprogramma actief is."
+        }
+    }
+}

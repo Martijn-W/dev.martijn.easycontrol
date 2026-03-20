@@ -10,6 +10,20 @@
             "password": "Password",
             "connect": "Connect"
         },
+        "thermostatCt200Https": {
+            "customView": {
+                "pairingTitle": "Pairing",
+                "networkRequirement": "Your PC and Homey must be on the same network.",
+                "homeyIpAddressLabel": "Homey IP address:",
+                "detectingHomeyIp": "Detecting Homey IP...",
+                "noteLabel": "Note:",
+                "noteText": "This device should only be used when the device Thermostat (CT200) does not work.",
+                "step1Prefix": "1. Download the helper app here (macOS/Windows/Linux):",
+                "step2Instruction": "2. Follow the instructions in the helper app to log in with your SingleKey Id account",
+                "enterPairingCode": "Enter this Pairing Code in the app:",
+                "waitingForAccessToken": "Waiting for the access token"
+            }
+        },
         "awayMode": {
             "error": "Failed to set away mode. Make sure a clock program is active."
         }

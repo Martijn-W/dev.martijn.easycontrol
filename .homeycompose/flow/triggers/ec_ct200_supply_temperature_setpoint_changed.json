@@ -1,0 +1,25 @@
+{
+    "id": "ec_ct200_supply_temperature_setpoint_changed",
+    "title": {
+        "en": "Supply temperature setpoint changed",
+        "nl": "Aanvoertemperatuur setpoint gewijzigd"
+    },
+    "tokens": [
+        {
+            "name": "ec_supply_temperature_setpoint",
+            "type": "number",
+            "title": {
+                "en": "Supply temperature setpoint",
+                "nl": "Aanvoertemperatuur setpoint"
+            },
+            "example": 28
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "id": "ec_ct200_get_away_mode",
+    "title": {
+        "en": "Get away mode status",
+        "nl": "Afwezigheidsmodus ophalen"
+    },
+    "titleFormatted": {
+        "en": "The away mode !{{is|isn't}} [[enabled]]",
+        "nl": "De afwezigheidsmodus !{{is|is niet}} [[enabled]]"
+    },
+    "hint": {
+        "en": "Get the current away mode status",
+        "nl": "Haal de huidige afwezigheidsmodus op"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        },
+        {
+            "type": "dropdown",
+            "name": "enabled",
+            "values": [
+                {
+                    "id": "true",
+                    "label": {
+                        "en": "On"
+                    }
+                },
+                {
+                    "id": "false",
+                    "label": {
+                        "en": "Off"
+                    }
+                }
+            ]
+        }
+    ]
+}

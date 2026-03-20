@@ -1,0 +1,25 @@
+{
+    "id": "ec_ct200_temperature_offset_changed",
+    "title": {
+        "en": "The temperature offset changes",
+        "nl": "De temperatuur compensatie verandert"
+    },
+    "tokens": [
+        {
+            "name": "ec_temperature_offset",
+            "type": "number",
+            "title": {
+                "en": "Temperature offset",
+                "nl": "Temperatuur compensatie"
+            },
+            "example": -1.5
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

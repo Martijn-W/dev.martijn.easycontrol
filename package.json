@@ -1,12 +1,12 @@
 {
   "name": "dev.martijn.easycontrol",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "scripts": {
     "build": "tsc",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore ."
   },
   "dependencies": {
-    "bosch-xmpp-client": "github:Martijn-W/dev.martijn.bosch-xmpp-client#semver:1.1.0"
+    "bosch-xmpp-client": "github:Martijn-W/dev.martijn.bosch-xmpp-client#semver:2.0.0"
   },
   "devDependencies": {
     "@tsconfig/node16": "^16.1.4",

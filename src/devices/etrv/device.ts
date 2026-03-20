@@ -1,10 +1,10 @@
 import Homey from 'homey';
 import { thermostatManager } from '../../bosch';
 import DeviceSettings from './deviceSettings';
-import Ct200Device from '../ct200/device';
+import { Ct200BaseDevice } from '../base/ct200BaseDevice';
 
 export default class EtrvDevice extends Homey.Device {
-    #thermostat: Ct200Device | undefined;
+    #thermostat: Ct200BaseDevice<any> | undefined;
     #settings: DeviceSettings | null = null;
 
     async onInit() {
@@ -39,8 +39,6 @@ export default class EtrvDevice extends Homey.Device {
 
 
     public onAdded() {
-        console.log('>>>> DEVICE Added!', this.#thermostat === undefined);
-
         if (this.#thermostat) {
             this.#thermostat.requestSync();
         }
