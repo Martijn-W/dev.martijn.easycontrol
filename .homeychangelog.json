@@ -44,5 +44,9 @@
     "3.0.0": {
         "en": "Added support for connecting to the thermostat over HTTPS. If you have trouble connecting your thermostat over XMPP, try to connect over HTTPS instead.",
         "nl": "Ondersteuning toegevoegd voor het verbinden met de thermostaat via HTTPS. Als je problemen ervaart met het verbinden met je thermostaat via XMPP, probeer dan via HTTPS te verbinden."
+    },
+    "3.0.1": {
+        "en": "Improved connection retry logic for HTTPS connections when adding new devices",
+        "nl": "Verbeterde logica voor het opnieuw proberen te verbinden voor HTTPS-verbindingen bij het toevoegen van nieuwe apparaten"
     }
 }

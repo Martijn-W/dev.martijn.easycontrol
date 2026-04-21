@@ -104,8 +104,6 @@ export default class Ct200HttpsDriver extends Ct200BaseDriver {
     async validateDevice(data: { token: string, refreshToken: string }, session: PairSession): Promise<void> {
         this.log('Validating device...');
 
-        let ecClient: HttpEasyControlClient;
-
         try {
             this.log('Attempting to connect to the HTTP Client...');
 
@@ -117,7 +115,7 @@ export default class Ct200HttpsDriver extends Ct200BaseDriver {
 
             this.#tokenCache = token;
 
-            ecClient = new HttpEasyControlClient(
+            const ecClient = new HttpEasyControlClient(
                 new HttpConfigBuilder()
                     .withGatewayId('000000000')
                     .withToken(token)
@@ -134,14 +132,32 @@ export default class Ct200HttpsDriver extends Ct200BaseDriver {
             this.#gateways = (await ecClient.getGateways() ?? [])
                 .map(gateway => ({...gateway, deviceName: null, zoneId: null, id: null}));
 
-
             this.log(`Found ${this.#gateways.length} gateway(s)`);
 
             for (const gateway of this.#gateways) {
-                ecClient = new HttpEasyControlClient(
+                try {
+                    await this.#fetchGatewayDevices(gateway);
+                } catch (ex) {
+                    this.error(`[validateDevice] Failed to fetch devices from gateway ${gateway.deviceId}, skipping`, ex);
+                }
+            }
+        } catch (ex) {
+            this.error('[validateDevice] Failed to connect to the HTTP Client', ex);
+        }
+
+        await session.nextView()
+            .catch(e => this.error(e));
+    }
+
+    async #fetchGatewayDevices(gateway: { id: number | null, deviceId: string, deviceType: string, deviceName: string | null, zoneId: number | null }, maxRetries: number = 3): Promise<void> {
+        let lastError: unknown;
+
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                const ecClient = new HttpEasyControlClient(
                     new HttpConfigBuilder()
                         .withGatewayId(gateway.deviceId)
-                        .withToken(this.#tokenCache)
+                        .withToken(this.#tokenCache!)
                         .build()
                 );
 
@@ -152,20 +168,26 @@ export default class Ct200HttpsDriver extends Ct200BaseDriver {
                         .filter(device => device.type === 'thermostat');
 
                     if (device.length === 0) {
-                        continue;
+                        return;
                     }
 
                     gateway.deviceName = atob(device[0].name);
                     gateway.zoneId = device[0].zone;
                     gateway.id = device[0].id;
                 }
-            }
 
-            await session.nextView()
-                .catch(e => this.error(e));
-        } catch (ex) {
-            this.log('Failed to connect to the HTTP Client', ex);
+                return;
+            } catch (ex) {
+                lastError = ex;
+                this.log(`[fetchGatewayDevices] Attempt ${attempt}/${maxRetries} failed for gateway ${gateway.deviceId}`, ex);
+
+                if (attempt < maxRetries) {
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                }
+            }
         }
+
+        throw lastError;
     }
 
     #resetParingState(app: any, onReset?: () => void) {
