@@ -94,6 +94,7 @@ export default class EtrvDriver extends Homey.Driver {
     private async registerActions(): Promise<void> {
         await this.registerSetTemperatureOffsetAction();
         await this.registerSetChildLockAction();
+        await this.registerThermostatModeFlowCards();
     }
 
     private async registerSetTemperatureOffsetAction(): Promise<void> {
@@ -127,6 +128,48 @@ export default class EtrvDriver extends Homey.Driver {
             const lockValue = lock.toLowerCase() === 'true';
 
             return device.getCapabilityValue('ec_child_lock') === lockValue;
+        });
+    }
+
+    private async registerThermostatModeFlowCards(): Promise<void> {
+        const setThermostatMode = this.homey.flow.getActionCard('ec_etrv_set_thermostat_mode');
+        const getThermostatMode = this.homey.flow.getConditionCard('ec_etrv_get_thermostat_mode');
+
+        type ThermostatModeArguments = {
+            readonly device: EtrvDevice,
+            readonly mode: { id: string, name: string }
+        }
+
+        type ModeOption = { id: string, title: { en: string, nl?: string } };
+
+        const getOptions = (device: EtrvDevice, query: string) => {
+            const options = device.getCapabilityOptions('ec_thermostat_mode') as { values?: ModeOption[] };
+            return (options.values ?? [])
+                .filter(v => {
+                    if (!query)
+                        return true;
+
+                    const name = v.title.nl ?? v.title.en;
+
+                    return name.toLowerCase().includes(query.toLowerCase());
+                })
+                .map(v => ({id: v.id, name: v.title.nl ?? v.title.en}));
+        };
+
+        setThermostatMode.registerArgumentAutocompleteListener('mode', async (query: string, args: ThermostatModeArguments) => {
+            return getOptions(args.device, query);
+        });
+
+        setThermostatMode.registerRunListener(async ({device, mode}: ThermostatModeArguments) => {
+            await device.onSetThermostatMode(mode.id);
+        });
+
+        getThermostatMode.registerArgumentAutocompleteListener('mode', async (query: string, args: ThermostatModeArguments) => {
+            return getOptions(args.device, query);
+        });
+
+        getThermostatMode.registerRunListener(async ({device, mode}: ThermostatModeArguments) => {
+            return device.getCapabilityValue('ec_thermostat_mode') === mode.id;
         });
     }
 }

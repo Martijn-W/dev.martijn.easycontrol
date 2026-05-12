@@ -1,6 +1,7 @@
 import { DeviceResponse, Endpoint, PutResponse, ValueResponse, ZoneResponse } from '.';
 import { IEasyControlClient } from 'bosch-xmpp-client/dist/types';
 import ConnectionSettings from './models/settings/connectionSettings';
+import { ProgramResponse } from './models/responses/programResponse';
 
 export abstract class Client {
     protected abstract easyControlClient: IEasyControlClient | null;
@@ -202,6 +203,44 @@ export abstract class Client {
 
     public async setSystemAwayModeEnabled(enabled: boolean): Promise<PutResponse | null> {
         const response = await this.set(Endpoint.SystemAwayModeEnabled, enabled ? 'true' : 'false');
+
+        return response as PutResponse;
+    }
+
+    public async getClockPrograms(): Promise<ValueResponse<ProgramResponse[]> | null> {
+        const response = await this.get(Endpoint.ProgramsList);
+
+        return response as ValueResponse<ProgramResponse[]>;
+    }
+
+    public async getZoneUserMode(zoneId: number): Promise<ValueResponse<string> | null> {
+        const endpoint = Endpoint.ZoneUserMode.replace('%1', `${zoneId}`);
+
+        const response = await this.get(endpoint);
+
+        return response as ValueResponse<string>;
+    }
+
+    public async setZoneUserMode(zoneId: number, mode: 'clock' | 'manual'): Promise<PutResponse | null> {
+        const endpoint = Endpoint.ZoneUserMode.replace('%1', `${zoneId}`);
+
+        const response = await this.set(endpoint, mode);
+
+        return response as PutResponse;
+    }
+
+    public async getZoneClockProgram(zoneId: number): Promise<ValueResponse<number> | null> {
+        const endpoint = Endpoint.ZoneClockProgram.replace('%1', `${zoneId}`);
+
+        const response = await this.get(endpoint);
+
+        return response as ValueResponse<number>;
+    }
+
+    public async setZoneClockProgram(zoneId: number, programNumber: number): Promise<PutResponse | null> {
+        const endpoint = Endpoint.ZoneClockProgram.replace('%1', `${zoneId}`);
+
+        const response = await this.set(endpoint, programNumber);
 
         return response as PutResponse;
     }

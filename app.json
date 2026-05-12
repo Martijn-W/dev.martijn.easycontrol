@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "dev.martijn.easycontrol",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "compatibility": ">=12.2.0",
   "sdk": 3,
   "brandColor": "#ED0007",
@@ -209,6 +209,30 @@
         ]
       },
       {
+        "id": "ec_thermostat_mode_changed",
+        "title": {
+          "en": "Thermostat mode changed",
+          "nl": "Thermostaatmodus gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ec_thermostat_mode",
+            "type": "string",
+            "title": {
+              "en": "Thermostat mode",
+              "nl": "Thermostaatmodus"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https|thermostat-etrv"
+          }
+        ]
+      },
+      {
         "id": "ec_measure_return_temperature_changed",
         "title": {
           "en": "Return temperature changed",
@@ -230,6 +254,30 @@
             "type": "device",
             "name": "device",
             "filter": "driver_id=thermostat-ct200"
+          }
+        ]
+      },
+      {
+        "id": "ec_ct200https_thermostat_mode_changed",
+        "title": {
+          "en": "Thermostat mode changed",
+          "nl": "Thermostaatmodus gewijzigd"
+        },
+        "tokens": [
+          {
+            "name": "ec_thermostat_mode",
+            "type": "string",
+            "title": {
+              "en": "Thermostat mode",
+              "nl": "Thermostaatmodus"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200-https"
           }
         ]
       },
@@ -386,6 +434,66 @@
                 }
               }
             ]
+          }
+        ]
+      },
+      {
+        "id": "ec_ct200_get_thermostat_mode",
+        "title": {
+          "en": "Thermostat mode",
+          "nl": "Thermostaatmodus"
+        },
+        "titleFormatted": {
+          "en": "The thermostat mode !{{is|isn't}} [[mode]]",
+          "nl": "De thermostaatmodus !{{is|is niet}} [[mode]]"
+        },
+        "hint": {
+          "en": "Check the current thermostat program mode",
+          "nl": "Controleer de huidige thermostaatprogrammamodus"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+          },
+          {
+            "type": "autocomplete",
+            "name": "mode",
+            "title": {
+              "en": "Mode",
+              "nl": "Modus"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ec_etrv_get_thermostat_mode",
+        "title": {
+          "en": "Thermostat mode",
+          "nl": "Thermostaatmodus"
+        },
+        "titleFormatted": {
+          "en": "The thermostat mode !{{is|isn't}} [[mode]]",
+          "nl": "De thermostaatmodus !{{is|is niet}} [[mode]]"
+        },
+        "hint": {
+          "en": "Check the current thermostat program mode",
+          "nl": "Controleer de huidige thermostaatprogrammamodus"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-etrv"
+          },
+          {
+            "type": "autocomplete",
+            "name": "mode",
+            "title": {
+              "en": "Mode",
+              "nl": "Modus"
+            }
           }
         ]
       },
@@ -602,6 +710,66 @@
                 }
               }
             ]
+          }
+        ]
+      },
+      {
+        "id": "ec_ct200_set_thermostat_mode",
+        "title": {
+          "en": "Set thermostat mode",
+          "nl": "Thermostaatmodus instellen"
+        },
+        "titleFormatted": {
+          "en": "Set thermostat mode to [[mode]]",
+          "nl": "Zet thermostaatmodus naar [[mode]]"
+        },
+        "hint": {
+          "en": "Switch between manual mode and a clock program",
+          "nl": "Schakel tussen handmatige modus en een klokprogramma"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+          },
+          {
+            "type": "autocomplete",
+            "name": "mode",
+            "title": {
+              "en": "Mode",
+              "nl": "Modus"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ec_etrv_set_thermostat_mode",
+        "title": {
+          "en": "Set thermostat mode",
+          "nl": "Thermostaatmodus instellen"
+        },
+        "titleFormatted": {
+          "en": "Set thermostat mode to [[mode]]",
+          "nl": "Zet thermostaatmodus naar [[mode]]"
+        },
+        "hint": {
+          "en": "Switch between manual mode and a clock program",
+          "nl": "Schakel tussen handmatige modus en een klokprogramma"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-etrv"
+          },
+          {
+            "type": "autocomplete",
+            "name": "mode",
+            "title": {
+              "en": "Mode",
+              "nl": "Modus"
+            }
           }
         ]
       },
@@ -1156,6 +1324,27 @@
       "max": 2,
       "step": 0.5,
       "decimals": 1
+    },
+    "ec_thermostat_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat program",
+        "nl": "Thermostaatprogramma"
+      },
+      "uiComponent": "picker",
+      "getable": true,
+      "setable": true,
+      "insights": false,
+      "uiQuickAction": false,
+      "values": [
+        {
+          "id": "manual",
+          "title": {
+            "en": "Manual",
+            "nl": "Manueel"
+          }
+        }
+      ]
     },
     "ec_valve_position": {
       "type": "number",

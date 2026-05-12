@@ -56,6 +56,31 @@
     ],
     "conditions": [
         {
+            "id": "ec_etrv_get_thermostat_mode",
+            "title": {
+                "en": "Thermostat mode",
+                "nl": "Thermostaatmodus"
+            },
+            "titleFormatted": {
+                "en": "The thermostat mode !{{is|isn't}} [[mode]]",
+                "nl": "De thermostaatmodus !{{is|is niet}} [[mode]]"
+            },
+            "hint": {
+                "en": "Check the current thermostat program mode",
+                "nl": "Controleer de huidige thermostaatprogrammamodus"
+            },
+            "args": [
+                {
+                    "type": "autocomplete",
+                    "name": "mode",
+                    "title": {
+                        "en": "Mode",
+                        "nl": "Modus"
+                    }
+                }
+            ]
+        },
+        {
             "id": "ec_etrv_get_child_lock",
             "title": {
                 "en": "Get child lock status",
@@ -92,6 +117,31 @@
         }
     ],
     "actions": [
+        {
+            "id": "ec_etrv_set_thermostat_mode",
+            "title": {
+                "en": "Set thermostat mode",
+                "nl": "Thermostaatmodus instellen"
+            },
+            "titleFormatted": {
+                "en": "Set thermostat mode to [[mode]]",
+                "nl": "Zet thermostaatmodus naar [[mode]]"
+            },
+            "hint": {
+                "en": "Switch between manual mode and a clock program",
+                "nl": "Schakel tussen handmatige modus en een klokprogramma"
+            },
+            "args": [
+                {
+                    "type": "autocomplete",
+                    "name": "mode",
+                    "title": {
+                        "en": "Mode",
+                        "nl": "Modus"
+                    }
+                }
+            ]
+        },
         {
             "id": "ec_etrv_set_child_lock",
             "title": {

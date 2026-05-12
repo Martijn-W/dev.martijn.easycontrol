@@ -19,8 +19,6 @@
             ]
         }
     ],
-    "conditions": [
-    ],
-    "actions": [
-    ]
+    "conditions": [],
+    "actions": []
 }

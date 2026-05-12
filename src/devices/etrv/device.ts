@@ -28,7 +28,7 @@ export default class EtrvDevice extends Homey.Device {
             return;
         }
 
-        this.#thermostat.registerValve(this);
+        await this.#thermostat.registerValve(this);
 
         this.log('EasyControl Thermostat Valve device has been initialized');
     }
@@ -64,6 +64,35 @@ export default class EtrvDevice extends Homey.Device {
         this.setCapabilityValue('ec_temperature_offset', value).catch(this.error);
     }
 
+    async onSetThermostatMode(value: string): Promise<void> {
+        if (!this.#thermostat) {
+            return;
+        }
+
+        this.log(`Setting thermostat mode: ${value}`);
+
+        const client = this.#thermostat.getClient();
+
+        if (value === 'manual') {
+            const response = await client.setZoneUserMode(this.#settings!.zoneId, 'manual');
+
+            if (response?.status !== 'ok') {
+                throw new Error(this.homey.__('easycontrol.thermostatMode.error'));
+            }
+        } else {
+            const programNumber = parseInt(value, 10);
+
+            const userModeResponse = await client.setZoneUserMode(this.#settings!.zoneId, 'clock');
+            const clockProgramResponse = await client.setZoneClockProgram(this.#settings!.zoneId, programNumber);
+
+            if (userModeResponse?.status !== 'ok' || clockProgramResponse?.status !== 'ok') {
+                throw new Error(this.homey.__('easycontrol.thermostatMode.error'));
+            }
+        }
+
+        this.setCapabilityValue('ec_thermostat_mode', value).catch(this.error);
+    }
+
     async onSetChildLock(value: boolean): Promise<void> {
         if (!this.#thermostat) {
             return;
@@ -81,9 +110,20 @@ export default class EtrvDevice extends Homey.Device {
     }
 
     private async registerCapabilities(): Promise<void> {
+        const capabilities: string[] = [
+            'ec_thermostat_mode'
+        ];
+
+        for (let capability of capabilities) {
+            if (!this.hasCapability(capability)) {
+                await this.addCapability(capability);
+            }
+        }
+
         this.registerCapabilityListener('target_temperature', this.onSetTargetTemperature.bind(this));
         this.registerCapabilityListener('ec_temperature_offset', this.onSetTemperatureOffset.bind(this));
         this.registerCapabilityListener('ec_child_lock', this.onSetChildLock.bind(this));
+        this.registerCapabilityListener('ec_thermostat_mode', this.onSetThermostatMode.bind(this));
     }
 
     private async onSetTargetTemperature(value: any): Promise<void> {
@@ -116,6 +156,8 @@ export default class EtrvDevice extends Homey.Device {
 
         const zoneTemperature = await client.getZoneTemperature(zoneId);
         const zoneTargetTemperature = await client.getZoneTargetTemperature(zoneId);
+        const zoneUserMode = await client.getZoneUserMode(zoneId);
+        const zoneClockProgram = await client.getZoneClockProgram(zoneId);
         const batteryStatus = await client.getDeviceBattery(deviceId);
         const deviceSignal = await client.getDeviceSignal(deviceId);
         const deviceValvePosition = await client.getDeviceValvePosition(deviceId);
@@ -156,6 +198,16 @@ export default class EtrvDevice extends Homey.Device {
             this.log(`→ temperature offset: ${deviceTemperatureOffset.value}${deviceTemperatureOffset.unitOfMeasure}`);
 
             this.setCapabilityValue('ec_temperature_offset', deviceTemperatureOffset.value).catch(this.error);
+        }
+
+        if (zoneUserMode != null) {
+            const modeValue = zoneUserMode.value === 'manual'
+                ? 'manual'
+                : String(Math.round(zoneClockProgram?.value ?? 0));
+
+            this.log(`→ thermostat mode: ${zoneUserMode.value}, program: ${zoneClockProgram?.value}`);
+
+            this.setCapabilityValue('ec_thermostat_mode', modeValue).catch(this.error);
         }
 
         if (deviceChildLockEnabled != null) {

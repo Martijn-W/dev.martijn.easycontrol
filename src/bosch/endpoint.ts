@@ -7,6 +7,8 @@ export enum Endpoint {
     ZoneHumidity = '/zones/zn%1/humidity',
     ZoneManualTemperatureHeating = '/zones/zn%1/manualTemperatureHeating',
     ZoneValvePosition = '/zones/zn%1/actualValvePosition',
+    ZoneUserMode = '/zones/zn%1/userMode',
+    ZoneClockProgram = '/zones/zn%1/clockProgram',
 
     ApplianceSystemPressure = '/system/appliance/systemPressure',
 
@@ -27,5 +29,7 @@ export enum Endpoint {
     SystemSensorHumidityIndoor = '/system/sensors/humidity/indoor_h1',
     SystemTemperatureOffset = '/system/sensors/temperatures/offset',
 
-    HeatingCircuitSupplyTemperatureSetpoint = '/heatingCircuits/hc%1/supplyTemperatureSetpoint'
+    HeatingCircuitSupplyTemperatureSetpoint = '/heatingCircuits/hc%1/supplyTemperatureSetpoint',
+
+    ProgramsList = '/programs/list',
 }

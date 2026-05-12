@@ -1,5 +1,6 @@
 import Homey from 'homey';
 import { Client, thermostatManager, ValueResponse } from '../../bosch';
+import { ProgramResponse } from '../../bosch/models/responses/programResponse';
 import EtrvDevice from '../etrv/device';
 import BaseDeviceSettings from './baseDeviceSettings';
 import ConnectionSettings from '../../bosch/models/settings/connectionSettings';
@@ -12,6 +13,9 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
     protected connectedValves: EtrvDevice[] = [];
     protected settings: BaseDeviceSettings | null = null;
     protected abstract unsupportedCapabilities: string[];
+
+    #lastKnownPrograms: string = '';
+    #lastKnownProgramValues: Array<{ id: string, title: { en: string, nl: string } }> | null = null;
 
     #shouldSync: boolean = true;
     #isSyncing: boolean = false;
@@ -68,8 +72,17 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         this.log('EasyControl device has been deleted');
     }
 
-    registerValve(device: EtrvDevice): void {
+    async registerValve(device: EtrvDevice): Promise<void> {
         this.connectedValves.push(device);
+
+        if (!this.#lastKnownProgramValues) {
+            const programs = await this.client.getClockPrograms();
+
+            if (programs)
+                await this.#syncThermostatModeOptions(programs.value);
+        } else {
+            await device.setCapabilityOptions('ec_thermostat_mode', {values: this.#lastKnownProgramValues}).catch(this.error);
+        }
     }
 
     removeValve(device: EtrvDevice): void {
@@ -128,6 +141,29 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         }
 
         this.setCapabilityValue('ec_away_mode', value).catch(this.error);
+    }
+
+    async onSetThermostatMode(value: string): Promise<void> {
+        this.log(`Setting thermostat mode: ${value}`);
+
+        if (value === 'manual') {
+            const response = await this.client.setZoneUserMode(this.settings!.zoneId, 'manual');
+
+            if (response?.status !== 'ok') {
+                throw new Error(this.homey.__('easycontrol.thermostatMode.error'));
+            }
+        } else {
+            const programNumber = parseInt(value, 10);
+
+            const userModeResponse = await this.client.setZoneUserMode(this.settings!.zoneId, 'clock');
+            const clockProgramResponse = await this.client.setZoneClockProgram(this.settings!.zoneId, programNumber);
+
+            if (userModeResponse?.status !== 'ok' || clockProgramResponse?.status !== 'ok') {
+                throw new Error(this.homey.__('easycontrol.thermostatMode.error'));
+            }
+        }
+
+        this.setCapabilityValue('ec_thermostat_mode', value).catch(this.error);
     }
 
     requestSync(): void {
@@ -216,7 +252,8 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
             'ec_measure_outside_temperature',
             'ec_temperature_offset',
             'ec_supply_temperature_setpoint',
-            'ec_away_mode'
+            'ec_away_mode',
+            'ec_thermostat_mode'
         ];
 
         for (let capability of capabilities) {
@@ -225,9 +262,42 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
             }
         }
 
+        if (!this.unsupportedCapabilities.includes('ec_thermostat_mode')) {
+            const programs = await this.client.getClockPrograms();
+
+            if (programs)
+                await this.#syncThermostatModeOptions(programs.value);
+        }
+
         this.registerCapabilityListener('target_temperature', this.#onSetTargetTemperature.bind(this));
         this.registerCapabilityListener('ec_child_lock', this.onSetChildLock.bind(this));
         this.registerCapabilityListener('ec_away_mode', this.onSetAwayMode.bind(this));
+        this.registerCapabilityListener('ec_thermostat_mode', this.onSetThermostatMode.bind(this));
+    }
+
+    async #syncThermostatModeOptions(programs: ProgramResponse[]): Promise<void> {
+        const hash = JSON.stringify(programs);
+
+        if (hash === this.#lastKnownPrograms)
+            return;
+
+        this.#lastKnownPrograms = hash;
+
+        const values = [
+            {id: 'manual', title: {en: 'Manual', nl: 'Manueel'}},
+            ...programs.map(p => ({
+                id: String(p.id),
+                title: {en: atob(p.name), nl: atob(p.name)}
+            }))
+        ];
+
+        this.#lastKnownProgramValues = values;
+
+        await this.setCapabilityOptions('ec_thermostat_mode', {values});
+
+        for (const valve of this.connectedValves) {
+            await valve.setCapabilityOptions('ec_thermostat_mode', {values}).catch(this.error);
+        }
     }
 
     async #setThermostatData(): Promise<void> {
@@ -250,6 +320,9 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         const systemTemperatureOffset = await this.#fetchWithFailureTracking('getSystemTemperatureOffset', async () => await this.client.getSystemTemperatureOffset());
         const supplyTemperatureSetpoint = await this.#fetchWithFailureTracking('getHeatingCircuitSupplyTemperatureSetpoint', async () => await this.client.getHeatingCircuitSupplyTemperatureSetpoint());
         const systemAwayModeEnabled = await this.#fetchWithFailureTracking('getSystemAwayModeEnabled', async () => await this.client.getSystemAwayModeEnabled());
+        const zoneUserMode = await this.#fetchWithFailureTracking('getZoneUserMode', async () => await this.client.getZoneUserMode(zoneId));
+        const zoneClockProgram = await this.#fetchWithFailureTracking('getZoneClockProgram', async () => await this.client.getZoneClockProgram(zoneId));
+        const clockPrograms = await this.client.getClockPrograms().catch(() => null);
 
         if (zoneTemperature != null) {
             this.log(`→ temperature: ${zoneTemperature.value}${zoneTemperature.unitOfMeasure}`);
@@ -339,6 +412,19 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
             } else {
                 this.log(`! unexpected away mode status type: ${typeof value}, value: ${value}`);
             }
+        }
+
+        if (clockPrograms)
+            await this.#syncThermostatModeOptions(clockPrograms.value);
+
+        if (zoneUserMode != null) {
+            const modeValue = zoneUserMode.value === 'manual'
+                ? 'manual'
+                : String(Math.round(zoneClockProgram?.value ?? 0));
+
+            this.log(`→ thermostat mode: ${zoneUserMode.value}, program: ${zoneClockProgram?.value}`);
+
+            this.setCapabilityValue('ec_thermostat_mode', modeValue).catch(this.error);
         }
 
         // Notify all connected thermostat valves that they need to update. Make sure to wait for each device to finish,

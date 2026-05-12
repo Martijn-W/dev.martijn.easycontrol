@@ -1,0 +1,21 @@
+{
+    "type": "enum",
+    "title": {
+        "en": "Thermostat program",
+        "nl": "Thermostaatprogramma"
+    },
+    "uiComponent": "picker",
+    "getable": true,
+    "setable": true,
+    "insights": false,
+    "uiQuickAction": false,
+    "values": [
+        {
+            "id": "manual",
+            "title": {
+                "en": "Manual",
+                "nl": "Manueel"
+            }
+        }
+    ]
+}

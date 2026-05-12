@@ -26,6 +26,9 @@
         },
         "awayMode": {
             "error": "Kan afwezigheidsmodus niet instellen. Zorg ervoor dat een klokprogramma actief is."
+        },
+        "thermostatMode": {
+            "error": "Kan thermostaatprogramma niet instellen."
         }
     }
 }

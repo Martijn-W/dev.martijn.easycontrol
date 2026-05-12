@@ -1,0 +1,23 @@
+{
+    "triggers": [
+        {
+            "id": "ec_ct200https_thermostat_mode_changed",
+            "title": {
+                "en": "Thermostat mode changed",
+                "nl": "Thermostaatmodus gewijzigd"
+            },
+            "tokens": [
+                {
+                    "name": "ec_thermostat_mode",
+                    "type": "string",
+                    "title": {
+                        "en": "Thermostat mode",
+                        "nl": "Thermostaatmodus"
+                    }
+                }
+            ]
+        }
+    ],
+    "conditions": [],
+    "actions": []
+}

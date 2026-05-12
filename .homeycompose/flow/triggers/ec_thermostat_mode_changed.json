@@ -1,0 +1,24 @@
+{
+    "id": "ec_thermostat_mode_changed",
+    "title": {
+        "en": "Thermostat mode changed",
+        "nl": "Thermostaatmodus gewijzigd"
+    },
+    "tokens": [
+        {
+            "name": "ec_thermostat_mode",
+            "type": "string",
+            "title": {
+                "en": "Thermostat mode",
+                "nl": "Thermostaatmodus"
+            }
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https|thermostat-etrv"
+        }
+    ]
+}

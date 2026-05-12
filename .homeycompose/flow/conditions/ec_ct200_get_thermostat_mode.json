@@ -1,0 +1,30 @@
+{
+    "id": "ec_ct200_get_thermostat_mode",
+    "title": {
+        "en": "Thermostat mode",
+        "nl": "Thermostaatmodus"
+    },
+    "titleFormatted": {
+        "en": "The thermostat mode !{{is|isn't}} [[mode]]",
+        "nl": "De thermostaatmodus !{{is|is niet}} [[mode]]"
+    },
+    "hint": {
+        "en": "Check the current thermostat program mode",
+        "nl": "Controleer de huidige thermostaatprogrammamodus"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        },
+        {
+            "type": "autocomplete",
+            "name": "mode",
+            "title": {
+                "en": "Mode",
+                "nl": "Modus"
+            }
+        }
+    ]
+}

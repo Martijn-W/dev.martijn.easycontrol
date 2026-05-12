@@ -48,5 +48,9 @@
     "3.0.1": {
         "en": "Improved connection retry logic for HTTPS connections when adding new devices",
         "nl": "Verbeterde logica voor het opnieuw proberen te verbinden voor HTTPS-verbindingen bij het toevoegen van nieuwe apparaten"
+    },
+    "3.1.0": {
+        "en": "Added support for switching between clock programmes and manual mode",
+        "nl": "Ondersteuning toegevoegd voor het wisselen tussen klokprogramma's en handmatige modus"
     }
 }
