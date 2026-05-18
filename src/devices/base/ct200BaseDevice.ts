@@ -16,6 +16,7 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
 
     #lastKnownPrograms: string = '';
     #lastKnownProgramValues: Array<{ id: string, title: { en: string, nl: string } }> | null = null;
+    #currentThermostatModeToken: Homey.FlowToken | null = null;
 
     #shouldSync: boolean = true;
     #isSyncing: boolean = false;
@@ -39,6 +40,19 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         thermostatManager.addThermostat(this.settings!.serialNumber, this);
 
         await this.#registerCapabilities();
+
+        if (!this.unsupportedCapabilities.includes('ec_thermostat_mode')) {
+            const currentMode = this.getCapabilityValue('ec_thermostat_mode') as string | null;
+
+            this.#currentThermostatModeToken = await this.homey.flow.createToken(
+                `ec_current_thermostat_mode_${this.driver.id}_${this.settings!.serialNumber}`,
+                {
+                    type: 'string',
+                    title: `${this.getName()} - ${this.homey.__('easycontrol.currentThermostatModeToken.title')}`,
+                    value: currentMode ? this.#resolveModeName(currentMode) : ''
+                }
+            );
+        }
 
         this.log('EasyControl device has been initialized');
 
@@ -67,6 +81,7 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
     async onDeleted(): Promise<void> {
         thermostatManager.removeThermostat(this.settings!.serialNumber);
 
+        await this.#currentThermostatModeToken?.unregister();
         await this.#reset();
 
         this.log('EasyControl device has been deleted');
@@ -164,6 +179,7 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         }
 
         this.setCapabilityValue('ec_thermostat_mode', value).catch(this.error);
+        this.#currentThermostatModeToken?.setValue(this.#resolveModeName(value)).catch(this.error);
     }
 
     requestSync(): void {
@@ -273,6 +289,12 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         this.registerCapabilityListener('ec_child_lock', this.onSetChildLock.bind(this));
         this.registerCapabilityListener('ec_away_mode', this.onSetAwayMode.bind(this));
         this.registerCapabilityListener('ec_thermostat_mode', this.onSetThermostatMode.bind(this));
+    }
+
+    #resolveModeName(modeValue: string): string {
+        const currentMode = this.#lastKnownProgramValues?.find(v => v.id === modeValue);
+
+        return currentMode?.title.nl ?? currentMode?.title.en ?? modeValue;
     }
 
     async #syncThermostatModeOptions(programs: ProgramResponse[]): Promise<void> {
@@ -425,6 +447,7 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
             this.log(`→ thermostat mode: ${zoneUserMode.value}, program: ${zoneClockProgram?.value}`);
 
             this.setCapabilityValue('ec_thermostat_mode', modeValue).catch(this.error);
+            this.#currentThermostatModeToken?.setValue(this.#resolveModeName(modeValue)).catch(this.error);
         }
 
         // Notify all connected thermostat valves that they need to update. Make sure to wait for each device to finish,

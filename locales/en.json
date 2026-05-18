@@ -29,6 +29,9 @@
         },
         "thermostatMode": {
             "error": "Failed to set thermostat program."
+        },
+        "currentThermostatModeToken": {
+            "title": "Current Thermostat Mode"
         }
     }
 }

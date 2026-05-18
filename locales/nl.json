@@ -29,6 +29,9 @@
         },
         "thermostatMode": {
             "error": "Kan thermostaatprogramma niet instellen."
+        },
+        "currentThermostatModeToken": {
+            "title": "Huidige thermostaatmodus"
         }
     }
 }

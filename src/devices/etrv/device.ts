@@ -6,6 +6,7 @@ import { Ct200BaseDevice } from '../base/ct200BaseDevice';
 export default class EtrvDevice extends Homey.Device {
     #thermostat: Ct200BaseDevice<any> | undefined;
     #settings: DeviceSettings | null = null;
+    #currentThermostatModeToken: Homey.FlowToken | null = null;
 
     async onInit() {
         this.#settings = this.fixSettings(this.getSettings() as DeviceSettings);
@@ -30,11 +31,23 @@ export default class EtrvDevice extends Homey.Device {
 
         await this.#thermostat.registerValve(this);
 
+        const currentMode = this.getCapabilityValue('ec_thermostat_mode') as string | null;
+
+        this.#currentThermostatModeToken = await this.homey.flow.createToken(
+            `ec_current_thermostat_mode_${this.driver.id}_${this.#settings!.serialNumber}_${this.#settings!.deviceId}`,
+            {
+                type: 'string',
+                title: `${this.getName()} - ${this.homey.__('easycontrol.currentThermostatModeToken.title')}`,
+                value: currentMode ? this.#resolveModeName(currentMode) : ''
+            }
+        );
+
         this.log('EasyControl Thermostat Valve device has been initialized');
     }
 
     async onDeleted(): Promise<void> {
         this.#thermostat?.removeValve(this);
+        await this.#currentThermostatModeToken?.unregister();
     }
 
 
@@ -91,6 +104,7 @@ export default class EtrvDevice extends Homey.Device {
         }
 
         this.setCapabilityValue('ec_thermostat_mode', value).catch(this.error);
+        this.#currentThermostatModeToken?.setValue(this.#resolveModeName(value)).catch(this.error);
     }
 
     async onSetChildLock(value: boolean): Promise<void> {
@@ -142,6 +156,15 @@ export default class EtrvDevice extends Homey.Device {
 
     private delay(ms: number): Promise<void> {
         return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    #resolveModeName(modeValue: string): string {
+        type ModeOption = { id: string, title: { en: string, nl: string } };
+
+        const options = this.getCapabilityOptions('ec_thermostat_mode') as { values?: ModeOption[] };
+        const currentMode = options.values?.find(v => v.id === modeValue);
+
+        return currentMode?.title.nl ?? currentMode?.title.en ?? modeValue;
     }
 
     async setThermostatValveData(): Promise<void> {
@@ -208,6 +231,7 @@ export default class EtrvDevice extends Homey.Device {
             this.log(`→ thermostat mode: ${zoneUserMode.value}, program: ${zoneClockProgram?.value}`);
 
             this.setCapabilityValue('ec_thermostat_mode', modeValue).catch(this.error);
+            this.#currentThermostatModeToken?.setValue(this.#resolveModeName(modeValue)).catch(this.error);
         }
 
         if (deviceChildLockEnabled != null) {
