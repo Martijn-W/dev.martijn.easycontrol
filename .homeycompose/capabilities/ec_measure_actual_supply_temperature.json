@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Actual supply temperature",
+        "nl": "Actuele aanvoertemperatuur"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/actual_supply_temperature.svg",
+    "getable": true,
+    "setable": false,
+    "units": {
+        "en": "°C",
+        "nl": "°C"
+    },
+    "insights": true
+}

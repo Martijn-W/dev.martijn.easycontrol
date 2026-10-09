@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-labelledby="title desc">
+    <title id="title">Power setpoint</title>
+    <desc id="desc">White flame with an incoming arrow representing requested heating power</desc>
+
+    <!-- Heating power -->
+    <path d="M17 5
+             C18 14 7 18 7 28
+             C7 35 11 41 18 41
+             C25 41 29 35 29 28
+             C29 23 27 19 24 16
+             C24 21 21 23 19 24
+             C21 17 20 10 17 5Z"
+          fill="none"
+          stroke="white"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+    <!-- Incoming power demand -->
+    <g transform="translate(16 10.5) scale(1.5)">
+        <!-- Arrow shaft -->
+        <rect x="12" y="8" width="6" height="2" rx="0.5" fill="white"/>
+
+        <!-- Rounded arrow head -->
+        <path d="M13 6.7 Q12.7 6.5 12.4 6.8 L10.7 8.7 Q10.4 9 10.7 9.3 L12.4 11.2 Q12.7 11.5 13 11.3 Q13.2 11.15 13.2 10.8 L13.2 7.2 Q13.2 6.85 13 6.7 Z"
+              fill="white"/>
+    </g>
+</svg>

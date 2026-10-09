@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Requested heating power",
+        "nl": "Gevraagd verwarmingsvermogen"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/power_setpoint.svg",
+    "getable": true,
+    "setable": false,
+    "units": {
+        "en": "%",
+        "nl": "%"
+    },
+    "insights": true
+}

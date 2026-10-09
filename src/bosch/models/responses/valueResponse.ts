@@ -5,7 +5,8 @@ export interface ValueResponse<TValue> {
     recordable: number,
     value: TValue,
     used: string,
-    unitOfMeasure: 'C' | 'F',
+    available?: string | boolean,
+    unitOfMeasure: 'C' | 'F' | '%',
     minValue: number,
     maxValue: number,
     stepSize: number

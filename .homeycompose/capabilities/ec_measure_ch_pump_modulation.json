@@ -1,0 +1,19 @@
+{
+    "type": "number",
+    "title": {
+        "en": "CH pump modulation",
+        "nl": "CV-pompmodulatie"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/ch_pump_modulation.svg",
+    "getable": true,
+    "setable": false,
+    "units": {
+        "en": "%",
+        "nl": "%"
+    },
+    "insights": true,
+    "min": 0,
+    "max": 100,
+    "step": 1
+}

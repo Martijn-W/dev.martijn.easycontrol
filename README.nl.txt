@@ -9,6 +9,8 @@ Functies omvatten:
 — Actuele modulatie monitoren
 — Retourtemperatuur monitoren
 — Stand radiatorklep monitoren
+— CV-pompmodulatie, actuele aanvoertemperatuur en gevraagd verwarmingsvermogen monitoren
+— Minimale/maximale aanvoertemperatuur en grenzen van de stooklijn bekijken en instellen (CT200)
 — Kinderslot instellen
 — En nog veel meer!
 

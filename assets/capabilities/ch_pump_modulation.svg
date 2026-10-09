@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-labelledby="title desc">
+    <title id="title">CH pump modulation</title>
+    <desc id="desc">White square wave connected to a circulation pump</desc>
+
+    <!-- Modulation pulse and pump inlet -->
+    <path d="M4 28V8H14V28H23"
+          fill="none"
+          stroke="white"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+    <!-- Pump housing -->
+    <circle cx="33" cy="28" r="10"
+            fill="none"
+            stroke="white"
+            stroke-width="3"/>
+
+    <!-- Flow direction -->
+    <path d="M30 23L37 28L30 33Z"
+          fill="white"
+          stroke="white"
+          stroke-width="1.5"
+          stroke-linejoin="round"/>
+
+    <!-- Pump outlet -->
+    <path d="M43 28H45"
+          fill="none"
+          stroke="white"
+          stroke-width="3"
+          stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,25 @@
+{
+    "id": "ec_heat_curve_max_changed",
+    "title": {
+        "en": "Heating curve maximum changed",
+        "nl": "Bovengrens stooklijn gewijzigd"
+    },
+    "tokens": [
+        {
+            "name": "ec_heat_curve_max",
+            "type": "number",
+            "title": {
+                "en": "Heating curve maximum",
+                "nl": "Bovengrens stooklijn"
+            },
+            "example": 45
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

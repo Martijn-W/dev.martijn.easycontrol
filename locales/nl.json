@@ -27,6 +27,14 @@
         "awayMode": {
             "error": "Kan afwezigheidsmodus niet instellen. Zorg ervoor dat een klokprogramma actief is."
         },
+        "supplySettings": {
+            "unavailable": "Deze instelling is niet beschikbaar op deze thermostaat.",
+            "notWritable": "Deze instelling kan momenteel niet worden gewijzigd.",
+            "invalidValue": "De waarde moet een geldig getal zijn.",
+            "outOfRange": "De waarde moet tussen {{min}} en {{max}} liggen.",
+            "invalidStep": "De waarde komt niet overeen met de stapgrootte van deze instelling.",
+            "writeFailed": "Kan de instelling niet wijzigen."
+        },
         "thermostatMode": {
             "error": "Kan thermostaatprogramma niet instellen."
         },

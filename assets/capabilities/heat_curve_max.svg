@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24">
+    <!-- Upper limit -->
+    <path d="M4 3H20"
+          fill="none"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"/>
+
+    <!-- Heating curve: low on the left, high on the right -->
+    <path d="M5 19C7 19 8 19 11 16S16 8 19 8"
+          fill="none"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+
+    <!-- Upper endpoint -->
+    <circle cx="19" cy="8" r="2.5" fill="white"/>
+</svg>

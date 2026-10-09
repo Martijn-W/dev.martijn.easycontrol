@@ -1,0 +1,19 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Maximum supply temperature",
+        "nl": "Maximale aanvoertemperatuur"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/max_supply_temperature.svg",
+    "getable": true,
+    "setable": true,
+    "units": {
+        "en": "°C",
+        "nl": "°C"
+    },
+    "insights": true,
+    "min": 25,
+    "max": 90,
+    "step": 1
+}

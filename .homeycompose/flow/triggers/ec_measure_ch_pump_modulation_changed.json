@@ -1,0 +1,25 @@
+{
+    "id": "ec_measure_ch_pump_modulation_changed",
+    "title": {
+        "en": "CH pump modulation changed",
+        "nl": "CV-pompmodulatie gewijzigd"
+    },
+    "tokens": [
+        {
+            "name": "ec_measure_ch_pump_modulation",
+            "type": "number",
+            "title": {
+                "en": "CH pump modulation",
+                "nl": "CV-pompmodulatie"
+            },
+            "example": 35
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

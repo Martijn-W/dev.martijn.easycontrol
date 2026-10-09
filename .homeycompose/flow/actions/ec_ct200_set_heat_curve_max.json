@@ -1,0 +1,31 @@
+{
+    "id": "ec_ct200_set_heat_curve_max",
+    "title": {
+        "en": "Set heating curve maximum",
+        "nl": "Bovengrens stooklijn instellen"
+    },
+    "titleFormatted": {
+        "en": "Set the heating curve maximum to [[temperature]]",
+        "nl": "Stel de bovengrens van de stooklijn in op [[temperature]]"
+    },
+    "hint": {
+        "en": "Sets the upper limit of the heating curve",
+        "nl": "Stelt de bovengrens van de stooklijn in"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        },
+        {
+            "type": "number",
+            "name": "temperature",
+            "title": {
+                "en": "Temperature",
+                "nl": "Temperatuur"
+            },
+            "step": 1
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "id": "ec_max_supply_temperature_changed",
+    "title": {
+        "en": "Maximum supply temperature changed",
+        "nl": "Maximale aanvoertemperatuur gewijzigd"
+    },
+    "tokens": [
+        {
+            "name": "ec_max_supply_temperature",
+            "type": "number",
+            "title": {
+                "en": "Maximum supply temperature",
+                "nl": "Maximale aanvoertemperatuur"
+            },
+            "example": 45
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

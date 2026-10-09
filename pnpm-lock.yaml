@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       bosch-xmpp-client:
-        specifier: github:Martijn-W/dev.martijn.bosch-xmpp-client#semver:2.0.0
-        version: git+https://github.com/Martijn-W/dev.martijn.bosch-xmpp-client.git#fe8aeab3a5d03393d7a602228edcbab1a035d29d
+        specifier: github:Martijn-W/dev.martijn.bosch-xmpp-client#semver:2.1.0
+        version: git+https://github.com/Martijn-W/dev.martijn.bosch-xmpp-client.git#2ca82dd9a5236f4c25ba0b94c44c42418ea9798c
     devDependencies:
       '@tsconfig/node16':
         specifier: ^16.1.4
@@ -148,9 +148,9 @@ packages:
     resolution: {integrity: sha512-1rrj3SaIM51wtJUn1l2n4FK2e1QLfEmma9bsD1utaaosA8elpCyWi12QDPfaYoTyWSXNvQ7mGzvFevUJUs1mcQ==}
     engines: {node: '>= 20.10'}
 
-  bosch-xmpp-client@git+https://github.com/Martijn-W/dev.martijn.bosch-xmpp-client.git#fe8aeab3a5d03393d7a602228edcbab1a035d29d:
-    resolution: {commit: fe8aeab3a5d03393d7a602228edcbab1a035d29d, repo: https://github.com/Martijn-W/dev.martijn.bosch-xmpp-client.git, type: git}
-    version: 2.0.0
+  bosch-xmpp-client@git+https://github.com/Martijn-W/dev.martijn.bosch-xmpp-client.git#2ca82dd9a5236f4c25ba0b94c44c42418ea9798c:
+    resolution: {commit: 2ca82dd9a5236f4c25ba0b94c44c42418ea9798c, repo: https://github.com/Martijn-W/dev.martijn.bosch-xmpp-client.git, type: git}
+    version: 2.1.0
 
   cipher-base@1.0.6:
     resolution: {integrity: sha512-3Ek9H3X6pj5TgenXYtNWdaBon1tgYCaebd+XPg0keyjEbEfkD4KkmAxkQ/i1vYvxdcT5nscLBfq9VJRmCBcFSw==}
@@ -392,7 +392,7 @@ snapshots:
       '@xmpp/events': 0.14.0
       ltx: 3.1.2
 
-  bosch-xmpp-client@git+https://github.com/Martijn-W/dev.martijn.bosch-xmpp-client.git#fe8aeab3a5d03393d7a602228edcbab1a035d29d:
+  bosch-xmpp-client@git+https://github.com/Martijn-W/dev.martijn.bosch-xmpp-client.git#2ca82dd9a5236f4c25ba0b94c44c42418ea9798c:
     dependencies:
       '@xmpp/client': 0.14.0
       '@xmpp/sasl-scram-sha-1': 0.14.0

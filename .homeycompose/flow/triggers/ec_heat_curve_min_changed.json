@@ -1,0 +1,25 @@
+{
+    "id": "ec_heat_curve_min_changed",
+    "title": {
+        "en": "Heating curve minimum changed",
+        "nl": "Ondergrens stooklijn gewijzigd"
+    },
+    "tokens": [
+        {
+            "name": "ec_heat_curve_min",
+            "type": "number",
+            "title": {
+                "en": "Heating curve minimum",
+                "nl": "Ondergrens stooklijn"
+            },
+            "example": 45
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

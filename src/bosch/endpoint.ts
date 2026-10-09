@@ -16,6 +16,8 @@ export enum Endpoint {
 
     HeatSourcesReturnTemperature = '/heatSources/returnTemperature',
     HeatSourcesActualModulation = '/heatSources/actualModulation',
+    HeatSourcesCHpumpModulation = '/heatSources/CHpumpModulation',
+    HeatSourcesActualSupplyTemperature = '/heatSources/actualSupplyTemperature',
 
     DeviceBattery = '/devices/device%1/battery',
     DeviceSignal = '/devices/device%1/signal',
@@ -30,6 +32,11 @@ export enum Endpoint {
     SystemTemperatureOffset = '/system/sensors/temperatures/offset',
 
     HeatingCircuitSupplyTemperatureSetpoint = '/heatingCircuits/hc%1/supplyTemperatureSetpoint',
+    HeatingCircuitPowerSetpoint = '/heatingCircuits/hc%1/powerSetpoint',
+    HeatingCircuitMinSupply = '/heatingCircuits/hc%1/minSupply',
+    HeatingCircuitMaxSupply = '/heatingCircuits/hc%1/maxSupply',
+    HeatingCircuitHeatCurveMin = '/heatingCircuits/hc%1/heatCurveMin',
+    HeatingCircuitHeatCurveMax = '/heatingCircuits/hc%1/heatCurveMax',
 
     ProgramsList = '/programs/list',
 }

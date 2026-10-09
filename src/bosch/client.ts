@@ -93,6 +93,18 @@ export abstract class Client {
         return response as ValueResponse<number>;
     }
 
+    public async getHeatSourcesCHpumpModulation(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.HeatSourcesCHpumpModulation);
+
+        return response as ValueResponse<number>;
+    }
+
+    public async getHeatSourcesActualSupplyTemperature(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.HeatSourcesActualSupplyTemperature);
+
+        return response as ValueResponse<number>;
+    }
+
     public async getDeviceBattery(deviceId: number): Promise<ValueResponse<string> | null> {
         const endpoint = Endpoint.DeviceBattery.replace('%1', `${deviceId}`);
 
@@ -193,6 +205,60 @@ export abstract class Client {
         const response = await this.get(Endpoint.HeatingCircuitSupplyTemperatureSetpoint.replace('%1', '1'));
 
         return response as ValueResponse<number>;
+    }
+
+    public async getHeatingCircuitPowerSetpoint(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.HeatingCircuitPowerSetpoint.replace('%1', '1'));
+
+        return response as ValueResponse<number>;
+    }
+
+    public async getHeatingCircuitMinSupply(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.HeatingCircuitMinSupply.replace('%1', '1'));
+
+        return response as ValueResponse<number>;
+    }
+
+    public async setHeatingCircuitMinSupply(temperature: number): Promise<PutResponse | null> {
+        const response = await this.set(Endpoint.HeatingCircuitMinSupply.replace('%1', '1'), temperature);
+
+        return response as PutResponse;
+    }
+
+    public async getHeatingCircuitMaxSupply(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.HeatingCircuitMaxSupply.replace('%1', '1'));
+
+        return response as ValueResponse<number>;
+    }
+
+    public async setHeatingCircuitMaxSupply(temperature: number): Promise<PutResponse | null> {
+        const response = await this.set(Endpoint.HeatingCircuitMaxSupply.replace('%1', '1'), temperature);
+
+        return response as PutResponse;
+    }
+
+    public async getHeatingCircuitHeatCurveMin(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.HeatingCircuitHeatCurveMin.replace('%1', '1'));
+
+        return response as ValueResponse<number>;
+    }
+
+    public async setHeatingCircuitHeatCurveMin(temperature: number): Promise<PutResponse | null> {
+        const response = await this.set(Endpoint.HeatingCircuitHeatCurveMin.replace('%1', '1'), temperature);
+
+        return response as PutResponse;
+    }
+
+    public async getHeatingCircuitHeatCurveMax(): Promise<ValueResponse<number> | null> {
+        const response = await this.get(Endpoint.HeatingCircuitHeatCurveMax.replace('%1', '1'));
+
+        return response as ValueResponse<number>;
+    }
+
+    public async setHeatingCircuitHeatCurveMax(temperature: number): Promise<PutResponse | null> {
+        const response = await this.set(Endpoint.HeatingCircuitHeatCurveMax.replace('%1', '1'), temperature);
+
+        return response as PutResponse;
     }
 
     public async getSystemAwayModeEnabled(): Promise<ValueResponse<string> | null> {

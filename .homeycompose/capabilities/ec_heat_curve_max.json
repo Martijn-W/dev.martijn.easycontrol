@@ -1,0 +1,19 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Heating curve maximum",
+        "nl": "Bovengrens stooklijn"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/heat_curve_max.svg",
+    "getable": true,
+    "setable": true,
+    "units": {
+        "en": "°C",
+        "nl": "°C"
+    },
+    "insights": true,
+    "min": 40,
+    "max": 90,
+    "step": 1
+}

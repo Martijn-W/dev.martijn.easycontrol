@@ -1,0 +1,31 @@
+{
+    "id": "ec_ct200_set_max_supply_temperature",
+    "title": {
+        "en": "Set maximum supply temperature",
+        "nl": "Maximale aanvoertemperatuur instellen"
+    },
+    "titleFormatted": {
+        "en": "Set the maximum supply temperature to [[temperature]]",
+        "nl": "Stel de maximale aanvoertemperatuur in op [[temperature]]"
+    },
+    "hint": {
+        "en": "Sets the maximum supply temperature of the heating circuit",
+        "nl": "Stelt de maximale aanvoertemperatuur van het verwarmingscircuit in"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        },
+        {
+            "type": "number",
+            "name": "temperature",
+            "title": {
+                "en": "Temperature",
+                "nl": "Temperatuur"
+            },
+            "step": 1
+        }
+    ]
+}

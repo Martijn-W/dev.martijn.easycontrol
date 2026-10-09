@@ -1,0 +1,25 @@
+{
+    "id": "ec_measure_actual_supply_temperature_changed",
+    "title": {
+        "en": "Actual supply temperature changed",
+        "nl": "Actuele aanvoertemperatuur gewijzigd"
+    },
+    "tokens": [
+        {
+            "name": "ec_measure_actual_supply_temperature",
+            "type": "number",
+            "title": {
+                "en": "Actual supply temperature",
+                "nl": "Actuele aanvoertemperatuur"
+            },
+            "example": 45
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

@@ -56,5 +56,9 @@
     "3.2.0": {
         "en": "[Ct200(-https)|ETRV] Added global flow tokens for current thermostat mode (DeviceName - Current Thermostat Mode)",
         "nl": "[Ct200(-https)|ETRV] Globale flow tokens toegevoegd voor de huidige thermostaatmodus (ApparaatNaam - Huidige thermostaatmodus)"
+    },
+    "3.3.0": {
+        "en": "[Ct200(-https)] Added CH pump modulation, actual supply temperature and requested heating power. Added minimum/maximum supply temperature and heating curve limits, which can be viewed and set via flow actions. Improved connection reliability with request queuing and retries when Bosch rate limits are hit.",
+        "nl": "[Ct200(-https)] CV-pompmodulatie, actuele aanvoertemperatuur en gevraagd verwarmingsvermogen toegevoegd. Minimale/maximale aanvoertemperatuur en grenzen van de stooklijn toegevoegd, die via flow-acties ingesteld kunnen worden. Betrouwbaardere verbinding door wachtrijen en nieuwe pogingen wanneer Bosch-limieten worden bereikt."
     }
 }

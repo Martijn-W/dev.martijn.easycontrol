@@ -1,0 +1,25 @@
+{
+    "id": "ec_measure_power_setpoint_changed",
+    "title": {
+        "en": "Requested heating power changed",
+        "nl": "Gevraagd verwarmingsvermogen gewijzigd"
+    },
+    "tokens": [
+        {
+            "name": "ec_measure_power_setpoint",
+            "type": "number",
+            "title": {
+                "en": "Requested heating power",
+                "nl": "Gevraagd verwarmingsvermogen"
+            },
+            "example": 35
+        }
+    ],
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        }
+    ]
+}

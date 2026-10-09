@@ -1,0 +1,19 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Heating curve minimum",
+        "nl": "Ondergrens stooklijn"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/heat_curve_min.svg",
+    "getable": true,
+    "setable": true,
+    "units": {
+        "en": "°C",
+        "nl": "°C"
+    },
+    "insights": true,
+    "min": 20,
+    "max": 90,
+    "step": 1
+}

@@ -182,6 +182,46 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         this.#currentThermostatModeToken?.setValue(this.#resolveModeName(value)).catch(this.error);
     }
 
+    async onSetMinSupplyTemperature(value: number): Promise<void> {
+        await this.#setSupplySetting(
+            'ec_min_supply_temperature',
+            'minimum supply temperature',
+            value,
+            async () => await this.client.getHeatingCircuitMinSupply(),
+            async () => await this.client.setHeatingCircuitMinSupply(value)
+        );
+    }
+
+    async onSetMaxSupplyTemperature(value: number): Promise<void> {
+        await this.#setSupplySetting(
+            'ec_max_supply_temperature',
+            'maximum supply temperature',
+            value,
+            async () => await this.client.getHeatingCircuitMaxSupply(),
+            async () => await this.client.setHeatingCircuitMaxSupply(value)
+        );
+    }
+
+    async onSetHeatCurveMin(value: number): Promise<void> {
+        await this.#setSupplySetting(
+            'ec_heat_curve_min',
+            'heating curve minimum',
+            value,
+            async () => await this.client.getHeatingCircuitHeatCurveMin(),
+            async () => await this.client.setHeatingCircuitHeatCurveMin(value)
+        );
+    }
+
+    async onSetHeatCurveMax(value: number): Promise<void> {
+        await this.#setSupplySetting(
+            'ec_heat_curve_max',
+            'heating curve maximum',
+            value,
+            async () => await this.client.getHeatingCircuitHeatCurveMax(),
+            async () => await this.client.setHeatingCircuitHeatCurveMax(value)
+        );
+    }
+
     requestSync(): void {
         this.#scheduleNextSync(0);
     }
@@ -269,7 +309,14 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
             'ec_temperature_offset',
             'ec_supply_temperature_setpoint',
             'ec_away_mode',
-            'ec_thermostat_mode'
+            'ec_thermostat_mode',
+            'ec_measure_ch_pump_modulation',
+            'ec_measure_actual_supply_temperature',
+            'ec_measure_power_setpoint',
+            'ec_min_supply_temperature',
+            'ec_max_supply_temperature',
+            'ec_heat_curve_min',
+            'ec_heat_curve_max'
         ];
 
         for (let capability of capabilities) {
@@ -289,6 +336,18 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         this.registerCapabilityListener('ec_child_lock', this.onSetChildLock.bind(this));
         this.registerCapabilityListener('ec_away_mode', this.onSetAwayMode.bind(this));
         this.registerCapabilityListener('ec_thermostat_mode', this.onSetThermostatMode.bind(this));
+
+        if (!this.unsupportedCapabilities.includes('ec_min_supply_temperature') && this.hasCapability('ec_min_supply_temperature'))
+            this.registerCapabilityListener('ec_min_supply_temperature', this.onSetMinSupplyTemperature.bind(this));
+
+        if (!this.unsupportedCapabilities.includes('ec_max_supply_temperature') && this.hasCapability('ec_max_supply_temperature'))
+            this.registerCapabilityListener('ec_max_supply_temperature', this.onSetMaxSupplyTemperature.bind(this));
+
+        if (!this.unsupportedCapabilities.includes('ec_heat_curve_min') && this.hasCapability('ec_heat_curve_min'))
+            this.registerCapabilityListener('ec_heat_curve_min', this.onSetHeatCurveMin.bind(this));
+
+        if (!this.unsupportedCapabilities.includes('ec_heat_curve_max') && this.hasCapability('ec_heat_curve_max'))
+            this.registerCapabilityListener('ec_heat_curve_max', this.onSetHeatCurveMax.bind(this));
     }
 
     #resolveModeName(modeValue: string): string {
@@ -322,6 +381,108 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         }
     }
 
+    async #setSupplySetting(
+        capability: string,
+        name: string,
+        value: number,
+        fetcher: () => Promise<ValueResponse<number> | null>,
+        setter: () => Promise<{ status?: string } | null>
+    ): Promise<void> {
+        if (this.unsupportedCapabilities.includes(capability) || !this.hasCapability(capability)) {
+            throw new Error(this.homey.__('easycontrol.supplySettings.unavailable'));
+        }
+
+        if (typeof value !== 'number' || !Number.isFinite(value)) {
+            throw new Error(this.homey.__('easycontrol.supplySettings.invalidValue'));
+        }
+
+        const current = await fetcher();
+
+        if (!this.#isUsableResponse(current)) {
+            throw new Error(this.homey.__('easycontrol.supplySettings.unavailable'));
+        }
+
+        if (current.writeable !== 1) {
+            throw new Error(this.homey.__('easycontrol.supplySettings.notWritable'));
+        }
+
+        const {minValue, maxValue, stepSize} = current;
+
+        if (!Number.isFinite(minValue) || !Number.isFinite(maxValue) || minValue > maxValue) {
+            throw new Error(this.homey.__('easycontrol.supplySettings.unavailable'));
+        }
+
+        if (value < minValue || value > maxValue) {
+            throw new Error(this.homey.__('easycontrol.supplySettings.outOfRange', {min: minValue, max: maxValue}));
+        }
+
+        if (stepSize !== undefined && stepSize !== null) {
+            if (typeof stepSize !== 'number' || !Number.isFinite(stepSize) || stepSize <= 0) {
+                throw new Error(this.homey.__('easycontrol.supplySettings.invalidStep'));
+            }
+
+            const steps = (value - minValue) / stepSize;
+
+            if (Math.abs(steps - Math.round(steps)) > 1e-6) {
+                throw new Error(this.homey.__('easycontrol.supplySettings.invalidStep'));
+            }
+        }
+
+        this.log(`Setting ${name}: ${value}`);
+
+        const response = await setter();
+
+        if (response?.status !== 'ok') {
+            throw new Error(this.homey.__('easycontrol.supplySettings.writeFailed'));
+        }
+
+        this.setCapabilityValue(capability, value).catch(this.error);
+    }
+
+    #isUsableResponse(response: ValueResponse<number> | null): response is ValueResponse<number> {
+        if (response == null || typeof response.value !== 'number' || !Number.isFinite(response.value))
+            return false;
+
+        if (`${response.used}`.toLowerCase() === 'false')
+            return false;
+
+        return `${response.available}`.toLowerCase() !== 'false';
+    }
+
+    async #syncSupplySetting(capability: string, name: string, response: ValueResponse<number> | null): Promise<void> {
+        if (!this.#isUsableResponse(response)) {
+            if (response != null)
+                this.log(`! ${name} is unavailable or invalid, skipping update`);
+
+            return;
+        }
+
+        this.log(`→ ${name}: ${response.value}${response.unitOfMeasure}`);
+
+        this.setCapabilityValue(capability, response.value).catch(this.error);
+
+        const options: { min?: number, max?: number, step?: number } = {};
+
+        if (Number.isFinite(response.minValue))
+            options.min = response.minValue;
+
+        if (Number.isFinite(response.maxValue))
+            options.max = response.maxValue;
+
+        if (Number.isFinite(response.stepSize) && response.stepSize > 0)
+            options.step = response.stepSize;
+
+        if (options.min !== undefined && options.max !== undefined && options.min > options.max)
+            return;
+
+        const currentOptions = this.getCapabilityOptions(capability) as { min?: number, max?: number, step?: number };
+
+        if (Object.entries(options).every(([key, optionValue]) => currentOptions[key as keyof typeof options] === optionValue))
+            return;
+
+        await this.setCapabilityOptions(capability, {...currentOptions, ...options}).catch(this.error);
+    }
+
     async #setThermostatData(): Promise<void> {
         const zoneId = this.settings!.zoneId;
         this.#failedApiCallsInSync = 0;
@@ -345,6 +506,28 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         const zoneUserMode = await this.#fetchWithFailureTracking('getZoneUserMode', async () => await this.client.getZoneUserMode(zoneId));
         const zoneClockProgram = await this.#fetchWithFailureTracking('getZoneClockProgram', async () => await this.client.getZoneClockProgram(zoneId));
         const clockPrograms = await this.client.getClockPrograms().catch(() => null);
+
+        const chPumpModulation: ValueResponse<number> | null = !this.unsupportedCapabilities.includes('ec_measure_ch_pump_modulation')
+            ? await this.#fetchWithFailureTracking('getHeatSourcesCHpumpModulation', async () => await this.client.getHeatSourcesCHpumpModulation())
+            : null;
+        const actualSupplyTemperature: ValueResponse<number> | null = !this.unsupportedCapabilities.includes('ec_measure_actual_supply_temperature')
+            ? await this.#fetchWithFailureTracking('getHeatSourcesActualSupplyTemperature', async () => await this.client.getHeatSourcesActualSupplyTemperature())
+            : null;
+        const powerSetpoint: ValueResponse<number> | null = !this.unsupportedCapabilities.includes('ec_measure_power_setpoint')
+            ? await this.#fetchWithFailureTracking('getHeatingCircuitPowerSetpoint', async () => await this.client.getHeatingCircuitPowerSetpoint())
+            : null;
+        const minSupply: ValueResponse<number> | null = !this.unsupportedCapabilities.includes('ec_min_supply_temperature')
+            ? await this.#fetchWithFailureTracking('getHeatingCircuitMinSupply', async () => await this.client.getHeatingCircuitMinSupply())
+            : null;
+        const maxSupply: ValueResponse<number> | null = !this.unsupportedCapabilities.includes('ec_max_supply_temperature')
+            ? await this.#fetchWithFailureTracking('getHeatingCircuitMaxSupply', async () => await this.client.getHeatingCircuitMaxSupply())
+            : null;
+        const heatCurveMin: ValueResponse<number> | null = !this.unsupportedCapabilities.includes('ec_heat_curve_min')
+            ? await this.#fetchWithFailureTracking('getHeatingCircuitHeatCurveMin', async () => await this.client.getHeatingCircuitHeatCurveMin())
+            : null;
+        const heatCurveMax: ValueResponse<number> | null = !this.unsupportedCapabilities.includes('ec_heat_curve_max')
+            ? await this.#fetchWithFailureTracking('getHeatingCircuitHeatCurveMax', async () => await this.client.getHeatingCircuitHeatCurveMax())
+            : null;
 
         if (zoneTemperature != null) {
             this.log(`→ temperature: ${zoneTemperature.value}${zoneTemperature.unitOfMeasure}`);
@@ -421,6 +604,29 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
 
             this.setCapabilityValue('ec_supply_temperature_setpoint', supplyTemperatureSetpoint.value).catch(this.error);
         }
+
+        if (this.#isUsableResponse(chPumpModulation)) {
+            this.log(`→ CH pump modulation: ${chPumpModulation.value}${chPumpModulation.unitOfMeasure}`);
+
+            this.setCapabilityValue('ec_measure_ch_pump_modulation', chPumpModulation.value).catch(this.error);
+        }
+
+        if (this.#isUsableResponse(actualSupplyTemperature)) {
+            this.log(`→ actual supply temperature: ${actualSupplyTemperature.value}${actualSupplyTemperature.unitOfMeasure}`);
+
+            this.setCapabilityValue('ec_measure_actual_supply_temperature', actualSupplyTemperature.value).catch(this.error);
+        }
+
+        if (this.#isUsableResponse(powerSetpoint)) {
+            this.log(`→ power setpoint: ${powerSetpoint.value}${powerSetpoint.unitOfMeasure}`);
+
+            this.setCapabilityValue('ec_measure_power_setpoint', powerSetpoint.value).catch(this.error);
+        }
+
+        await this.#syncSupplySetting('ec_min_supply_temperature', 'minimum supply temperature', minSupply);
+        await this.#syncSupplySetting('ec_max_supply_temperature', 'maximum supply temperature', maxSupply);
+        await this.#syncSupplySetting('ec_heat_curve_min', 'heating curve minimum', heatCurveMin);
+        await this.#syncSupplySetting('ec_heat_curve_max', 'heating curve maximum', heatCurveMax);
 
         if (systemAwayModeEnabled != null) {
             this.log(`→ away mode status: ${systemAwayModeEnabled.value}`);

@@ -27,6 +27,14 @@
         "awayMode": {
             "error": "Failed to set away mode. Make sure a clock program is active."
         },
+        "supplySettings": {
+            "unavailable": "This setting is not available on this thermostat.",
+            "notWritable": "This setting is currently not writable.",
+            "invalidValue": "The value must be a valid number.",
+            "outOfRange": "The value must be between {{min}} and {{max}}.",
+            "invalidStep": "The value does not match the step size of this setting.",
+            "writeFailed": "Failed to change the setting."
+        },
         "thermostatMode": {
             "error": "Failed to set thermostat program."
         },

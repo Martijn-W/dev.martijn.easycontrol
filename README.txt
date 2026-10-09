@@ -9,6 +9,8 @@ Features include:
 — Monitor actual modulation
 — Monitor return temperature
 — Monitor valve position
+— Monitor CH pump modulation, actual supply temperature and requested heating power
+— View and set minimum/maximum supply temperature and heating curve limits (CT200)
 — Set child lock
 — And many more!
 

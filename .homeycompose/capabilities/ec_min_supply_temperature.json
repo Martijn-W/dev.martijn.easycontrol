@@ -1,0 +1,19 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Minimum supply temperature",
+        "nl": "Minimale aanvoertemperatuur"
+    },
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/min_supply_temperature.svg",
+    "getable": true,
+    "setable": true,
+    "units": {
+        "en": "°C",
+        "nl": "°C"
+    },
+    "insights": true,
+    "min": 10,
+    "max": 90,
+    "step": 1
+}

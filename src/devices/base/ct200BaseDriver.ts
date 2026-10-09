@@ -20,6 +20,62 @@ export default abstract class Ct200BaseDriver extends Homey.Driver {
         await this.registerSetChildLockAction();
         await this.registerSetAwayModeAction();
         await this.registerThermostatModeFlowCards();
+        await this.registerSetMinSupplyTemperatureAction();
+        await this.registerSetMaxSupplyTemperatureAction();
+        await this.registerSetHeatCurveMinAction();
+        await this.registerSetHeatCurveMaxAction();
+    }
+
+    private async registerSetMinSupplyTemperatureAction(): Promise<void> {
+        const setMinSupplyTemperature = this.homey.flow.getActionCard('ec_ct200_set_min_supply_temperature');
+
+        type SupplyTemperatureArguments = {
+            readonly device: Ct200BaseDevice<any>,
+            readonly temperature: number
+        }
+
+        setMinSupplyTemperature.registerRunListener(async ({device, temperature}: SupplyTemperatureArguments) => {
+            await device.onSetMinSupplyTemperature(temperature);
+        });
+    }
+
+    private async registerSetMaxSupplyTemperatureAction(): Promise<void> {
+        const setMaxSupplyTemperature = this.homey.flow.getActionCard('ec_ct200_set_max_supply_temperature');
+
+        type SupplyTemperatureArguments = {
+            readonly device: Ct200BaseDevice<any>,
+            readonly temperature: number
+        }
+
+        setMaxSupplyTemperature.registerRunListener(async ({device, temperature}: SupplyTemperatureArguments) => {
+            await device.onSetMaxSupplyTemperature(temperature);
+        });
+    }
+
+    private async registerSetHeatCurveMinAction(): Promise<void> {
+        const setHeatCurveMin = this.homey.flow.getActionCard('ec_ct200_set_heat_curve_min');
+
+        type HeatCurveArguments = {
+            readonly device: Ct200BaseDevice<any>,
+            readonly temperature: number
+        }
+
+        setHeatCurveMin.registerRunListener(async ({device, temperature}: HeatCurveArguments) => {
+            await device.onSetHeatCurveMin(temperature);
+        });
+    }
+
+    private async registerSetHeatCurveMaxAction(): Promise<void> {
+        const setHeatCurveMax = this.homey.flow.getActionCard('ec_ct200_set_heat_curve_max');
+
+        type HeatCurveArguments = {
+            readonly device: Ct200BaseDevice<any>,
+            readonly temperature: number
+        }
+
+        setHeatCurveMax.registerRunListener(async ({device, temperature}: HeatCurveArguments) => {
+            await device.onSetHeatCurveMax(temperature);
+        });
     }
 
     private async registerSetTemperatureOffsetAction(): Promise<void> {

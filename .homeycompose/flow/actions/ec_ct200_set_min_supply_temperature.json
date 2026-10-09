@@ -1,0 +1,31 @@
+{
+    "id": "ec_ct200_set_min_supply_temperature",
+    "title": {
+        "en": "Set minimum supply temperature",
+        "nl": "Minimale aanvoertemperatuur instellen"
+    },
+    "titleFormatted": {
+        "en": "Set the minimum supply temperature to [[temperature]]",
+        "nl": "Stel de minimale aanvoertemperatuur in op [[temperature]]"
+    },
+    "hint": {
+        "en": "Sets the minimum supply temperature of the heating circuit",
+        "nl": "Stelt de minimale aanvoertemperatuur van het verwarmingscircuit in"
+    },
+    "args": [
+        {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=thermostat-ct200|thermostat-ct200-https"
+        },
+        {
+            "type": "number",
+            "name": "temperature",
+            "title": {
+                "en": "Temperature",
+                "nl": "Temperatuur"
+            },
+            "step": 1
+        }
+    ]
+}
