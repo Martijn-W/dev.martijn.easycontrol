@@ -450,6 +450,13 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
     }
 
     async #syncSupplySetting(capability: string, name: string, response: ValueResponse<number> | null): Promise<void> {
+        if (!this.hasCapability(capability)) {
+            if (response != null)
+                this.log(`! capability ${capability} is not present on this device, skipping update`);
+
+            return;
+        }
+
         if (!this.#isUsableResponse(response)) {
             if (response != null)
                 this.log(`! ${name} is unavailable or invalid, skipping update`);
@@ -475,12 +482,23 @@ export abstract class Ct200BaseDevice<TClient extends Client> extends Homey.Devi
         if (options.min !== undefined && options.max !== undefined && options.min > options.max)
             return;
 
-        const currentOptions = this.getCapabilityOptions(capability) as { min?: number, max?: number, step?: number };
+        try {
+            let currentOptions: { min?: number, max?: number, step?: number } = {};
 
-        if (Object.entries(options).every(([key, optionValue]) => currentOptions[key as keyof typeof options] === optionValue))
-            return;
+            try {
+                // Throws when no options have been stored for this capability yet
+                currentOptions = this.getCapabilityOptions(capability) ?? {};
+            } catch {
+                this.log(`No stored options for ${capability} yet`);
+            }
 
-        await this.setCapabilityOptions(capability, {...currentOptions, ...options}).catch(this.error);
+            if (Object.entries(options).every(([key, optionValue]) => currentOptions[key as keyof typeof options] === optionValue))
+                return;
+
+            await this.setCapabilityOptions(capability, {...currentOptions, ...options});
+        } catch (error) {
+            this.error(`Failed to update options for ${capability}`, error);
+        }
     }
 
     async #setThermostatData(): Promise<void> {
